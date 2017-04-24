@@ -87,1769 +87,1784 @@ sample_pres<-sample_n(df_pres,100) %>% select(Libellé.de.la.commune)%>% .$Libel
 df_pres %>% filter (Libellé.de.la.commune %in% sample_pres)
 ```
 
-    ##     Code.du.département Libellé.du.département Code.de.la.commune
-    ## 1                     1                    AIN                122
-    ## 2                     2                  AISNE                 97
-    ## 3                     2                  AISNE                271
-    ## 4                     2                  AISNE                518
-    ## 5                     3                 ALLIER                139
-    ## 6                     3                 ALLIER                222
-    ## 7                     3                 ALLIER                241
-    ## 8                     6        ALPES MARITIMES                 75
-    ## 9                     7                ARDECHE                314
-    ## 10                    9                 ARIEGE                173
-    ## 11                    9                 ARIEGE                289
-    ## 12                   10                   AUBE                121
-    ## 13                   10                   AUBE                154
-    ## 14                   11                   AUDE                110
-    ## 15                   11                   AUDE                261
-    ## 16                   11                   AUDE                282
-    ## 17                   12                AVEYRON                 36
-    ## 18                   12                AVEYRON                138
-    ## 19                   14               CALVADOS                217
-    ## 20                   16               CHARENTE                358
-    ## 21                   17      CHARENTE MARITIME                 23
-    ## 22                   17      CHARENTE MARITIME                355
-    ## 23                   18                   CHER                201
-    ## 24                   2B            HAUTE CORSE                238
-    ## 25                   21              COTE D'OR                121
-    ## 26                   22          COTES D'ARMOR                187
-    ## 27                   22          COTES D'ARMOR                256
-    ## 28                   22          COTES D'ARMOR                278
-    ## 29                   27                   EURE                  2
-    ## 30                   27                   EURE                 81
-    ## 31                   28           EURE ET LOIR                 50
-    ## 32                   28           EURE ET LOIR                226
-    ## 33                   28           EURE ET LOIR                275
-    ## 34                   28           EURE ET LOIR                407
-    ## 35                   29              FINISTERE                294
-    ## 36                   30                   GARD                 13
-    ## 37                   30                   GARD                 22
-    ## 38                   30                   GARD                 99
-    ## 39                   30                   GARD                205
-    ## 40                   31          HAUTE GARONNE                182
-    ## 41                   31          HAUTE GARONNE                239
-    ## 42                   32                   GERS                  7
-    ## 43                   32                   GERS                326
-    ## 44                   32                   GERS                467
-    ## 45                   33                GIRONDE                250
-    ## 46                   38                  ISERE                105
-    ## 47                   38                  ISERE                261
-    ## 48                   39                   JURA                 36
-    ## 49                   39                   JURA                136
-    ## 50                   39                   JURA                190
-    ## 51                   39                   JURA                220
-    ## 52                   39                   JURA                342
-    ## 53                   41           LOIR ET CHER                  1
-    ## 54                   41           LOIR ET CHER                166
-    ## 55                   42                  LOIRE                 98
-    ## 56                   42                  LOIRE                156
-    ## 57                   42                  LOIRE                306
-    ## 58                   44       LOIRE ATLANTIQUE                 48
-    ## 59                   44       LOIRE ATLANTIQUE                210
-    ## 60                   46                    LOT                250
-    ## 61                   47         LOT ET GARONNE                 11
-    ## 62                   47         LOT ET GARONNE                309
-    ## 63                   48                 LOZERE                 66
-    ## 64                   50                 MANCHE                192
-    ## 65                   50                 MANCHE                318
-    ## 66                   51                  MARNE                621
-    ## 67                   52            HAUTE MARNE                163
-    ## 68                   53                MAYENNE                138
-    ## 69                   54     MEURTHE ET MOSELLE                 82
-    ## 70                   54     MEURTHE ET MOSELLE                172
-    ## 71                   55                  MEUSE                 44
-    ## 72                   55                  MEUSE                323
-    ## 73                   55                  MEUSE                544
-    ## 74                   58                 NIEVRE                 14
-    ## 75                   58                 NIEVRE                 43
-    ## 76                   58                 NIEVRE                162
-    ## 77                   58                 NIEVRE                284
-    ## 78                   59                   NORD                 37
-    ## 79                   59                   NORD                361
-    ## 80                   60                   OISE                387
-    ## 81                   61                   ORNE                451
-    ## 82                   62          PAS DE CALAIS                 84
-    ## 83                   62          PAS DE CALAIS                475
-    ## 84                   62          PAS DE CALAIS                676
-    ## 85                   62          PAS DE CALAIS                797
-    ## 86                   63            PUY DE DOME                 48
-    ## 87                   63            PUY DE DOME                129
-    ## 88                   64   PYRENEES ATLANTIQUES                132
-    ## 89                   64   PYRENEES ATLANTIQUES                183
-    ## 90                   65        HAUTES PYRENEES                217
-    ## 91                   66    PYRENEES ORIENTALES                 77
-    ## 92                   66    PYRENEES ORIENTALES                165
-    ## 93                   69                  RHONE                138
-    ## 94                   70            HAUTE SAONE                262
-    ## 95                   70            HAUTE SAONE                479
-    ## 96                   70            HAUTE SAONE                572
-    ## 97                   71         SAONE ET LOIRE                404
-    ## 98                   71         SAONE ET LOIRE                410
-    ## 99                   73                 SAVOIE                117
-    ## 100                  74           HAUTE SAVOIE                290
-    ## 101                  76         SEINE MARITIME                 81
-    ## 102                  76         SEINE MARITIME                298
-    ## 103                  76         SEINE MARITIME                514
-    ## 104                  77         SEINE ET MARNE                180
-    ## 105                  77         SEINE ET MARNE                369
-    ## 106                  78               YVELINES                238
-    ## 107                  78               YVELINES                299
-    ## 108                  78               YVELINES                380
-    ## 109                  79            DEUX SEVRES                171
-    ## 110                  80                  SOMME                 55
-    ## 111                  80                  SOMME                667
-    ## 112                  81                   TARN                229
-    ## 113                  86                 VIENNE                235
-    ## 114                  88                 VOSGES                318
-    ## 115                  88                 VOSGES                363
-    ## 116                  89                  YONNE                479
-    ## 117                  92         HAUTS DE SEINE                 51
+    ##     Code.du.département  Libellé.du.département Code.de.la.commune
+    ## 1                     2                   AISNE                528
+    ## 2                     3                  ALLIER                185
+    ## 3                     3                  ALLIER                195
+    ## 4                     4 ALPES DE HAUTE PROVENCE                  1
+    ## 5                     6         ALPES MARITIMES                  1
+    ## 6                     7                 ARDECHE                  6
+    ## 7                     7                 ARDECHE                318
+    ## 8                     9                  ARIEGE                177
+    ## 9                     9                  ARIEGE                206
+    ## 10                    9                  ARIEGE                269
+    ## 11                   10                    AUBE                153
+    ## 12                   10                    AUBE                220
+    ## 13                   14                CALVADOS                530
+    ## 14                   15                  CANTAL                 57
+    ## 15                   16                CHARENTE                294
+    ## 16                   16                CHARENTE                368
+    ## 17                   17       CHARENTE MARITIME                 59
+    ## 18                   17       CHARENTE MARITIME                118
+    ## 19                   17       CHARENTE MARITIME                213
+    ## 20                   18                    CHER                 56
+    ## 21                   18                    CHER                 60
+    ## 22                   21               COTE D'OR                  6
+    ## 23                   21               COTE D'OR                309
+    ## 24                   21               COTE D'OR                437
+    ## 25                   24                DORDOGNE                133
+    ## 26                   24                DORDOGNE                585
+    ## 27                   25                   DOUBS                195
+    ## 28                   28            EURE ET LOIR                 12
+    ## 29                   30                    GARD                156
+    ## 30                   30                    GARD                187
+    ## 31                   32                    GERS                346
+    ## 32                   33                 GIRONDE                359
+    ## 33                   33                 GIRONDE                472
+    ## 34                   34                 HERAULT                212
+    ## 35                   34                 HERAULT                262
+    ## 36                   35         ILLE ET VILAINE                177
+    ## 37                   36                   INDRE                 53
+    ## 38                   37          INDRE ET LOIRE                186
+    ## 39                   40                  LANDES                 62
+    ## 40                   41            LOIR ET CHER                233
+    ## 41                   41            LOIR ET CHER                238
+    ## 42                   42                   LOIRE                183
+    ## 43                   45                  LOIRET                 76
+    ## 44                   45                  LOIRET                161
+    ## 45                   45                  LOIRET                326
+    ## 46                   45                  LOIRET                327
+    ## 47                   46                     LOT                 39
+    ## 48                   47          LOT ET GARONNE                227
+    ## 49                   48                  LOZERE                 46
+    ## 50                   50                  MANCHE                384
+    ## 51                   50                  MANCHE                517
+    ## 52                   50                  MANCHE                546
+    ## 53                   51                   MARNE                 63
+    ## 54                   51                   MARNE                 86
+    ## 55                   51                   MARNE                390
+    ## 56                   51                   MARNE                577
+    ## 57                   51                   MARNE                626
+    ## 58                   52             HAUTE MARNE                 88
+    ## 59                   52             HAUTE MARNE                121
+    ## 60                   52             HAUTE MARNE                301
+    ## 61                   52             HAUTE MARNE                433
+    ## 62                   53                 MAYENNE                116
+    ## 63                   54      MEURTHE ET MOSELLE                157
+    ## 64                   55                   MEUSE                 17
+    ## 65                   55                   MEUSE                140
+    ## 66                   56                MORBIHAN                200
+    ## 67                   57                 MOSELLE                225
+    ## 68                   57                 MOSELLE                232
+    ## 69                   57                 MOSELLE                380
+    ## 70                   58                  NIEVRE                 57
+    ## 71                   58                  NIEVRE                184
+    ## 72                   58                  NIEVRE                284
+    ## 73                   59                    NORD                497
+    ## 74                   60                    OISE                298
+    ## 75                   60                    OISE                413
+    ## 76                   60                    OISE                432
+    ## 77                   61                    ORNE                103
+    ## 78                   61                    ORNE                299
+    ## 79                   61                    ORNE                427
+    ## 80                   62           PAS DE CALAIS                293
+    ## 81                   62           PAS DE CALAIS                391
+    ## 82                   62           PAS DE CALAIS                562
+    ## 83                   63             PUY DE DOME                 91
+    ## 84                   63             PUY DE DOME                256
+    ## 85                   64    PYRENEES ATLANTIQUES                 44
+    ## 86                   64    PYRENEES ATLANTIQUES                350
+    ## 87                   65         HAUTES PYRENEES                 67
+    ## 88                   65         HAUTES PYRENEES                424
+    ## 89                   67                BAS RHIN                142
+    ## 90                   69                   RHONE                212
+    ## 91                   69                   RHONE                271
+    ## 92                   70             HAUTE SAONE                222
+    ## 93                   70             HAUTE SAONE                553
+    ## 94                   71          SAONE ET LOIRE                 12
+    ## 95                   71          SAONE ET LOIRE                111
+    ## 96                   72                  SARTHE                 97
+    ## 97                   72                  SARTHE                178
+    ## 98                   73                  SAVOIE                 40
+    ## 99                   73                  SAVOIE                 53
+    ## 100                  74            HAUTE SAVOIE                 24
+    ## 101                  74            HAUTE SAVOIE                 65
+    ## 102                  76          SEINE MARITIME                194
+    ## 103                  76          SEINE MARITIME                258
+    ## 104                  76          SEINE MARITIME                305
+    ## 105                  77          SEINE ET MARNE                209
+    ## 106                  77          SEINE ET MARNE                321
+    ## 107                  77          SEINE ET MARNE                421
+    ## 108                  79             DEUX SEVRES                161
+    ## 109                  80                   SOMME                139
+    ## 110                  81                    TARN                231
+    ## 111                  82         TARN ET GARONNE                 82
+    ## 112                  86                  VIENNE                 83
+    ## 113                  88                  VOSGES                298
+    ## 114                  89                   YONNE                 88
+    ## 115                  89                   YONNE                 93
+    ## 116                  90   TERRITOIRE DE BELFORT                105
+    ## 117                  95              VAL D'OISE                 58
+    ## 118                  95              VAL D'OISE                438
     ##             Libellé.de.la.commune Inscrits Abstentions X..Abs.Ins Votants
-    ## 1            Cormaranche-en-Bugey      625          69      11.04     556
-    ## 2                        Boncourt      205          32      15.61     173
-    ## 3                        Dravegny      110          16      14.55      94
-    ## 4                       Montlevon      217          38      17.51     179
-    ## 5                        Laprugne      310          56      18.06     254
-    ## 6                   Saint-Caprais       70          11      15.71      59
-    ## 7          Saint-Léopardin-d'Augy      284          39      13.73     245
-    ## 8                          Levens     3866         678      17.54    3188
-    ## 9                          Silhac      319          31       9.72     288
-    ## 10                        Loubens      179          21      11.73     158
-    ## 11               Lorp-Sentaraille      991         133      13.42     858
-    ## 12                      Dampierre      284          42      14.79     242
-    ## 13            Fontenay-de-Bossery       78           8      10.26      70
-    ## 14                      Coustouge       90          16      17.78      74
-    ## 15                           Moux      544         105      19.30     439
-    ## 16            Peyrefitte-du-Razès       52          14      26.92      38
-    ## 17                        Brommat      608         109      17.93     499
-    ## 18               Marcillac-Vallon     1266         151      11.93    1115
-    ## 19                      Dampierre      108          15      13.89      93
-    ## 20      Saint-Yrieix-sur-Charente     5245         762      14.53    4483
-    ## 21                          Aujac      255          43      16.86     212
-    ## 22                Sainte-Lheurine      400          76      19.00     324
-    ## 23                  Saint-Caprais      505          67      13.27     438
-    ## 24               Poggio-di-Venaco      153          38      24.84     115
-    ## 25                 Bussy-la-Pesle       74           9      12.16      65
-    ## 26                         Plérin    10166        1035      10.18    9131
-    ## 27              Quemper-Guézennec      903         117      12.96     786
-    ## 28                   Saint-Brieuc    31120        7166      23.03   23954
-    ## 29                           Acon      356          72      20.22     284
-    ## 30                       Boncourt      128          15      11.72     113
-    ## 31                       Boncourt      219          23      10.50     196
-    ## 32                     Maillebois      734         123      16.76     611
-    ## 33                          Néron      524          93      17.75     431
-    ## 34                       Vichères      250          34      13.60     216
-    ## 35                      Le Tréhou      430          57      13.26     373
-    ## 36                     Argilliers      249          28      11.24     221
-    ## 37                          Aujac      187          30      16.04     157
-    ## 38                           Cros      229          27      11.79     202
-    ## 39                  Pougnadoresse      172          22      12.79     150
-    ## 40                     Fenouillet     3581         495      13.82    3086
-    ## 41                L'Isle-en-Dodon     1398         185      13.23    1213
-    ## 42                        Ardizas      162          22      13.58     140
-    ## 43                      Pouylebon      133          32      24.06     101
-    ## 44                  Saint-Caprais      102          12      11.76      90
-    ## 45                        Loubens      262          42      16.03     220
-    ## 46                        Chirens     1725         285      16.52    1440
-    ## 47                       Morestel     2448         435      17.77    2013
-    ## 48               Balme-d'Epy (La)       43           9      20.93      34
-    ## 49                       Chemenot       31           2       6.45      29
-    ## 50                      Dampierre      813         127      15.62     686
-    ## 51                      Falletans      294          27       9.18     267
-    ## 52                          Monay      116          21      18.10      95
-    ## 53                         Ambloy      142          20      14.08     122
-    ## 54                          Oisly      290          36      12.41     254
-    ## 55                      Fourneaux      475          55      11.58     420
-    ## 56                        Neulise      902         138      15.30     764
-    ## 57                     Tarentaise      379          49      12.93     330
-    ## 58                         Couffé     1678         207      12.34    1471
-    ## 59                        Trignac     5260         975      18.54    4285
-    ## 60                  Saint-Caprais       74           8      10.81      66
-    ## 61                          Anthé      139          23      16.55     116
-    ## 62                     Tombeboeuf      336          50      14.88     286
-    ## 63           Fraissinet-de-Lozère      196          40      20.41     156
-    ## 64                      Fourneaux       81          15      18.52      66
-    ## 65             Le Mesnil-Rainfray      155          20      12.90     135
-    ## 66              Vienne-le-Château      411          75      18.25     336
-    ## 67                      Dampierre      303          68      22.44     235
-    ## 68                     Longuefuye      244          38      15.57     206
-    ## 69                       Boncourt      164          16       9.76     148
-    ## 70          Doncourt-lès-Longuyon      188          27      14.36     161
-    ## 71                        Belrain       32           3       9.38      29
-    ## 72          Martincourt-sur-Meuse       46           3       6.52      43
-    ## 73                       Velosnes       83          23      27.71      60
-    ## 74                      Arzembouy       78          21      26.92      57
-    ## 75                 Bussy-la-Pesle       41           6      14.63      35
-    ## 76                     Menestreau      112          24      21.43      88
-    ## 77                          Talon       55           8      14.55      47
-    ## 78             Avesnes-les-Aubert     2605         477      18.31    2128
-    ## 79                       Lourches     2176         526      24.17    1650
-    ## 80        Marseille-en-Beauvaisis      862         150      17.40     712
-    ## 81  Saint-Quentin-les-Chardonnets      232          32      13.79     200
-    ## 82                          Barly      193          29      15.03     164
-    ## 83                        Ivergny      174          21      12.07     153
-    ## 84                        Quernes      369          33       8.94     336
-    ## 85                      Siracourt      221          30      13.57     191
-    ## 86                   Bourg-Lastic      768         120      15.63     648
-    ## 87                           Cros      177          32      18.08     145
-    ## 88                        Bizanos     3630         596      16.42    3034
-    ## 89                   Caubios-Loos      401          39       9.73     362
-    ## 90                       Hautaget       45           5      11.11      40
-    ## 91                     Fenouillet       76          20      26.32      56
-    ## 92                          Rodès      470          66      14.04     404
-    ## 93                     Montromant      318          44      13.84     274
-    ## 94                   Genevreuille      135           8       5.93     127
-    ## 95             Sauvigney-lès-Gray       95           8       8.42      87
-    ## 96               Vitrey-sur-Mance      243          49      20.16     194
-    ## 97                   Saint-Désert      704         104      14.77     600
-    ## 98        Saint-Etienne-en-Bresse      592          99      16.72     493
-    ## 99                      Fourneaux      550         103      18.73     447
-    ## 100                    Vallorcine      341          42      12.32     299
-    ## 101             Berneval-le-Grand     1017         174      17.11     843
-    ## 102                    Ganzeville      414          71      17.15     343
-    ## 103        Quévreville-la-Poterie      805         106      13.17     699
-    ## 104              Férolles-Attilly      869         202      23.25     667
-    ## 105                        Poincy      534          68      12.73     466
-    ## 106               Flins-sur-Seine     1603         297      18.53    1306
-    ## 107                   Hardricourt     1365         242      17.73    1123
-    ## 108                         Maule     4220         861      20.40    3359
-    ## 109              Mauzé-Thouarsais     1831         354      19.33    1477
-    ## 110                         Barly      142          23      16.20     119
-    ## 111                     Remaugies       95          14      14.74      81
-    ## 112                    Roquevidal      108          10       9.26      98
-    ## 113      Saint-Maurice-la-Clouère      930         126      13.55     804
-    ## 114                      Moyemont      171          30      17.54     141
-    ## 115                       Punerot      142          34      23.94     108
-    ## 116                   Vincelottes      278          51      18.35     227
-    ## 117             Neuilly-sur-Seine    37003        5964      16.12   31039
+    ## 1                   Mortefontaine      183          15       8.20     168
+    ## 2                       Montluçon    26429        6994      26.46   19435
+    ## 3                 Néris-les-Bains     2054         307      14.95    1747
+    ## 4                          Aiglun      862         112      12.99     750
+    ## 5                          Aiglun      116          18      15.52      98
+    ## 6                 Albon d'Ardèche      142          24      16.90     118
+    ## 7                        Tauriers      165          28      16.97     137
+    ## 8                         Madière      191          26      13.61     165
+    ## 9                     Montferrier      586         111      18.94     475
+    ## 10         Saint-Martin-de-Caralp      290          39      13.45     251
+    ## 11                 Fontaine-Mâcon      438          83      18.95     355
+    ## 12   Maizières-la-Grande-Paroisse     1178         225      19.10     953
+    ## 13                       Ranville     1471         254      17.27    1217
+    ## 14               Cros-de-Montvert      210          36      17.14     174
+    ## 15                    Saint-Amant      548          92      16.79     456
+    ## 16                           Sers      628          93      14.81     535
+    ## 17                      Bourgneuf      838         112      13.37     726
+    ## 18                       Corignac      273          35      12.82     238
+    ## 19                          Lozay      130          25      19.23     105
+    ## 20                         Chassy      212          32      15.09     180
+    ## 21                       Chaumont       35           3       8.57      32
+    ## 22                Aisey-sur-Seine      138          26      18.84     112
+    ## 23                      Griselles       67          13      19.40      54
+    ## 24                     Montmançon      134          21      15.67     113
+    ## 25                    La Coquille     1047         170      16.24     877
+    ## 26       Villefranche-du-Périgord      509          80      15.72     429
+    ## 27           Dannemarie-sur-Crète      804          93      11.57     711
+    ## 28                          Arrou     1353         246      18.18    1107
+    ## 29                   Marguerittes     6995        1317      18.83    5678
+    ## 30                     Navacelles      249          40      16.06     209
+    ## 31                     Roquebrune      160          19      11.88     141
+    ## 32                     Roquebrune      177          26      14.69     151
+    ## 33    Saint-Sauveur-de-Puynormand      287          44      15.33     243
+    ## 34                        Poujols      127          15      11.81     112
+    ## 35                  Saint-Guiraud      164          24      14.63     140
+    ## 36                     La Mézière     3039         348      11.45    2691
+    ## 37                          Ciron      426          65      15.26     361
+    ## 38                   Pont-de-Ruan      617          77      12.48     540
+    ## 39             Campet-et-Lamolère      244          34      13.93     210
+    ## 40                         Sambin      719         109      15.16     610
+    ## 41              Savigny-sur-Braye     1696         336      19.81    1360
+    ## 42                   La Ricamarie     5059        1363      26.94    3696
+    ## 43     La Chapelle-Saint-Sépulcre      214          35      16.36     179
+    ## 44                      Griselles      618          90      14.56     528
+    ## 45                     Tournoisis      274          33      12.04     241
+    ## 46                        Traînou     2342         418      17.85    1924
+    ## 47                       Brengues      161          24      14.91     137
+    ## 48                        Ruffiac      137          17      12.41     120
+    ## 49                       Chaulhac       84          24      28.57      60
+    ## 50             Octeville-l'Avenel      158          26      16.46     132
+    ## 51     Saint-Martin-de-Varreville      158          37      23.42     121
+    ## 52       Saint-Samson-de-Bonfossé      628          77      12.26     551
+    ## 53             Binson-et-Orquigny      138          22      15.94     116
+    ## 54                         Breuil      207          27      13.04     180
+    ## 55                         Moussy      615         111      18.05     504
+    ## 56                        Tramery      126          20      15.87     106
+    ## 57  La Villeneuve-lès-Charleville       91          14      15.38      77
+    ## 58                       Ceffonds      506          85      16.80     421
+    ## 59                       Chaumont    16202        4191      25.87   12011
+    ## 60                   Maisoncelles       67           4       5.97      63
+    ## 61               Romain-sur-Meuse      121          19      15.70     102
+    ## 62                       Le Horps      585          74      12.65     511
+    ## 63                     Dieulouard     3603         854      23.70    2749
+    ## 64            Autrécourt-sur-Aire       99          17      17.17      82
+    ## 65                          Cunel       10           0       0.00      10
+    ## 66                        Ruffiac     1128         163      14.45     965
+    ## 67                        Fonteny      111           8       7.21     103
+    ## 68                   Francaltroff      550         104      18.91     446
+    ## 69       Laneuveville-lès-Lorquin       81          11      13.58      70
+    ## 70         Chantenay-Saint-Imbert      863         122      14.14     741
+    ## 71                         Moussy      104          15      14.42      89
+    ## 72                          Talon       55           8      14.55      47
+    ## 73                      Renescure     1769         295      16.68    1474
+    ## 74                       Hanvoile      467          83      17.77     384
+    ## 75       Montagny-Sainte-Félicité      338          41      12.13     297
+    ## 76                  Mortefontaine      597         111      18.59     486
+    ## 77                       Chaumont      147          25      17.01     122
+    ## 78                Moussonvilliers      197          29      14.72     168
+    ## 79       Saint-Martin-l'Aiguillon      159          15       9.43     144
+    ## 80                          Embry      180          18      10.00     162
+    ## 81                     Guarbecque     1153         156      13.53     997
+    ## 82                     Matringhem      149          15      10.07     134
+    ## 83          Charbonnier-les-Mines      657          90      13.70     567
+    ## 84                     Novacelles      140          28      20.00     112
+    ## 85                          Arget       78          17      21.79      61
+    ## 86                      Louhossoa      603         121      20.07     482
+    ## 87                          Barry      116          12      10.34     104
+    ## 88                           Sers      114          21      18.42      93
+    ## 89                     Fort-Louis      174          31      17.82     143
+    ## 90          Saint-Jean-des-Vignes      326          48      14.72     278
+    ## 91                       Chassieu     7436        1247      16.77    6189
+    ## 92      Etrelles-et-la-Montbleuse       65          11      16.92      54
+    ## 93                     Villargent       94          12      12.77      82
+    ## 94                         Artaix      280          35      12.50     245
+    ## 95                         Chassy      260          24       9.23     236
+    ## 96                    Coulombiers      340          50      14.71     290
+    ## 97                   Maisoncelles      141          25      17.73     116
+    ## 98                        Bessans      387          70      18.09     317
+    ## 99                      Bourgneuf      456          64      14.04     392
+    ## 100                          Ayse     1620         252      15.56    1368
+    ## 101                      Chaumont      341          52      15.25     289
+    ## 102            Criquebeuf-en-Caux      306          41      13.40     265
+    ## 103              Fauville-en-Caux     1524         209      13.71    1315
+    ## 104          Gonfreville-l'Orcher     6316        1234      19.54    5082
+    ## 105                     Gouvernes      900         148      16.44     752
+    ## 106            Mousseaux-lès-Bray      545         113      20.73     432
+    ## 107      Saint-Mars-Vieux-Maisons      227          46      20.26     181
+    ## 108                         Luzay      478          88      18.41     390
+    ## 109                        Breuil       71           8      11.27      63
+    ## 110                     Rouairoux      316          57      18.04     259
+    ## 111              Lacapelle-Livron      159          25      15.72     134
+    ## 112                   Coulombiers      810         104      12.84     706
+    ## 113                     Ménarmont       49           6      12.24      43
+    ## 114                        Chassy      351          55      15.67     296
+    ## 115                      Chaumont      426          64      15.02     362
+    ## 116                Villars-le-Sec      118          22      18.64      96
+    ## 117               Bernes-sur-Oise     1421         261      18.37    1160
+    ## 118                        Moussy       89          20      22.47      69
     ##     X..Vot.Ins Blancs.et.nuls X..BlNuls.Ins X..BlNuls.Vot Exprimés
-    ## 1        88.96             17          2.72          3.06      539
-    ## 2        84.39              0          0.00          0.00      173
-    ## 3        85.45              1          0.91          1.06       93
-    ## 4        82.49              4          1.84          2.23      175
-    ## 5        81.94              6          1.94          2.36      248
-    ## 6        84.29              0          0.00          0.00       59
-    ## 7        86.27              5          1.76          2.04      240
-    ## 8        82.46             50          1.29          1.57     3138
-    ## 9        90.28              1          0.31          0.35      287
-    ## 10       88.27              5          2.79          3.16      153
-    ## 11       86.58             11          1.11          1.28      847
-    ## 12       85.21              4          1.41          1.65      238
-    ## 13       89.74              2          2.56          2.86       68
-    ## 14       82.22              2          2.22          2.70       72
-    ## 15       80.70              9          1.65          2.05      430
-    ## 16       73.08              1          1.92          2.63       37
-    ## 17       82.07              6          0.99          1.20      493
-    ## 18       88.07             18          1.42          1.61     1097
-    ## 19       86.11              0          0.00          0.00       93
-    ## 20       85.47             68          1.30          1.52     4415
-    ## 21       83.14              1          0.39          0.47      211
-    ## 22       81.00             11          2.75          3.40      313
-    ## 23       86.73              6          1.19          1.37      432
-    ## 24       75.16              2          1.31          1.74      113
-    ## 25       87.84              3          4.05          4.62       62
-    ## 26       89.82            162          1.59          1.77     8969
-    ## 27       87.04             13          1.44          1.65      773
-    ## 28       76.97            347          1.12          1.45    23607
-    ## 29       79.78              7          1.97          2.46      277
-    ## 30       88.28              2          1.56          1.77      111
-    ## 31       89.50              4          1.83          2.04      192
-    ## 32       83.24             12          1.63          1.96      599
-    ## 33       82.25              3          0.57          0.70      428
-    ## 34       86.40              3          1.20          1.39      213
-    ## 35       86.74              2          0.47          0.54      371
-    ## 36       88.76              3          1.20          1.36      218
-    ## 37       83.96              5          2.67          3.18      152
-    ## 38       88.21              2          0.87          0.99      200
-    ## 39       87.21              2          1.16          1.33      148
-    ## 40       86.18             54          1.51          1.75     3032
-    ## 41       86.77             27          1.93          2.23     1186
-    ## 42       86.42              2          1.23          1.43      138
-    ## 43       75.94              2          1.50          1.98       99
-    ## 44       88.24              2          1.96          2.22       88
-    ## 45       83.97              9          3.44          4.09      211
-    ## 46       83.48             20          1.16          1.39     1420
-    ## 47       82.23             27          1.10          1.34     1986
-    ## 48       79.07              0          0.00          0.00       34
-    ## 49       93.55              2          6.45          6.90       27
-    ## 50       84.38             12          1.48          1.75      674
-    ## 51       90.82              5          1.70          1.87      262
-    ## 52       81.90              3          2.59          3.16       92
-    ## 53       85.92              4          2.82          3.28      118
-    ## 54       87.59              2          0.69          0.79      252
-    ## 55       88.42             13          2.74          3.10      407
-    ## 56       84.70             20          2.22          2.62      744
-    ## 57       87.07             11          2.90          3.33      319
-    ## 58       87.66             37          2.21          2.52     1434
-    ## 59       81.46             72          1.37          1.68     4213
-    ## 60       89.19              1          1.35          1.52       65
-    ## 61       83.45              3          2.16          2.59      113
-    ## 62       85.12              9          2.68          3.15      277
-    ## 63       79.59              4          2.04          2.56      152
-    ## 64       81.48              0          0.00          0.00       66
-    ## 65       87.10              5          3.23          3.70      130
-    ## 66       81.75              5          1.22          1.49      331
-    ## 67       77.56              4          1.32          1.70      231
-    ## 68       84.43              4          1.64          1.94      202
-    ## 69       90.24              1          0.61          0.68      147
-    ## 70       85.64              3          1.60          1.86      158
-    ## 71       90.63              1          3.13          3.45       28
-    ## 72       93.48              2          4.35          4.65       41
-    ## 73       72.29              1          1.20          1.67       59
-    ## 74       73.08              2          2.56          3.51       55
-    ## 75       85.37              1          2.44          2.86       34
-    ## 76       78.57              1          0.89          1.14       87
-    ## 77       85.45              0          0.00          0.00       47
-    ## 78       81.69             38          1.46          1.79     2090
-    ## 79       75.83             33          1.52          2.00     1617
-    ## 80       82.60             16          1.86          2.25      696
-    ## 81       86.21              3          1.29          1.50      197
-    ## 82       84.97              4          2.07          2.44      160
-    ## 83       87.93              2          1.15          1.31      151
-    ## 84       91.06              4          1.08          1.19      332
-    ## 85       86.43              3          1.36          1.57      188
-    ## 86       84.38             10          1.30          1.54      638
-    ## 87       81.92              3          1.69          2.07      142
-    ## 88       83.58             57          1.57          1.88     2977
-    ## 89       90.27              8          2.00          2.21      354
-    ## 90       88.89              1          2.22          2.50       39
-    ## 91       73.68              1          1.32          1.79       55
-    ## 92       85.96              6          1.28          1.49      398
-    ## 93       86.16              5          1.57          1.82      269
-    ## 94       94.07              2          1.48          1.57      125
-    ## 95       91.58              1          1.05          1.15       86
-    ## 96       79.84              7          2.88          3.61      187
-    ## 97       85.23             14          1.99          2.33      586
-    ## 98       83.28              6          1.01          1.22      487
-    ## 99       81.27             12          2.18          2.68      435
-    ## 100      87.68              6          1.76          2.01      293
-    ## 101      82.89             16          1.57          1.90      827
-    ## 102      82.85              7          1.69          2.04      336
-    ## 103      86.83             14          1.74          2.00      685
-    ## 104      76.75              7          0.81          1.05      660
-    ## 105      87.27              7          1.31          1.50      459
-    ## 106      81.47             31          1.93          2.37     1275
-    ## 107      82.27             17          1.25          1.51     1106
-    ## 108      79.60             48          1.14          1.43     3311
-    ## 109      80.67             41          2.24          2.78     1436
-    ## 110      83.80              2          1.41          1.68      117
-    ## 111      85.26              1          1.05          1.23       80
-    ## 112      90.74              3          2.78          3.06       95
-    ## 113      86.45             13          1.40          1.62      791
-    ## 114      82.46              2          1.17          1.42      139
-    ## 115      76.06              2          1.41          1.85      106
-    ## 116      81.65              5          1.80          2.20      222
-    ## 117      83.88            257          0.69          0.83    30782
+    ## 1        91.80              8          4.37          4.76      160
+    ## 2        73.54            450          1.70          2.32    18985
+    ## 3        85.05             34          1.66          1.95     1713
+    ## 4        87.01             13          1.51          1.73      737
+    ## 5        84.48              0          0.00          0.00       98
+    ## 6        83.10              3          2.11          2.54      115
+    ## 7        83.03              1          0.61          0.73      136
+    ## 8        86.39              3          1.57          1.82      162
+    ## 9        81.06              8          1.37          1.68      467
+    ## 10       86.55              0          0.00          0.00      251
+    ## 11       81.05              3          0.68          0.85      352
+    ## 12       80.90             20          1.70          2.10      933
+    ## 13       82.73             18          1.22          1.48     1199
+    ## 14       82.86              3          1.43          1.72      171
+    ## 15       83.21              8          1.46          1.75      448
+    ## 16       85.19             14          2.23          2.62      521
+    ## 17       86.63             19          2.27          2.62      707
+    ## 18       87.18              4          1.47          1.68      234
+    ## 19       80.77              0          0.00          0.00      105
+    ## 20       84.91              5          2.36          2.78      175
+    ## 21       91.43              2          5.71          6.25       30
+    ## 22       81.16              3          2.17          2.68      109
+    ## 23       80.60              1          1.49          1.85       53
+    ## 24       84.33              1          0.75          0.88      112
+    ## 25       83.76             26          2.48          2.96      851
+    ## 26       84.28             19          3.73          4.43      410
+    ## 27       88.43              7          0.87          0.98      704
+    ## 28       81.82             19          1.40          1.72     1088
+    ## 29       81.17             98          1.40          1.73     5580
+    ## 30       83.94              2          0.80          0.96      207
+    ## 31       88.13              3          1.88          2.13      138
+    ## 32       85.31              2          1.13          1.32      149
+    ## 33       84.67              2          0.70          0.82      241
+    ## 34       88.19              5          3.94          4.46      107
+    ## 35       85.37              6          3.66          4.29      134
+    ## 36       88.55             54          1.78          2.01     2637
+    ## 37       84.74             11          2.58          3.05      350
+    ## 38       87.52              5          0.81          0.93      535
+    ## 39       86.07             10          4.10          4.76      200
+    ## 40       84.84              8          1.11          1.31      602
+    ## 41       80.19             38          2.24          2.79     1322
+    ## 42       73.06             59          1.17          1.60     3637
+    ## 43       83.64              2          0.93          1.12      177
+    ## 44       85.44              6          0.97          1.14      522
+    ## 45       87.96              7          2.55          2.90      234
+    ## 46       82.15             34          1.45          1.77     1890
+    ## 47       85.09              2          1.24          1.46      135
+    ## 48       87.59              3          2.19          2.50      117
+    ## 49       71.43              0          0.00          0.00       60
+    ## 50       83.54              1          0.63          0.76      131
+    ## 51       76.58              5          3.16          4.13      116
+    ## 52       87.74             11          1.75          2.00      540
+    ## 53       84.06              4          2.90          3.45      112
+    ## 54       86.96              0          0.00          0.00      180
+    ## 55       81.95             10          1.63          1.98      494
+    ## 56       84.13              5          3.97          4.72      101
+    ## 57       84.62              0          0.00          0.00       77
+    ## 58       83.20             10          1.98          2.38      411
+    ## 59       74.13            230          1.42          1.91    11781
+    ## 60       94.03              0          0.00          0.00       63
+    ## 61       84.30              1          0.83          0.98      101
+    ## 62       87.35              4          0.68          0.78      507
+    ## 63       76.30             31          0.86          1.13     2718
+    ## 64       82.83              5          5.05          6.10       77
+    ## 65      100.00              0          0.00          0.00       10
+    ## 66       85.55             23          2.04          2.38      942
+    ## 67       92.79              5          4.50          4.85       98
+    ## 68       81.09              4          0.73          0.90      442
+    ## 69       86.42              1          1.23          1.43       69
+    ## 70       85.86             13          1.51          1.75      728
+    ## 71       85.58              2          1.92          2.25       87
+    ## 72       85.45              0          0.00          0.00       47
+    ## 73       83.32             39          2.20          2.65     1435
+    ## 74       82.23             18          3.85          4.69      366
+    ## 75       87.87              2          0.59          0.67      295
+    ## 76       81.41              7          1.17          1.44      479
+    ## 77       82.99              3          2.04          2.46      119
+    ## 78       85.28              1          0.51          0.60      167
+    ## 79       90.57              1          0.63          0.69      143
+    ## 80       90.00              2          1.11          1.23      160
+    ## 81       86.47             22          1.91          2.21      975
+    ## 82       89.93              4          2.68          2.99      130
+    ## 83       86.30             19          2.89          3.35      548
+    ## 84       80.00              1          0.71          0.89      111
+    ## 85       78.21              1          1.28          1.64       60
+    ## 86       79.93             20          3.32          4.15      462
+    ## 87       89.66              4          3.45          3.85      100
+    ## 88       81.58              2          1.75          2.15       91
+    ## 89       82.18              3          1.72          2.10      140
+    ## 90       85.28              7          2.15          2.52      271
+    ## 91       83.23            111          1.49          1.79     6078
+    ## 92       83.08              2          3.08          3.70       52
+    ## 93       87.23              1          1.06          1.22       81
+    ## 94       87.50              8          2.86          3.27      237
+    ## 95       90.77              6          2.31          2.54      230
+    ## 96       85.29              7          2.06          2.41      283
+    ## 97       82.27              2          1.42          1.72      114
+    ## 98       81.91              6          1.55          1.89      311
+    ## 99       85.96              6          1.32          1.53      386
+    ## 100      84.44             28          1.73          2.05     1340
+    ## 101      84.75              5          1.47          1.73      284
+    ## 102      86.60             11          3.59          4.15      254
+    ## 103      86.29             31          2.03          2.36     1284
+    ## 104      80.46             82          1.30          1.61     5000
+    ## 105      83.56             10          1.11          1.33      742
+    ## 106      79.27              9          1.65          2.08      423
+    ## 107      79.74              3          1.32          1.66      178
+    ## 108      81.59             11          2.30          2.82      379
+    ## 109      88.73              0          0.00          0.00       63
+    ## 110      81.96              6          1.90          2.32      253
+    ## 111      84.28              2          1.26          1.49      132
+    ## 112      87.16             15          1.85          2.12      691
+    ## 113      87.76              1          2.04          2.33       42
+    ## 114      84.33              5          1.42          1.69      291
+    ## 115      84.98              6          1.41          1.66      356
+    ## 116      81.36              2          1.69          2.08       94
+    ## 117      81.63             24          1.69          2.07     1136
+    ## 118      77.53              2          2.25          2.90       67
     ##     X..Exp.Ins X..Exp.Vot  Sexe  Nom Prénom Voix X..Voix.Ins X..Voix.Exp
-    ## 1        86.24      96.94 FALSE JOLY    Eva   11        1.76        2.04
-    ## 2        84.39     100.00 FALSE JOLY    Eva    0        0.00        0.00
-    ## 3        84.55      98.94 FALSE JOLY    Eva    1        0.91        1.08
-    ## 4        80.65      97.77 FALSE JOLY    Eva    5        2.30        2.86
-    ## 5        80.00      97.64 FALSE JOLY    Eva    5        1.61        2.02
-    ## 6        84.29     100.00 FALSE JOLY    Eva    2        2.86        3.39
-    ## 7        84.51      97.96 FALSE JOLY    Eva    3        1.06        1.25
-    ## 8        81.17      98.43 FALSE JOLY    Eva   70        1.81        2.23
-    ## 9        89.97      99.65 FALSE JOLY    Eva   15        4.70        5.23
-    ## 10       85.47      96.84 FALSE JOLY    Eva    9        5.03        5.88
-    ## 11       85.47      98.72 FALSE JOLY    Eva   13        1.31        1.53
-    ## 12       83.80      98.35 FALSE JOLY    Eva    2        0.70        0.84
-    ## 13       87.18      97.14 FALSE JOLY    Eva    0        0.00        0.00
-    ## 14       80.00      97.30 FALSE JOLY    Eva    1        1.11        1.39
-    ## 15       79.04      97.95 FALSE JOLY    Eva   11        2.02        2.56
-    ## 16       71.15      97.37 FALSE JOLY    Eva    1        1.92        2.70
-    ## 17       81.09      98.80 FALSE JOLY    Eva    5        0.82        1.01
-    ## 18       86.65      98.39 FALSE JOLY    Eva   26        2.05        2.37
-    ## 19       86.11     100.00 FALSE JOLY    Eva    1        0.93        1.08
-    ## 20       84.18      98.48 FALSE JOLY    Eva  103        1.96        2.33
-    ## 21       82.75      99.53 FALSE JOLY    Eva    5        1.96        2.37
-    ## 22       78.25      96.60 FALSE JOLY    Eva    4        1.00        1.28
-    ## 23       85.54      98.63 FALSE JOLY    Eva    4        0.79        0.93
-    ## 24       73.86      98.26 FALSE JOLY    Eva    5        3.27        4.42
-    ## 25       83.78      95.38 FALSE JOLY    Eva    2        2.70        3.23
-    ## 26       88.23      98.23 FALSE JOLY    Eva  315        3.10        3.51
-    ## 27       85.60      98.35 FALSE JOLY    Eva   23        2.55        2.98
-    ## 28       75.86      98.55 FALSE JOLY    Eva  901        2.90        3.82
-    ## 29       77.81      97.54 FALSE JOLY    Eva    1        0.28        0.36
-    ## 30       86.72      98.23 FALSE JOLY    Eva    1        0.78        0.90
-    ## 31       87.67      97.96 FALSE JOLY    Eva   11        5.02        5.73
-    ## 32       81.61      98.04 FALSE JOLY    Eva   16        2.18        2.67
-    ## 33       81.68      99.30 FALSE JOLY    Eva   13        2.48        3.04
-    ## 34       85.20      98.61 FALSE JOLY    Eva    6        2.40        2.82
-    ## 35       86.28      99.46 FALSE JOLY    Eva    9        2.09        2.43
-    ## 36       87.55      98.64 FALSE JOLY    Eva    7        2.81        3.21
-    ## 37       81.28      96.82 FALSE JOLY    Eva   13        6.95        8.55
-    ## 38       87.34      99.01 FALSE JOLY    Eva   24       10.48       12.00
-    ## 39       86.05      98.67 FALSE JOLY    Eva    1        0.58        0.68
-    ## 40       84.67      98.25 FALSE JOLY    Eva   60        1.68        1.98
-    ## 41       84.84      97.77 FALSE JOLY    Eva   18        1.29        1.52
-    ## 42       85.19      98.57 FALSE JOLY    Eva    4        2.47        2.90
-    ## 43       74.44      98.02 FALSE JOLY    Eva    6        4.51        6.06
-    ## 44       86.27      97.78 FALSE JOLY    Eva    5        4.90        5.68
-    ## 45       80.53      95.91 FALSE JOLY    Eva    7        2.67        3.32
-    ## 46       82.32      98.61 FALSE JOLY    Eva   54        3.13        3.80
-    ## 47       81.13      98.66 FALSE JOLY    Eva   33        1.35        1.66
-    ## 48       79.07     100.00 FALSE JOLY    Eva    1        2.33        2.94
-    ## 49       87.10      93.10 FALSE JOLY    Eva    1        3.23        3.70
-    ## 50       82.90      98.25 FALSE JOLY    Eva   10        1.23        1.48
-    ## 51       89.12      98.13 FALSE JOLY    Eva    8        2.72        3.05
-    ## 52       79.31      96.84 FALSE JOLY    Eva    6        5.17        6.52
-    ## 53       83.10      96.72 FALSE JOLY    Eva    5        3.52        4.24
-    ## 54       86.90      99.21 FALSE JOLY    Eva    5        1.72        1.98
-    ## 55       85.68      96.90 FALSE JOLY    Eva    9        1.89        2.21
-    ## 56       82.48      97.38 FALSE JOLY    Eva   12        1.33        1.61
-    ## 57       84.17      96.67 FALSE JOLY    Eva   11        2.90        3.45
-    ## 58       85.46      97.48 FALSE JOLY    Eva   46        2.74        3.21
-    ## 59       80.10      98.32 FALSE JOLY    Eva   49        0.93        1.16
-    ## 60       87.84      98.48 FALSE JOLY    Eva    3        4.05        4.62
-    ## 61       81.29      97.41 FALSE JOLY    Eva    0        0.00        0.00
-    ## 62       82.44      96.85 FALSE JOLY    Eva    4        1.19        1.44
-    ## 63       77.55      97.44 FALSE JOLY    Eva    5        2.55        3.29
-    ## 64       81.48     100.00 FALSE JOLY    Eva    0        0.00        0.00
-    ## 65       83.87      96.30 FALSE JOLY    Eva    0        0.00        0.00
-    ## 66       80.54      98.51 FALSE JOLY    Eva    1        0.24        0.30
-    ## 67       76.24      98.30 FALSE JOLY    Eva    2        0.66        0.87
-    ## 68       82.79      98.06 FALSE JOLY    Eva   13        5.33        6.44
-    ## 69       89.63      99.32 FALSE JOLY    Eva    1        0.61        0.68
-    ## 70       84.04      98.14 FALSE JOLY    Eva    2        1.06        1.27
-    ## 71       87.50      96.55 FALSE JOLY    Eva    3        9.38       10.71
-    ## 72       89.13      95.35 FALSE JOLY    Eva    0        0.00        0.00
-    ## 73       71.08      98.33 FALSE JOLY    Eva    0        0.00        0.00
-    ## 74       70.51      96.49 FALSE JOLY    Eva    0        0.00        0.00
-    ## 75       82.93      97.14 FALSE JOLY    Eva    0        0.00        0.00
-    ## 76       77.68      98.86 FALSE JOLY    Eva    4        3.57        4.60
-    ## 77       85.45     100.00 FALSE JOLY    Eva    0        0.00        0.00
-    ## 78       80.23      98.21 FALSE JOLY    Eva   24        0.92        1.15
-    ## 79       74.31      98.00 FALSE JOLY    Eva    5        0.23        0.31
-    ## 80       80.74      97.75 FALSE JOLY    Eva    9        1.04        1.29
-    ## 81       84.91      98.50 FALSE JOLY    Eva    2        0.86        1.02
-    ## 82       82.90      97.56 FALSE JOLY    Eva    1        0.52        0.63
-    ## 83       86.78      98.69 FALSE JOLY    Eva    2        1.15        1.32
-    ## 84       89.97      98.81 FALSE JOLY    Eva    1        0.27        0.30
-    ## 85       85.07      98.43 FALSE JOLY    Eva    2        0.90        1.06
-    ## 86       83.07      98.46 FALSE JOLY    Eva    6        0.78        0.94
-    ## 87       80.23      97.93 FALSE JOLY    Eva    5        2.82        3.52
-    ## 88       82.01      98.12 FALSE JOLY    Eva   70        1.93        2.35
-    ## 89       88.28      97.79 FALSE JOLY    Eva    7        1.75        1.98
-    ## 90       86.67      97.50 FALSE JOLY    Eva    1        2.22        2.56
-    ## 91       72.37      98.21 FALSE JOLY    Eva    2        2.63        3.64
-    ## 92       84.68      98.51 FALSE JOLY    Eva   17        3.62        4.27
-    ## 93       84.59      98.18 FALSE JOLY    Eva   18        5.66        6.69
-    ## 94       92.59      98.43 FALSE JOLY    Eva    1        0.74        0.80
-    ## 95       90.53      98.85 FALSE JOLY    Eva    2        2.11        2.33
-    ## 96       76.95      96.39 FALSE JOLY    Eva    2        0.82        1.07
-    ## 97       83.24      97.67 FALSE JOLY    Eva    6        0.85        1.02
-    ## 98       82.26      98.78 FALSE JOLY    Eva    8        1.35        1.64
-    ## 99       79.09      97.32 FALSE JOLY    Eva   10        1.82        2.30
-    ## 100      85.92      97.99 FALSE JOLY    Eva   33        9.68       11.26
-    ## 101      81.32      98.10 FALSE JOLY    Eva   14        1.38        1.69
-    ## 102      81.16      97.96 FALSE JOLY    Eva    3        0.72        0.89
-    ## 103      85.09      98.00 FALSE JOLY    Eva    9        1.12        1.31
-    ## 104      75.95      98.95 FALSE JOLY    Eva   13        1.50        1.97
-    ## 105      85.96      98.50 FALSE JOLY    Eva    4        0.75        0.87
-    ## 106      79.54      97.63 FALSE JOLY    Eva   22        1.37        1.73
-    ## 107      81.03      98.49 FALSE JOLY    Eva   23        1.68        2.08
-    ## 108      78.46      98.57 FALSE JOLY    Eva   80        1.90        2.42
-    ## 109      78.43      97.22 FALSE JOLY    Eva   21        1.15        1.46
-    ## 110      82.39      98.32 FALSE JOLY    Eva    1        0.70        0.85
-    ## 111      84.21      98.77 FALSE JOLY    Eva    0        0.00        0.00
-    ## 112      87.96      96.94 FALSE JOLY    Eva   17       15.74       17.89
-    ## 113      85.05      98.38 FALSE JOLY    Eva   25        2.69        3.16
-    ## 114      81.29      98.58 FALSE JOLY    Eva    5        2.92        3.60
-    ## 115      74.65      98.15 FALSE JOLY    Eva    1        0.70        0.94
-    ## 116      79.86      97.80 FALSE JOLY    Eva    4        1.44        1.80
-    ## 117      83.19      99.17 FALSE JOLY    Eva  409        1.11        1.33
+    ## 1        87.43      95.24 FALSE JOLY    Eva    3        1.64        1.88
+    ## 2        71.83      97.68 FALSE JOLY    Eva  261        0.99        1.37
+    ## 3        83.40      98.05 FALSE JOLY    Eva   29        1.41        1.69
+    ## 4        85.50      98.27 FALSE JOLY    Eva   20        2.32        2.71
+    ## 5        84.48     100.00 FALSE JOLY    Eva    3        2.59        3.06
+    ## 6        80.99      97.46 FALSE JOLY    Eva    2        1.41        1.74
+    ## 7        82.42      99.27 FALSE JOLY    Eva    8        4.85        5.88
+    ## 8        84.82      98.18 FALSE JOLY    Eva    7        3.66        4.32
+    ## 9        79.69      98.32 FALSE JOLY    Eva    7        1.19        1.50
+    ## 10       86.55     100.00 FALSE JOLY    Eva    9        3.10        3.59
+    ## 11       80.37      99.15 FALSE JOLY    Eva    7        1.60        1.99
+    ## 12       79.20      97.90 FALSE JOLY    Eva    4        0.34        0.43
+    ## 13       81.51      98.52 FALSE JOLY    Eva   16        1.09        1.33
+    ## 14       81.43      98.28 FALSE JOLY    Eva    2        0.95        1.17
+    ## 15       81.75      98.25 FALSE JOLY    Eva    6        1.09        1.34
+    ## 16       82.96      97.38 FALSE JOLY    Eva   12        1.91        2.30
+    ## 17       84.37      97.38 FALSE JOLY    Eva   17        2.03        2.40
+    ## 18       85.71      98.32 FALSE JOLY    Eva    4        1.47        1.71
+    ## 19       80.77     100.00 FALSE JOLY    Eva    1        0.77        0.95
+    ## 20       82.55      97.22 FALSE JOLY    Eva    2        0.94        1.14
+    ## 21       85.71      93.75 FALSE JOLY    Eva    0        0.00        0.00
+    ## 22       78.99      97.32 FALSE JOLY    Eva    7        5.07        6.42
+    ## 23       79.10      98.15 FALSE JOLY    Eva    2        2.99        3.77
+    ## 24       83.58      99.12 FALSE JOLY    Eva    1        0.75        0.89
+    ## 25       81.28      97.04 FALSE JOLY    Eva   14        1.34        1.65
+    ## 26       80.55      95.57 FALSE JOLY    Eva    3        0.59        0.73
+    ## 27       87.56      99.02 FALSE JOLY    Eva   18        2.24        2.56
+    ## 28       80.41      98.28 FALSE JOLY    Eva   12        0.89        1.10
+    ## 29       79.77      98.27 FALSE JOLY    Eva   81        1.16        1.45
+    ## 30       83.13      99.04 FALSE JOLY    Eva    1        0.40        0.48
+    ## 31       86.25      97.87 FALSE JOLY    Eva    1        0.63        0.72
+    ## 32       84.18      98.68 FALSE JOLY    Eva    1        0.56        0.67
+    ## 33       83.97      99.18 FALSE JOLY    Eva    1        0.35        0.41
+    ## 34       84.25      95.54 FALSE JOLY    Eva    3        2.36        2.80
+    ## 35       81.71      95.71 FALSE JOLY    Eva    9        5.49        6.72
+    ## 36       86.77      97.99 FALSE JOLY    Eva   73        2.40        2.77
+    ## 37       82.16      96.95 FALSE JOLY    Eva    4        0.94        1.14
+    ## 38       86.71      99.07 FALSE JOLY    Eva   11        1.78        2.06
+    ## 39       81.97      95.24 FALSE JOLY    Eva    2        0.82        1.00
+    ## 40       83.73      98.69 FALSE JOLY    Eva    5        0.70        0.83
+    ## 41       77.95      97.21 FALSE JOLY    Eva   20        1.18        1.51
+    ## 42       71.89      98.40 FALSE JOLY    Eva   40        0.79        1.10
+    ## 43       82.71      98.88 FALSE JOLY    Eva    0        0.00        0.00
+    ## 44       84.47      98.86 FALSE JOLY    Eva   10        1.62        1.92
+    ## 45       85.40      97.10 FALSE JOLY    Eva    5        1.82        2.14
+    ## 46       80.70      98.23 FALSE JOLY    Eva   31        1.32        1.64
+    ## 47       83.85      98.54 FALSE JOLY    Eva    6        3.73        4.44
+    ## 48       85.40      97.50 FALSE JOLY    Eva    4        2.92        3.42
+    ## 49       71.43     100.00 FALSE JOLY    Eva    1        1.19        1.67
+    ## 50       82.91      99.24 FALSE JOLY    Eva    2        1.27        1.53
+    ## 51       73.42      95.87 FALSE JOLY    Eva    2        1.27        1.72
+    ## 52       85.99      98.00 FALSE JOLY    Eva    6        0.96        1.11
+    ## 53       81.16      96.55 FALSE JOLY    Eva    0        0.00        0.00
+    ## 54       86.96     100.00 FALSE JOLY    Eva    3        1.45        1.67
+    ## 55       80.33      98.02 FALSE JOLY    Eva   11        1.79        2.23
+    ## 56       80.16      95.28 FALSE JOLY    Eva    5        3.97        4.95
+    ## 57       84.62     100.00 FALSE JOLY    Eva    0        0.00        0.00
+    ## 58       81.23      97.62 FALSE JOLY    Eva    3        0.59        0.73
+    ## 59       72.71      98.09 FALSE JOLY    Eva  248        1.53        2.11
+    ## 60       94.03     100.00 FALSE JOLY    Eva    1        1.49        1.59
+    ## 61       83.47      99.02 FALSE JOLY    Eva    1        0.83        0.99
+    ## 62       86.67      99.22 FALSE JOLY    Eva   12        2.05        2.37
+    ## 63       75.44      98.87 FALSE JOLY    Eva   23        0.64        0.85
+    ## 64       77.78      93.90 FALSE JOLY    Eva    1        1.01        1.30
+    ## 65      100.00     100.00 FALSE JOLY    Eva    0        0.00        0.00
+    ## 66       83.51      97.62 FALSE JOLY    Eva   10        0.89        1.06
+    ## 67       88.29      95.15 FALSE JOLY    Eva    0        0.00        0.00
+    ## 68       80.36      99.10 FALSE JOLY    Eva    5        0.91        1.13
+    ## 69       85.19      98.57 FALSE JOLY    Eva    1        1.23        1.45
+    ## 70       84.36      98.25 FALSE JOLY    Eva    9        1.04        1.24
+    ## 71       83.65      97.75 FALSE JOLY    Eva    0        0.00        0.00
+    ## 72       85.45     100.00 FALSE JOLY    Eva    0        0.00        0.00
+    ## 73       81.12      97.35 FALSE JOLY    Eva   29        1.64        2.02
+    ## 74       78.37      95.31 FALSE JOLY    Eva    3        0.64        0.82
+    ## 75       87.28      99.33 FALSE JOLY    Eva    5        1.48        1.69
+    ## 76       80.23      98.56 FALSE JOLY    Eva   17        2.85        3.55
+    ## 77       80.95      97.54 FALSE JOLY    Eva    1        0.68        0.84
+    ## 78       84.77      99.40 FALSE JOLY    Eva    0        0.00        0.00
+    ## 79       89.94      99.31 FALSE JOLY    Eva    4        2.52        2.80
+    ## 80       88.89      98.77 FALSE JOLY    Eva    6        3.33        3.75
+    ## 81       84.56      97.79 FALSE JOLY    Eva   11        0.95        1.13
+    ## 82       87.25      97.01 FALSE JOLY    Eva    0        0.00        0.00
+    ## 83       83.41      96.65 FALSE JOLY    Eva    6        0.91        1.09
+    ## 84       79.29      99.11 FALSE JOLY    Eva    3        2.14        2.70
+    ## 85       76.92      98.36 FALSE JOLY    Eva    3        3.85        5.00
+    ## 86       76.62      95.85 FALSE JOLY    Eva   21        3.48        4.55
+    ## 87       86.21      96.15 FALSE JOLY    Eva    1        0.86        1.00
+    ## 88       79.82      97.85 FALSE JOLY    Eva    0        0.00        0.00
+    ## 89       80.46      97.90 FALSE JOLY    Eva    0        0.00        0.00
+    ## 90       83.13      97.48 FALSE JOLY    Eva    9        2.76        3.32
+    ## 91       81.74      98.21 FALSE JOLY    Eva  146        1.96        2.40
+    ## 92       80.00      96.30 FALSE JOLY    Eva    0        0.00        0.00
+    ## 93       86.17      98.78 FALSE JOLY    Eva    2        2.13        2.47
+    ## 94       84.64      96.73 FALSE JOLY    Eva    4        1.43        1.69
+    ## 95       88.46      97.46 FALSE JOLY    Eva    4        1.54        1.74
+    ## 96       83.24      97.59 FALSE JOLY    Eva   11        3.24        3.89
+    ## 97       80.85      98.28 FALSE JOLY    Eva    1        0.71        0.88
+    ## 98       80.36      98.11 FALSE JOLY    Eva   10        2.58        3.22
+    ## 99       84.65      98.47 FALSE JOLY    Eva    9        1.97        2.33
+    ## 100      82.72      97.95 FALSE JOLY    Eva   49        3.02        3.66
+    ## 101      83.28      98.27 FALSE JOLY    Eva   12        3.52        4.23
+    ## 102      83.01      95.85 FALSE JOLY    Eva    6        1.96        2.36
+    ## 103      84.25      97.64 FALSE JOLY    Eva   11        0.72        0.86
+    ## 104      79.16      98.39 FALSE JOLY    Eva   47        0.74        0.94
+    ## 105      82.44      98.67 FALSE JOLY    Eva    6        0.67        0.81
+    ## 106      77.61      97.92 FALSE JOLY    Eva    4        0.73        0.95
+    ## 107      78.41      98.34 FALSE JOLY    Eva    2        0.88        1.12
+    ## 108      79.29      97.18 FALSE JOLY    Eva    4        0.84        1.06
+    ## 109      88.73     100.00 FALSE JOLY    Eva    0        0.00        0.00
+    ## 110      80.06      97.68 FALSE JOLY    Eva    4        1.27        1.58
+    ## 111      83.02      98.51 FALSE JOLY    Eva    3        1.89        2.27
+    ## 112      85.31      97.88 FALSE JOLY    Eva    3        0.37        0.43
+    ## 113      85.71      97.67 FALSE JOLY    Eva    0        0.00        0.00
+    ## 114      82.91      98.31 FALSE JOLY    Eva    9        2.56        3.09
+    ## 115      83.57      98.34 FALSE JOLY    Eva   11        2.58        3.09
+    ## 116      79.66      97.92 FALSE JOLY    Eva    1        0.85        1.06
+    ## 117      79.94      97.93 FALSE JOLY    Eva   17        1.20        1.50
+    ## 118      75.28      97.10 FALSE JOLY    Eva    1        1.12        1.49
     ##     Sexe.1  Nom.1 Prénom.1 Voix.1 X..Voix.Ins.1 X..Voix.Exp.1 Sexe.2
-    ## 1    FALSE LE PEN   Marine    117         18.72         21.71      M
-    ## 2    FALSE LE PEN   Marine     50         24.39         28.90      M
-    ## 3    FALSE LE PEN   Marine     20         18.18         21.51      M
-    ## 4    FALSE LE PEN   Marine     60         27.65         34.29      M
-    ## 5    FALSE LE PEN   Marine     84         27.10         33.87      M
-    ## 6    FALSE LE PEN   Marine     10         14.29         16.95      M
-    ## 7    FALSE LE PEN   Marine     44         15.49         18.33      M
-    ## 8    FALSE LE PEN   Marine   1007         26.05         32.09      M
-    ## 9    FALSE LE PEN   Marine     31          9.72         10.80      M
-    ## 10   FALSE LE PEN   Marine     18         10.06         11.76      M
-    ## 11   FALSE LE PEN   Marine    148         14.93         17.47      M
-    ## 12   FALSE LE PEN   Marine     65         22.89         27.31      M
-    ## 13   FALSE LE PEN   Marine     17         21.79         25.00      M
-    ## 14   FALSE LE PEN   Marine     21         23.33         29.17      M
-    ## 15   FALSE LE PEN   Marine    107         19.67         24.88      M
-    ## 16   FALSE LE PEN   Marine      8         15.38         21.62      M
-    ## 17   FALSE LE PEN   Marine     63         10.36         12.78      M
-    ## 18   FALSE LE PEN   Marine    114          9.00         10.39      M
-    ## 19   FALSE LE PEN   Marine     26         24.07         27.96      M
-    ## 20   FALSE LE PEN   Marine    715         13.63         16.19      M
-    ## 21   FALSE LE PEN   Marine     63         24.71         29.86      M
-    ## 22   FALSE LE PEN   Marine     86         21.50         27.48      M
-    ## 23   FALSE LE PEN   Marine     90         17.82         20.83      M
-    ## 24   FALSE LE PEN   Marine     18         11.76         15.93      M
-    ## 25   FALSE LE PEN   Marine      9         12.16         14.52      M
-    ## 26   FALSE LE PEN   Marine   1058         10.41         11.80      M
-    ## 27   FALSE LE PEN   Marine    120         13.29         15.52      M
-    ## 28   FALSE LE PEN   Marine   2524          8.11         10.69      M
-    ## 29   FALSE LE PEN   Marine     73         20.51         26.35      M
-    ## 30   FALSE LE PEN   Marine     21         16.41         18.92      M
-    ## 31   FALSE LE PEN   Marine     30         13.70         15.63      M
-    ## 32   FALSE LE PEN   Marine    135         18.39         22.54      M
-    ## 33   FALSE LE PEN   Marine     61         11.64         14.25      M
-    ## 34   FALSE LE PEN   Marine     45         18.00         21.13      M
-    ## 35   FALSE LE PEN   Marine     40          9.30         10.78      M
-    ## 36   FALSE LE PEN   Marine     58         23.29         26.61      M
-    ## 37   FALSE LE PEN   Marine     38         20.32         25.00      M
-    ## 38   FALSE LE PEN   Marine     40         17.47         20.00      M
-    ## 39   FALSE LE PEN   Marine     32         18.60         21.62      M
-    ## 40   FALSE LE PEN   Marine    610         17.03         20.12      M
-    ## 41   FALSE LE PEN   Marine    221         15.81         18.63      M
-    ## 42   FALSE LE PEN   Marine     33         20.37         23.91      M
-    ## 43   FALSE LE PEN   Marine     20         15.04         20.20      M
-    ## 44   FALSE LE PEN   Marine      8          7.84          9.09      M
-    ## 45   FALSE LE PEN   Marine     39         14.89         18.48      M
-    ## 46   FALSE LE PEN   Marine    261         15.13         18.38      M
-    ## 47   FALSE LE PEN   Marine    497         20.30         25.03      M
-    ## 48   FALSE LE PEN   Marine      5         11.63         14.71      M
-    ## 49   FALSE LE PEN   Marine      8         25.81         29.63      M
-    ## 50   FALSE LE PEN   Marine    161         19.80         23.89      M
-    ## 51   FALSE LE PEN   Marine     74         25.17         28.24      M
-    ## 52   FALSE LE PEN   Marine     12         10.34         13.04      M
-    ## 53   FALSE LE PEN   Marine     22         15.49         18.64      M
-    ## 54   FALSE LE PEN   Marine     62         21.38         24.60      M
-    ## 55   FALSE LE PEN   Marine     99         20.84         24.32      M
-    ## 56   FALSE LE PEN   Marine    189         20.95         25.40      M
-    ## 57   FALSE LE PEN   Marine     78         20.58         24.45      M
-    ## 58   FALSE LE PEN   Marine    202         12.04         14.09      M
-    ## 59   FALSE LE PEN   Marine    783         14.89         18.59      M
-    ## 60   FALSE LE PEN   Marine     10         13.51         15.38      M
-    ## 61   FALSE LE PEN   Marine     32         23.02         28.32      M
-    ## 62   FALSE LE PEN   Marine     52         15.48         18.77      M
-    ## 63   FALSE LE PEN   Marine     10          5.10          6.58      M
-    ## 64   FALSE LE PEN   Marine     17         20.99         25.76      M
-    ## 65   FALSE LE PEN   Marine     21         13.55         16.15      M
-    ## 66   FALSE LE PEN   Marine    124         30.17         37.46      M
-    ## 67   FALSE LE PEN   Marine     72         23.76         31.17      M
-    ## 68   FALSE LE PEN   Marine     34         13.93         16.83      M
-    ## 69   FALSE LE PEN   Marine     35         21.34         23.81      M
-    ## 70   FALSE LE PEN   Marine     30         15.96         18.99      M
-    ## 71   FALSE LE PEN   Marine      6         18.75         21.43      M
-    ## 72   FALSE LE PEN   Marine     13         28.26         31.71      M
-    ## 73   FALSE LE PEN   Marine     14         16.87         23.73      M
-    ## 74   FALSE LE PEN   Marine     14         17.95         25.45      M
-    ## 75   FALSE LE PEN   Marine      7         17.07         20.59      M
-    ## 76   FALSE LE PEN   Marine     19         16.96         21.84      M
-    ## 77   FALSE LE PEN   Marine      8         14.55         17.02      M
-    ## 78   FALSE LE PEN   Marine    516         19.81         24.69      M
-    ## 79   FALSE LE PEN   Marine    402         18.47         24.86      M
-    ## 80   FALSE LE PEN   Marine    239         27.73         34.34      M
-    ## 81   FALSE LE PEN   Marine     45         19.40         22.84      M
-    ## 82   FALSE LE PEN   Marine     37         19.17         23.13      M
-    ## 83   FALSE LE PEN   Marine     40         22.99         26.49      M
-    ## 84   FALSE LE PEN   Marine     74         20.05         22.29      M
-    ## 85   FALSE LE PEN   Marine     47         21.27         25.00      M
-    ## 86   FALSE LE PEN   Marine    100         13.02         15.67      M
-    ## 87   FALSE LE PEN   Marine     19         10.73         13.38      M
-    ## 88   FALSE LE PEN   Marine    336          9.26         11.29      M
-    ## 89   FALSE LE PEN   Marine     40          9.98         11.30      M
-    ## 90   FALSE LE PEN   Marine      1          2.22          2.56      M
-    ## 91   FALSE LE PEN   Marine      8         10.53         14.55      M
-    ## 92   FALSE LE PEN   Marine     93         19.79         23.37      M
-    ## 93   FALSE LE PEN   Marine     36         11.32         13.38      M
-    ## 94   FALSE LE PEN   Marine     35         25.93         28.00      M
-    ## 95   FALSE LE PEN   Marine     19         20.00         22.09      M
-    ## 96   FALSE LE PEN   Marine     46         18.93         24.60      M
-    ## 97   FALSE LE PEN   Marine    127         18.04         21.67      M
-    ## 98   FALSE LE PEN   Marine    131         22.13         26.90      M
-    ## 99   FALSE LE PEN   Marine     69         12.55         15.86      M
-    ## 100  FALSE LE PEN   Marine     25          7.33          8.53      M
-    ## 101  FALSE LE PEN   Marine    170         16.72         20.56      M
-    ## 102  FALSE LE PEN   Marine     54         13.04         16.07      M
-    ## 103  FALSE LE PEN   Marine    118         14.66         17.23      M
-    ## 104  FALSE LE PEN   Marine    117         13.46         17.73      M
-    ## 105  FALSE LE PEN   Marine    131         24.53         28.54      M
-    ## 106  FALSE LE PEN   Marine    312         19.46         24.47      M
-    ## 107  FALSE LE PEN   Marine    193         14.14         17.45      M
-    ## 108  FALSE LE PEN   Marine    517         12.25         15.61      M
-    ## 109  FALSE LE PEN   Marine    247         13.49         17.20      M
-    ## 110  FALSE LE PEN   Marine     31         21.83         26.50      M
-    ## 111  FALSE LE PEN   Marine     30         31.58         37.50      M
-    ## 112  FALSE LE PEN   Marine      5          4.63          5.26      M
-    ## 113  FALSE LE PEN   Marine    136         14.62         17.19      M
-    ## 114  FALSE LE PEN   Marine     43         25.15         30.94      M
-    ## 115  FALSE LE PEN   Marine     33         23.24         31.13      M
-    ## 116  FALSE LE PEN   Marine     47         16.91         21.17      M
-    ## 117  FALSE LE PEN   Marine   1539          4.16          5.00      M
+    ## 1    FALSE LE PEN   Marine     52         28.42         32.50      M
+    ## 2    FALSE LE PEN   Marine   2733         10.34         14.40      M
+    ## 3    FALSE LE PEN   Marine    233         11.34         13.60      M
+    ## 4    FALSE LE PEN   Marine    150         17.40         20.35      M
+    ## 5    FALSE LE PEN   Marine     29         25.00         29.59      M
+    ## 6    FALSE LE PEN   Marine     30         21.13         26.09      M
+    ## 7    FALSE LE PEN   Marine     27         16.36         19.85      M
+    ## 8    FALSE LE PEN   Marine     41         21.47         25.31      M
+    ## 9    FALSE LE PEN   Marine    112         19.11         23.98      M
+    ## 10   FALSE LE PEN   Marine     20          6.90          7.97      M
+    ## 11   FALSE LE PEN   Marine    125         28.54         35.51      M
+    ## 12   FALSE LE PEN   Marine    246         20.88         26.37      M
+    ## 13   FALSE LE PEN   Marine    172         11.69         14.35      M
+    ## 14   FALSE LE PEN   Marine     20          9.52         11.70      M
+    ## 15   FALSE LE PEN   Marine     63         11.50         14.06      M
+    ## 16   FALSE LE PEN   Marine    107         17.04         20.54      M
+    ## 17   FALSE LE PEN   Marine     95         11.34         13.44      M
+    ## 18   FALSE LE PEN   Marine     57         20.88         24.36      M
+    ## 19   FALSE LE PEN   Marine     31         23.85         29.52      M
+    ## 20   FALSE LE PEN   Marine     50         23.58         28.57      M
+    ## 21   FALSE LE PEN   Marine      4         11.43         13.33      M
+    ## 22   FALSE LE PEN   Marine     18         13.04         16.51      M
+    ## 23   FALSE LE PEN   Marine     10         14.93         18.87      M
+    ## 24   FALSE LE PEN   Marine     27         20.15         24.11      M
+    ## 25   FALSE LE PEN   Marine    144         13.75         16.92      M
+    ## 26   FALSE LE PEN   Marine     62         12.18         15.12      M
+    ## 27   FALSE LE PEN   Marine    126         15.67         17.90      M
+    ## 28   FALSE LE PEN   Marine    279         20.62         25.64      M
+    ## 29   FALSE LE PEN   Marine   1784         25.50         31.97      M
+    ## 30   FALSE LE PEN   Marine     78         31.33         37.68      M
+    ## 31   FALSE LE PEN   Marine     27         16.88         19.57      M
+    ## 32   FALSE LE PEN   Marine     34         19.21         22.82      M
+    ## 33   FALSE LE PEN   Marine     61         21.25         25.31      M
+    ## 34   FALSE LE PEN   Marine     15         11.81         14.02      M
+    ## 35   FALSE LE PEN   Marine     23         14.02         17.16      M
+    ## 36   FALSE LE PEN   Marine    290          9.54         11.00      M
+    ## 37   FALSE LE PEN   Marine     51         11.97         14.57      M
+    ## 38   FALSE LE PEN   Marine    103         16.69         19.25      M
+    ## 39   FALSE LE PEN   Marine     43         17.62         21.50      M
+    ## 40   FALSE LE PEN   Marine    168         23.37         27.91      M
+    ## 41   FALSE LE PEN   Marine    312         18.40         23.60      M
+    ## 42   FALSE LE PEN   Marine    857         16.94         23.56      M
+    ## 43   FALSE LE PEN   Marine     50         23.36         28.25      M
+    ## 44   FALSE LE PEN   Marine    132         21.36         25.29      M
+    ## 45   FALSE LE PEN   Marine     47         17.15         20.09      M
+    ## 46   FALSE LE PEN   Marine    399         17.04         21.11      M
+    ## 47   FALSE LE PEN   Marine     13          8.07          9.63      M
+    ## 48   FALSE LE PEN   Marine     29         21.17         24.79      M
+    ## 49   FALSE LE PEN   Marine      7          8.33         11.67      M
+    ## 50   FALSE LE PEN   Marine     24         15.19         18.32      M
+    ## 51   FALSE LE PEN   Marine     32         20.25         27.59      M
+    ## 52   FALSE LE PEN   Marine     87         13.85         16.11      M
+    ## 53   FALSE LE PEN   Marine     32         23.19         28.57      M
+    ## 54   FALSE LE PEN   Marine     43         20.77         23.89      M
+    ## 55   FALSE LE PEN   Marine     93         15.12         18.83      M
+    ## 56   FALSE LE PEN   Marine     20         15.87         19.80      M
+    ## 57   FALSE LE PEN   Marine      8          8.79         10.39      M
+    ## 58   FALSE LE PEN   Marine    132         26.09         32.12      M
+    ## 59   FALSE LE PEN   Marine   2108         13.01         17.89      M
+    ## 60   FALSE LE PEN   Marine     21         31.34         33.33      M
+    ## 61   FALSE LE PEN   Marine     32         26.45         31.68      M
+    ## 62   FALSE LE PEN   Marine     77         13.16         15.19      M
+    ## 63   FALSE LE PEN   Marine    779         21.62         28.66      M
+    ## 64   FALSE LE PEN   Marine     15         15.15         19.48      M
+    ## 65   FALSE LE PEN   Marine      2         20.00         20.00      M
+    ## 66   FALSE LE PEN   Marine    145         12.85         15.39      M
+    ## 67   FALSE LE PEN   Marine     38         34.23         38.78      M
+    ## 68   FALSE LE PEN   Marine    117         21.27         26.47      M
+    ## 69   FALSE LE PEN   Marine     28         34.57         40.58      M
+    ## 70   FALSE LE PEN   Marine    155         17.96         21.29      M
+    ## 71   FALSE LE PEN   Marine     23         22.12         26.44      M
+    ## 72   FALSE LE PEN   Marine      8         14.55         17.02      M
+    ## 73   FALSE LE PEN   Marine    343         19.39         23.90      M
+    ## 74   FALSE LE PEN   Marine    125         26.77         34.15      M
+    ## 75   FALSE LE PEN   Marine     70         20.71         23.73      M
+    ## 76   FALSE LE PEN   Marine     90         15.08         18.79      M
+    ## 77   FALSE LE PEN   Marine     34         23.13         28.57      M
+    ## 78   FALSE LE PEN   Marine     39         19.80         23.35      M
+    ## 79   FALSE LE PEN   Marine     35         22.01         24.48      M
+    ## 80   FALSE LE PEN   Marine     34         18.89         21.25      M
+    ## 81   FALSE LE PEN   Marine    228         19.77         23.38      M
+    ## 82   FALSE LE PEN   Marine     47         31.54         36.15      M
+    ## 83   FALSE LE PEN   Marine     84         12.79         15.33      M
+    ## 84   FALSE LE PEN   Marine     29         20.71         26.13      M
+    ## 85   FALSE LE PEN   Marine      7          8.97         11.67      M
+    ## 86   FALSE LE PEN   Marine     70         11.61         15.15      M
+    ## 87   FALSE LE PEN   Marine     20         17.24         20.00      M
+    ## 88   FALSE LE PEN   Marine     14         12.28         15.38      M
+    ## 89   FALSE LE PEN   Marine     56         32.18         40.00      M
+    ## 90   FALSE LE PEN   Marine     50         15.34         18.45      M
+    ## 91   FALSE LE PEN   Marine   1039         13.97         17.09      M
+    ## 92   FALSE LE PEN   Marine     16         24.62         30.77      M
+    ## 93   FALSE LE PEN   Marine     24         25.53         29.63      M
+    ## 94   FALSE LE PEN   Marine     66         23.57         27.85      M
+    ## 95   FALSE LE PEN   Marine     47         18.08         20.43      M
+    ## 96   FALSE LE PEN   Marine     72         21.18         25.44      M
+    ## 97   FALSE LE PEN   Marine     31         21.99         27.19      M
+    ## 98   FALSE LE PEN   Marine     65         16.80         20.90      M
+    ## 99   FALSE LE PEN   Marine    105         23.03         27.20      M
+    ## 100  FALSE LE PEN   Marine    248         15.31         18.51      M
+    ## 101  FALSE LE PEN   Marine     52         15.25         18.31      M
+    ## 102  FALSE LE PEN   Marine     61         19.93         24.02      M
+    ## 103  FALSE LE PEN   Marine    216         14.17         16.82      M
+    ## 104  FALSE LE PEN   Marine   1130         17.89         22.60      M
+    ## 105  FALSE LE PEN   Marine    113         12.56         15.23      M
+    ## 106  FALSE LE PEN   Marine    111         20.37         26.24      M
+    ## 107  FALSE LE PEN   Marine     68         29.96         38.20      M
+    ## 108  FALSE LE PEN   Marine     58         12.13         15.30      M
+    ## 109  FALSE LE PEN   Marine     16         22.54         25.40      M
+    ## 110  FALSE LE PEN   Marine     74         23.42         29.25      M
+    ## 111  FALSE LE PEN   Marine     14          8.81         10.61      M
+    ## 112  FALSE LE PEN   Marine    112         13.83         16.21      M
+    ## 113  FALSE LE PEN   Marine     19         38.78         45.24      M
+    ## 114  FALSE LE PEN   Marine     75         21.37         25.77      M
+    ## 115  FALSE LE PEN   Marine    108         25.35         30.34      M
+    ## 116  FALSE LE PEN   Marine     27         22.88         28.72      M
+    ## 117  FALSE LE PEN   Marine    280         19.70         24.65      M
+    ## 118  FALSE LE PEN   Marine     17         19.10         25.37      M
     ##       Nom.2 Prénom.2 Voix.2 X..Voix.Ins.2 X..Voix.Exp.2 Sexe.3     Nom.3
-    ## 1   SARKOZY  Nicolas    148         23.68         27.46      M MÉLENCHON
-    ## 2   SARKOZY  Nicolas     39         19.02         22.54      M MÉLENCHON
-    ## 3   SARKOZY  Nicolas     44         40.00         47.31      M MÉLENCHON
-    ## 4   SARKOZY  Nicolas     48         22.12         27.43      M MÉLENCHON
-    ## 5   SARKOZY  Nicolas     44         14.19         17.74      M MÉLENCHON
-    ## 6   SARKOZY  Nicolas     13         18.57         22.03      M MÉLENCHON
-    ## 7   SARKOZY  Nicolas     50         17.61         20.83      M MÉLENCHON
-    ## 8   SARKOZY  Nicolas    930         24.06         29.64      M MÉLENCHON
-    ## 9   SARKOZY  Nicolas     60         18.81         20.91      M MÉLENCHON
-    ## 10  SARKOZY  Nicolas     10          5.59          6.54      M MÉLENCHON
-    ## 11  SARKOZY  Nicolas    184         18.57         21.72      M MÉLENCHON
-    ## 12  SARKOZY  Nicolas    111         39.08         46.64      M MÉLENCHON
-    ## 13  SARKOZY  Nicolas     43         55.13         63.24      M MÉLENCHON
-    ## 14  SARKOZY  Nicolas     21         23.33         29.17      M MÉLENCHON
-    ## 15  SARKOZY  Nicolas     65         11.95         15.12      M MÉLENCHON
-    ## 16  SARKOZY  Nicolas      4          7.69         10.81      M MÉLENCHON
-    ## 17  SARKOZY  Nicolas    203         33.39         41.18      M MÉLENCHON
-    ## 18  SARKOZY  Nicolas    290         22.91         26.44      M MÉLENCHON
-    ## 19  SARKOZY  Nicolas     20         18.52         21.51      M MÉLENCHON
-    ## 20  SARKOZY  Nicolas    978         18.65         22.15      M MÉLENCHON
-    ## 21  SARKOZY  Nicolas     54         21.18         25.59      M MÉLENCHON
-    ## 22  SARKOZY  Nicolas    101         25.25         32.27      M MÉLENCHON
-    ## 23  SARKOZY  Nicolas     99         19.60         22.92      M MÉLENCHON
-    ## 24  SARKOZY  Nicolas     14          9.15         12.39      M MÉLENCHON
-    ## 25  SARKOZY  Nicolas     19         25.68         30.65      M MÉLENCHON
-    ## 26  SARKOZY  Nicolas   2246         22.09         25.04      M MÉLENCHON
-    ## 27  SARKOZY  Nicolas    195         21.59         25.23      M MÉLENCHON
-    ## 28  SARKOZY  Nicolas   5201         16.71         22.03      M MÉLENCHON
-    ## 29  SARKOZY  Nicolas     94         26.40         33.94      M MÉLENCHON
-    ## 30  SARKOZY  Nicolas     41         32.03         36.94      M MÉLENCHON
-    ## 31  SARKOZY  Nicolas     66         30.14         34.38      M MÉLENCHON
-    ## 32  SARKOZY  Nicolas    188         25.61         31.39      M MÉLENCHON
-    ## 33  SARKOZY  Nicolas    142         27.10         33.18      M MÉLENCHON
-    ## 34  SARKOZY  Nicolas     65         26.00         30.52      M MÉLENCHON
-    ## 35  SARKOZY  Nicolas    103         23.95         27.76      M MÉLENCHON
-    ## 36  SARKOZY  Nicolas     58         23.29         26.61      M MÉLENCHON
-    ## 37  SARKOZY  Nicolas     33         17.65         21.71      M MÉLENCHON
-    ## 38  SARKOZY  Nicolas     29         12.66         14.50      M MÉLENCHON
-    ## 39  SARKOZY  Nicolas     45         26.16         30.41      M MÉLENCHON
-    ## 40  SARKOZY  Nicolas    702         19.60         23.15      M MÉLENCHON
-    ## 41  SARKOZY  Nicolas    253         18.10         21.33      M MÉLENCHON
-    ## 42  SARKOZY  Nicolas     16          9.88         11.59      M MÉLENCHON
-    ## 43  SARKOZY  Nicolas     27         20.30         27.27      M MÉLENCHON
-    ## 44  SARKOZY  Nicolas     15         14.71         17.05      M MÉLENCHON
-    ## 45  SARKOZY  Nicolas     51         19.47         24.17      M MÉLENCHON
-    ## 46  SARKOZY  Nicolas    342         19.83         24.08      M MÉLENCHON
-    ## 47  SARKOZY  Nicolas    589         24.06         29.66      M MÉLENCHON
-    ## 48  SARKOZY  Nicolas      7         16.28         20.59      M MÉLENCHON
-    ## 49  SARKOZY  Nicolas      5         16.13         18.52      M MÉLENCHON
-    ## 50  SARKOZY  Nicolas    158         19.43         23.44      M MÉLENCHON
-    ## 51  SARKOZY  Nicolas     61         20.75         23.28      M MÉLENCHON
-    ## 52  SARKOZY  Nicolas     19         16.38         20.65      M MÉLENCHON
-    ## 53  SARKOZY  Nicolas     46         32.39         38.98      M MÉLENCHON
-    ## 54  SARKOZY  Nicolas     73         25.17         28.97      M MÉLENCHON
-    ## 55  SARKOZY  Nicolas    101         21.26         24.82      M MÉLENCHON
-    ## 56  SARKOZY  Nicolas    197         21.84         26.48      M MÉLENCHON
-    ## 57  SARKOZY  Nicolas     80         21.11         25.08      M MÉLENCHON
-    ## 58  SARKOZY  Nicolas    357         21.28         24.90      M MÉLENCHON
-    ## 59  SARKOZY  Nicolas    600         11.41         14.24      M MÉLENCHON
-    ## 60  SARKOZY  Nicolas     18         24.32         27.69      M MÉLENCHON
-    ## 61  SARKOZY  Nicolas     26         18.71         23.01      M MÉLENCHON
-    ## 62  SARKOZY  Nicolas     92         27.38         33.21      M MÉLENCHON
-    ## 63  SARKOZY  Nicolas     29         14.80         19.08      M MÉLENCHON
-    ## 64  SARKOZY  Nicolas     31         38.27         46.97      M MÉLENCHON
-    ## 65  SARKOZY  Nicolas     50         32.26         38.46      M MÉLENCHON
-    ## 66  SARKOZY  Nicolas     70         17.03         21.15      M MÉLENCHON
-    ## 67  SARKOZY  Nicolas     69         22.77         29.87      M MÉLENCHON
-    ## 68  SARKOZY  Nicolas     40         16.39         19.80      M MÉLENCHON
-    ## 69  SARKOZY  Nicolas     40         24.39         27.21      M MÉLENCHON
-    ## 70  SARKOZY  Nicolas     41         21.81         25.95      M MÉLENCHON
-    ## 71  SARKOZY  Nicolas      7         21.88         25.00      M MÉLENCHON
-    ## 72  SARKOZY  Nicolas     12         26.09         29.27      M MÉLENCHON
-    ## 73  SARKOZY  Nicolas     13         15.66         22.03      M MÉLENCHON
-    ## 74  SARKOZY  Nicolas     18         23.08         32.73      M MÉLENCHON
-    ## 75  SARKOZY  Nicolas      8         19.51         23.53      M MÉLENCHON
-    ## 76  SARKOZY  Nicolas     25         22.32         28.74      M MÉLENCHON
-    ## 77  SARKOZY  Nicolas     12         21.82         25.53      M MÉLENCHON
-    ## 78  SARKOZY  Nicolas    301         11.55         14.40      M MÉLENCHON
-    ## 79  SARKOZY  Nicolas    209          9.60         12.93      M MÉLENCHON
-    ## 80  SARKOZY  Nicolas    133         15.43         19.11      M MÉLENCHON
-    ## 81  SARKOZY  Nicolas     53         22.84         26.90      M MÉLENCHON
-    ## 82  SARKOZY  Nicolas     60         31.09         37.50      M MÉLENCHON
-    ## 83  SARKOZY  Nicolas     45         25.86         29.80      M MÉLENCHON
-    ## 84  SARKOZY  Nicolas     63         17.07         18.98      M MÉLENCHON
-    ## 85  SARKOZY  Nicolas     54         24.43         28.72      M MÉLENCHON
-    ## 86  SARKOZY  Nicolas    119         15.49         18.65      M MÉLENCHON
-    ## 87  SARKOZY  Nicolas     45         25.42         31.69      M MÉLENCHON
-    ## 88  SARKOZY  Nicolas    728         20.06         24.45      M MÉLENCHON
-    ## 89  SARKOZY  Nicolas    133         33.17         37.57      M MÉLENCHON
-    ## 90  SARKOZY  Nicolas      3          6.67          7.69      M MÉLENCHON
-    ## 91  SARKOZY  Nicolas      3          3.95          5.45      M MÉLENCHON
-    ## 92  SARKOZY  Nicolas     70         14.89         17.59      M MÉLENCHON
-    ## 93  SARKOZY  Nicolas     86         27.04         31.97      M MÉLENCHON
-    ## 94  SARKOZY  Nicolas     29         21.48         23.20      M MÉLENCHON
-    ## 95  SARKOZY  Nicolas     27         28.42         31.40      M MÉLENCHON
-    ## 96  SARKOZY  Nicolas     59         24.28         31.55      M MÉLENCHON
-    ## 97  SARKOZY  Nicolas    166         23.58         28.33      M MÉLENCHON
-    ## 98  SARKOZY  Nicolas     99         16.72         20.33      M MÉLENCHON
-    ## 99  SARKOZY  Nicolas    111         20.18         25.52      M MÉLENCHON
-    ## 100 SARKOZY  Nicolas     63         18.48         21.50      M MÉLENCHON
-    ## 101 SARKOZY  Nicolas    215         21.14         26.00      M MÉLENCHON
-    ## 102 SARKOZY  Nicolas     99         23.91         29.46      M MÉLENCHON
-    ## 103 SARKOZY  Nicolas    130         16.15         18.98      M MÉLENCHON
-    ## 104 SARKOZY  Nicolas    294         33.83         44.55      M MÉLENCHON
-    ## 105 SARKOZY  Nicolas    174         32.58         37.91      M MÉLENCHON
-    ## 106 SARKOZY  Nicolas    390         24.33         30.59      M MÉLENCHON
-    ## 107 SARKOZY  Nicolas    349         25.57         31.56      M MÉLENCHON
-    ## 108 SARKOZY  Nicolas   1212         28.72         36.61      M MÉLENCHON
-    ## 109 SARKOZY  Nicolas    389         21.25         27.09      M MÉLENCHON
-    ## 110 SARKOZY  Nicolas     36         25.35         30.77      M MÉLENCHON
-    ## 111 SARKOZY  Nicolas     16         16.84         20.00      M MÉLENCHON
-    ## 112 SARKOZY  Nicolas     20         18.52         21.05      M MÉLENCHON
-    ## 113 SARKOZY  Nicolas    158         16.99         19.97      M MÉLENCHON
-    ## 114 SARKOZY  Nicolas     26         15.20         18.71      M MÉLENCHON
-    ## 115 SARKOZY  Nicolas     30         21.13         28.30      M MÉLENCHON
-    ## 116 SARKOZY  Nicolas     56         20.14         25.23      M MÉLENCHON
-    ## 117 SARKOZY  Nicolas  22360         60.43         72.64      M MÉLENCHON
+    ## 1   SARKOZY  Nicolas     42         22.95         26.25      M MÉLENCHON
+    ## 2   SARKOZY  Nicolas   4610         17.44         24.28      M MÉLENCHON
+    ## 3   SARKOZY  Nicolas    493         24.00         28.78      M MÉLENCHON
+    ## 4   SARKOZY  Nicolas    146         16.94         19.81      M MÉLENCHON
+    ## 5   SARKOZY  Nicolas     36         31.03         36.73      M MÉLENCHON
+    ## 6   SARKOZY  Nicolas     21         14.79         18.26      M MÉLENCHON
+    ## 7   SARKOZY  Nicolas     39         23.64         28.68      M MÉLENCHON
+    ## 8   SARKOZY  Nicolas     28         14.66         17.28      M MÉLENCHON
+    ## 9   SARKOZY  Nicolas     87         14.85         18.63      M MÉLENCHON
+    ## 10  SARKOZY  Nicolas     35         12.07         13.94      M MÉLENCHON
+    ## 11  SARKOZY  Nicolas    101         23.06         28.69      M MÉLENCHON
+    ## 12  SARKOZY  Nicolas    263         22.33         28.19      M MÉLENCHON
+    ## 13  SARKOZY  Nicolas    317         21.55         26.44      M MÉLENCHON
+    ## 14  SARKOZY  Nicolas     51         24.29         29.82      M MÉLENCHON
+    ## 15  SARKOZY  Nicolas     96         17.52         21.43      M MÉLENCHON
+    ## 16  SARKOZY  Nicolas    109         17.36         20.92      M MÉLENCHON
+    ## 17  SARKOZY  Nicolas    182         21.72         25.74      M MÉLENCHON
+    ## 18  SARKOZY  Nicolas     42         15.38         17.95      M MÉLENCHON
+    ## 19  SARKOZY  Nicolas     32         24.62         30.48      M MÉLENCHON
+    ## 20  SARKOZY  Nicolas     31         14.62         17.71      M MÉLENCHON
+    ## 21  SARKOZY  Nicolas      4         11.43         13.33      M MÉLENCHON
+    ## 22  SARKOZY  Nicolas     27         19.57         24.77      M MÉLENCHON
+    ## 23  SARKOZY  Nicolas      9         13.43         16.98      M MÉLENCHON
+    ## 24  SARKOZY  Nicolas     35         26.12         31.25      M MÉLENCHON
+    ## 25  SARKOZY  Nicolas    213         20.34         25.03      M MÉLENCHON
+    ## 26  SARKOZY  Nicolas     78         15.32         19.02      M MÉLENCHON
+    ## 27  SARKOZY  Nicolas    175         21.77         24.86      M MÉLENCHON
+    ## 28  SARKOZY  Nicolas    338         24.98         31.07      M MÉLENCHON
+    ## 29  SARKOZY  Nicolas   1384         19.79         24.80      M MÉLENCHON
+    ## 30  SARKOZY  Nicolas     47         18.88         22.71      M MÉLENCHON
+    ## 31  SARKOZY  Nicolas     44         27.50         31.88      M MÉLENCHON
+    ## 32  SARKOZY  Nicolas     40         22.60         26.85      M MÉLENCHON
+    ## 33  SARKOZY  Nicolas     50         17.42         20.75      M MÉLENCHON
+    ## 34  SARKOZY  Nicolas     38         29.92         35.51      M MÉLENCHON
+    ## 35  SARKOZY  Nicolas     28         17.07         20.90      M MÉLENCHON
+    ## 36  SARKOZY  Nicolas    608         20.01         23.06      M MÉLENCHON
+    ## 37  SARKOZY  Nicolas    117         27.46         33.43      M MÉLENCHON
+    ## 38  SARKOZY  Nicolas    121         19.61         22.62      M MÉLENCHON
+    ## 39  SARKOZY  Nicolas     56         22.95         28.00      M MÉLENCHON
+    ## 40  SARKOZY  Nicolas    184         25.59         30.56      M MÉLENCHON
+    ## 41  SARKOZY  Nicolas    379         22.35         28.67      M MÉLENCHON
+    ## 42  SARKOZY  Nicolas    501          9.90         13.78      M MÉLENCHON
+    ## 43  SARKOZY  Nicolas     49         22.90         27.68      M MÉLENCHON
+    ## 44  SARKOZY  Nicolas    178         28.80         34.10      M MÉLENCHON
+    ## 45  SARKOZY  Nicolas     98         35.77         41.88      M MÉLENCHON
+    ## 46  SARKOZY  Nicolas    499         21.31         26.40      M MÉLENCHON
+    ## 47  SARKOZY  Nicolas     42         26.09         31.11      M MÉLENCHON
+    ## 48  SARKOZY  Nicolas     29         21.17         24.79      M MÉLENCHON
+    ## 49  SARKOZY  Nicolas     24         28.57         40.00      M MÉLENCHON
+    ## 50  SARKOZY  Nicolas     57         36.08         43.51      M MÉLENCHON
+    ## 51  SARKOZY  Nicolas     42         26.58         36.21      M MÉLENCHON
+    ## 52  SARKOZY  Nicolas    144         22.93         26.67      M MÉLENCHON
+    ## 53  SARKOZY  Nicolas     44         31.88         39.29      M MÉLENCHON
+    ## 54  SARKOZY  Nicolas     53         25.60         29.44      M MÉLENCHON
+    ## 55  SARKOZY  Nicolas    192         31.22         38.87      M MÉLENCHON
+    ## 56  SARKOZY  Nicolas     48         38.10         47.52      M MÉLENCHON
+    ## 57  SARKOZY  Nicolas     36         39.56         46.75      M MÉLENCHON
+    ## 58  SARKOZY  Nicolas    142         28.06         34.55      M MÉLENCHON
+    ## 59  SARKOZY  Nicolas   3166         19.54         26.87      M MÉLENCHON
+    ## 60  SARKOZY  Nicolas      9         13.43         14.29      M MÉLENCHON
+    ## 61  SARKOZY  Nicolas     39         32.23         38.61      M MÉLENCHON
+    ## 62  SARKOZY  Nicolas    224         38.29         44.18      M MÉLENCHON
+    ## 63  SARKOZY  Nicolas    499         13.85         18.36      M MÉLENCHON
+    ## 64  SARKOZY  Nicolas     25         25.25         32.47      M MÉLENCHON
+    ## 65  SARKOZY  Nicolas      5         50.00         50.00      M MÉLENCHON
+    ## 66  SARKOZY  Nicolas    376         33.33         39.92      M MÉLENCHON
+    ## 67  SARKOZY  Nicolas     29         26.13         29.59      M MÉLENCHON
+    ## 68  SARKOZY  Nicolas    145         26.36         32.81      M MÉLENCHON
+    ## 69  SARKOZY  Nicolas     21         25.93         30.43      M MÉLENCHON
+    ## 70  SARKOZY  Nicolas    159         18.42         21.84      M MÉLENCHON
+    ## 71  SARKOZY  Nicolas     32         30.77         36.78      M MÉLENCHON
+    ## 72  SARKOZY  Nicolas     12         21.82         25.53      M MÉLENCHON
+    ## 73  SARKOZY  Nicolas    418         23.63         29.13      M MÉLENCHON
+    ## 74  SARKOZY  Nicolas     81         17.34         22.13      M MÉLENCHON
+    ## 75  SARKOZY  Nicolas     89         26.33         30.17      M MÉLENCHON
+    ## 76  SARKOZY  Nicolas    186         31.16         38.83      M MÉLENCHON
+    ## 77  SARKOZY  Nicolas     39         26.53         32.77      M MÉLENCHON
+    ## 78  SARKOZY  Nicolas     86         43.65         51.50      M MÉLENCHON
+    ## 79  SARKOZY  Nicolas     32         20.13         22.38      M MÉLENCHON
+    ## 80  SARKOZY  Nicolas     44         24.44         27.50      M MÉLENCHON
+    ## 81  SARKOZY  Nicolas    211         18.30         21.64      M MÉLENCHON
+    ## 82  SARKOZY  Nicolas     25         16.78         19.23      M MÉLENCHON
+    ## 83  SARKOZY  Nicolas     85         12.94         15.51      M MÉLENCHON
+    ## 84  SARKOZY  Nicolas     26         18.57         23.42      M MÉLENCHON
+    ## 85  SARKOZY  Nicolas     13         16.67         21.67      M MÉLENCHON
+    ## 86  SARKOZY  Nicolas    120         19.90         25.97      M MÉLENCHON
+    ## 87  SARKOZY  Nicolas     18         15.52         18.00      M MÉLENCHON
+    ## 88  SARKOZY  Nicolas     29         25.44         31.87      M MÉLENCHON
+    ## 89  SARKOZY  Nicolas     48         27.59         34.29      M MÉLENCHON
+    ## 90  SARKOZY  Nicolas     81         24.85         29.89      M MÉLENCHON
+    ## 91  SARKOZY  Nicolas   2147         28.87         35.32      M MÉLENCHON
+    ## 92  SARKOZY  Nicolas      3          4.62          5.77      M MÉLENCHON
+    ## 93  SARKOZY  Nicolas     12         12.77         14.81      M MÉLENCHON
+    ## 94  SARKOZY  Nicolas     64         22.86         27.00      M MÉLENCHON
+    ## 95  SARKOZY  Nicolas     43         16.54         18.70      M MÉLENCHON
+    ## 96  SARKOZY  Nicolas     84         24.71         29.68      M MÉLENCHON
+    ## 97  SARKOZY  Nicolas     35         24.82         30.70      M MÉLENCHON
+    ## 98  SARKOZY  Nicolas     96         24.81         30.87      M MÉLENCHON
+    ## 99  SARKOZY  Nicolas     87         19.08         22.54      M MÉLENCHON
+    ## 100 SARKOZY  Nicolas    479         29.57         35.75      M MÉLENCHON
+    ## 101 SARKOZY  Nicolas     83         24.34         29.23      M MÉLENCHON
+    ## 102 SARKOZY  Nicolas     58         18.95         22.83      M MÉLENCHON
+    ## 103 SARKOZY  Nicolas    395         25.92         30.76      M MÉLENCHON
+    ## 104 SARKOZY  Nicolas    521          8.25         10.42      M MÉLENCHON
+    ## 105 SARKOZY  Nicolas    298         33.11         40.16      M MÉLENCHON
+    ## 106 SARKOZY  Nicolas    117         21.47         27.66      M MÉLENCHON
+    ## 107 SARKOZY  Nicolas     58         25.55         32.58      M MÉLENCHON
+    ## 108 SARKOZY  Nicolas     98         20.50         25.86      M MÉLENCHON
+    ## 109 SARKOZY  Nicolas     24         33.80         38.10      M MÉLENCHON
+    ## 110 SARKOZY  Nicolas     52         16.46         20.55      M MÉLENCHON
+    ## 111 SARKOZY  Nicolas     32         20.13         24.24      M MÉLENCHON
+    ## 112 SARKOZY  Nicolas    176         21.73         25.47      M MÉLENCHON
+    ## 113 SARKOZY  Nicolas     14         28.57         33.33      M MÉLENCHON
+    ## 114 SARKOZY  Nicolas     96         27.35         32.99      M MÉLENCHON
+    ## 115 SARKOZY  Nicolas     81         19.01         22.75      M MÉLENCHON
+    ## 116 SARKOZY  Nicolas     32         27.12         34.04      M MÉLENCHON
+    ## 117 SARKOZY  Nicolas    218         15.34         19.19      M MÉLENCHON
+    ## 118 SARKOZY  Nicolas     20         22.47         29.85      M MÉLENCHON
     ##     Prénom.3 Voix.3 X..Voix.Ins.3 X..Voix.Exp.3 Sexe.4  Nom.4 Prénom.4
-    ## 1   Jean-Luc     63         10.08         11.69      M POUTOU Philippe
-    ## 2   Jean-Luc     15          7.32          8.67      M POUTOU Philippe
-    ## 3   Jean-Luc      4          3.64          4.30      M POUTOU Philippe
-    ## 4   Jean-Luc     11          5.07          6.29      M POUTOU Philippe
-    ## 5   Jean-Luc     25          8.06         10.08      M POUTOU Philippe
-    ## 6   Jean-Luc      7         10.00         11.86      M POUTOU Philippe
-    ## 7   Jean-Luc     47         16.55         19.58      M POUTOU Philippe
-    ## 8   Jean-Luc    281          7.27          8.95      M POUTOU Philippe
-    ## 9   Jean-Luc     52         16.30         18.12      M POUTOU Philippe
-    ## 10  Jean-Luc     35         19.55         22.88      M POUTOU Philippe
-    ## 11  Jean-Luc    135         13.62         15.94      M POUTOU Philippe
-    ## 12  Jean-Luc      8          2.82          3.36      M POUTOU Philippe
-    ## 13  Jean-Luc      2          2.56          2.94      M POUTOU Philippe
-    ## 14  Jean-Luc     10         11.11         13.89      M POUTOU Philippe
-    ## 15  Jean-Luc     80         14.71         18.60      M POUTOU Philippe
-    ## 16  Jean-Luc      6         11.54         16.22      M POUTOU Philippe
-    ## 17  Jean-Luc     53          8.72         10.75      M POUTOU Philippe
-    ## 18  Jean-Luc    145         11.45         13.22      M POUTOU Philippe
-    ## 19  Jean-Luc     11         10.19         11.83      M POUTOU Philippe
-    ## 20  Jean-Luc    453          8.64         10.26      M POUTOU Philippe
-    ## 21  Jean-Luc     14          5.49          6.64      M POUTOU Philippe
-    ## 22  Jean-Luc     11          2.75          3.51      M POUTOU Philippe
-    ## 23  Jean-Luc     54         10.69         12.50      M POUTOU Philippe
-    ## 24  Jean-Luc     24         15.69         21.24      M POUTOU Philippe
-    ## 25  Jean-Luc      7          9.46         11.29      M POUTOU Philippe
-    ## 26  Jean-Luc   1064         10.47         11.86      M POUTOU Philippe
-    ## 27  Jean-Luc     96         10.63         12.42      M POUTOU Philippe
-    ## 28  Jean-Luc   3158         10.15         13.38      M POUTOU Philippe
-    ## 29  Jean-Luc     14          3.93          5.05      M POUTOU Philippe
-    ## 30  Jean-Luc     12          9.38         10.81      M POUTOU Philippe
-    ## 31  Jean-Luc     19          8.68          9.90      M POUTOU Philippe
-    ## 32  Jean-Luc     49          6.68          8.18      M POUTOU Philippe
-    ## 33  Jean-Luc     63         12.02         14.72      M POUTOU Philippe
-    ## 34  Jean-Luc     15          6.00          7.04      M POUTOU Philippe
-    ## 35  Jean-Luc     49         11.40         13.21      M POUTOU Philippe
-    ## 36  Jean-Luc     29         11.65         13.30      M POUTOU Philippe
-    ## 37  Jean-Luc     23         12.30         15.13      M POUTOU Philippe
-    ## 38  Jean-Luc     32         13.97         16.00      M POUTOU Philippe
-    ## 39  Jean-Luc     13          7.56          8.78      M POUTOU Philippe
-    ## 40  Jean-Luc    380         10.61         12.53      M POUTOU Philippe
-    ## 41  Jean-Luc    138          9.87         11.64      M POUTOU Philippe
-    ## 42  Jean-Luc     18         11.11         13.04      M POUTOU Philippe
-    ## 43  Jean-Luc      9          6.77          9.09      M POUTOU Philippe
-    ## 44  Jean-Luc     14         13.73         15.91      M POUTOU Philippe
-    ## 45  Jean-Luc     21          8.02          9.95      M POUTOU Philippe
-    ## 46  Jean-Luc    173         10.03         12.18      M POUTOU Philippe
-    ## 47  Jean-Luc    171          6.99          8.61      M POUTOU Philippe
-    ## 48  Jean-Luc      7         16.28         20.59      M POUTOU Philippe
-    ## 49  Jean-Luc      6         19.35         22.22      M POUTOU Philippe
-    ## 50  Jean-Luc     68          8.36         10.09      M POUTOU Philippe
-    ## 51  Jean-Luc     31         10.54         11.83      M POUTOU Philippe
-    ## 52  Jean-Luc     14         12.07         15.22      M POUTOU Philippe
-    ## 53  Jean-Luc     10          7.04          8.47      M POUTOU Philippe
-    ## 54  Jean-Luc     21          7.24          8.33      M POUTOU Philippe
-    ## 55  Jean-Luc     36          7.58          8.85      M POUTOU Philippe
-    ## 56  Jean-Luc     64          7.10          8.60      M POUTOU Philippe
-    ## 57  Jean-Luc     20          5.28          6.27      M POUTOU Philippe
-    ## 58  Jean-Luc    165          9.83         11.51      M POUTOU Philippe
-    ## 59  Jean-Luc    791         15.04         18.78      M POUTOU Philippe
-    ## 60  Jean-Luc      4          5.41          6.15      M POUTOU Philippe
-    ## 61  Jean-Luc     15         10.79         13.27      M POUTOU Philippe
-    ## 62  Jean-Luc     38         11.31         13.72      M POUTOU Philippe
-    ## 63  Jean-Luc     29         14.80         19.08      M POUTOU Philippe
-    ## 64  Jean-Luc      6          7.41          9.09      M POUTOU Philippe
-    ## 65  Jean-Luc     10          6.45          7.69      M POUTOU Philippe
-    ## 66  Jean-Luc     17          4.14          5.14      M POUTOU Philippe
-    ## 67  Jean-Luc     12          3.96          5.19      M POUTOU Philippe
-    ## 68  Jean-Luc     27         11.07         13.37      M POUTOU Philippe
-    ## 69  Jean-Luc     19         11.59         12.93      M POUTOU Philippe
-    ## 70  Jean-Luc     23         12.23         14.56      M POUTOU Philippe
-    ## 71  Jean-Luc      0          0.00          0.00      M POUTOU Philippe
-    ## 72  Jean-Luc      6         13.04         14.63      M POUTOU Philippe
-    ## 73  Jean-Luc      9         10.84         15.25      M POUTOU Philippe
-    ## 74  Jean-Luc      8         10.26         14.55      M POUTOU Philippe
-    ## 75  Jean-Luc      8         19.51         23.53      M POUTOU Philippe
-    ## 76  Jean-Luc     10          8.93         11.49      M POUTOU Philippe
-    ## 77  Jean-Luc      2          3.64          4.26      M POUTOU Philippe
-    ## 78  Jean-Luc    614         23.57         29.38      M POUTOU Philippe
-    ## 79  Jean-Luc    335         15.40         20.72      M POUTOU Philippe
-    ## 80  Jean-Luc     59          6.84          8.48      M POUTOU Philippe
-    ## 81  Jean-Luc     17          7.33          8.63      M POUTOU Philippe
-    ## 82  Jean-Luc      8          4.15          5.00      M POUTOU Philippe
-    ## 83  Jean-Luc      8          4.60          5.30      M POUTOU Philippe
-    ## 84  Jean-Luc     51         13.82         15.36      M POUTOU Philippe
-    ## 85  Jean-Luc     23         10.41         12.23      M POUTOU Philippe
-    ## 86  Jean-Luc    104         13.54         16.30      M POUTOU Philippe
-    ## 87  Jean-Luc     15          8.47         10.56      M POUTOU Philippe
-    ## 88  Jean-Luc    288          7.93          9.67      M POUTOU Philippe
-    ## 89  Jean-Luc     23          5.74          6.50      M POUTOU Philippe
-    ## 90  Jean-Luc      5         11.11         12.82      M POUTOU Philippe
-    ## 91  Jean-Luc     15         19.74         27.27      M POUTOU Philippe
-    ## 92  Jean-Luc     82         17.45         20.60      M POUTOU Philippe
-    ## 93  Jean-Luc     41         12.89         15.24      M POUTOU Philippe
-    ## 94  Jean-Luc     12          8.89          9.60      M POUTOU Philippe
-    ## 95  Jean-Luc      8          8.42          9.30      M POUTOU Philippe
-    ## 96  Jean-Luc     12          4.94          6.42      M POUTOU Philippe
-    ## 97  Jean-Luc     68          9.66         11.60      M POUTOU Philippe
-    ## 98  Jean-Luc     62         10.47         12.73      M POUTOU Philippe
-    ## 99  Jean-Luc     45          8.18         10.34      M POUTOU Philippe
-    ## 100 Jean-Luc     32          9.38         10.92      M POUTOU Philippe
-    ## 101 Jean-Luc    111         10.91         13.42      M POUTOU Philippe
-    ## 102 Jean-Luc     51         12.32         15.18      M POUTOU Philippe
-    ## 103 Jean-Luc    121         15.03         17.66      M POUTOU Philippe
-    ## 104 Jean-Luc     42          4.83          6.36      M POUTOU Philippe
-    ## 105 Jean-Luc     19          3.56          4.14      M POUTOU Philippe
-    ## 106 Jean-Luc    102          6.36          8.00      M POUTOU Philippe
-    ## 107 Jean-Luc    113          8.28         10.22      M POUTOU Philippe
-    ## 108 Jean-Luc    249          5.90          7.52      M POUTOU Philippe
-    ## 109 Jean-Luc    140          7.65          9.75      M POUTOU Philippe
-    ## 110 Jean-Luc      8          5.63          6.84      M POUTOU Philippe
-    ## 111 Jean-Luc     10         10.53         12.50      M POUTOU Philippe
-    ## 112 Jean-Luc     19         17.59         20.00      M POUTOU Philippe
-    ## 113 Jean-Luc    103         11.08         13.02      M POUTOU Philippe
-    ## 114 Jean-Luc     18         10.53         12.95      M POUTOU Philippe
-    ## 115 Jean-Luc     18         12.68         16.98      M POUTOU Philippe
-    ## 116 Jean-Luc     27          9.71         12.16      M POUTOU Philippe
-    ## 117 Jean-Luc    649          1.75          2.11      M POUTOU Philippe
+    ## 1   Jean-Luc     15          8.20          9.38      M POUTOU Philippe
+    ## 2   Jean-Luc   2943         11.14         15.50      M POUTOU Philippe
+    ## 3   Jean-Luc    219         10.66         12.78      M POUTOU Philippe
+    ## 4   Jean-Luc    107         12.41         14.52      M POUTOU Philippe
+    ## 5   Jean-Luc      6          5.17          6.12      M POUTOU Philippe
+    ## 6   Jean-Luc     29         20.42         25.22      M POUTOU Philippe
+    ## 7   Jean-Luc     21         12.73         15.44      M POUTOU Philippe
+    ## 8   Jean-Luc     30         15.71         18.52      M POUTOU Philippe
+    ## 9   Jean-Luc     65         11.09         13.92      M POUTOU Philippe
+    ## 10  Jean-Luc     44         15.17         17.53      M POUTOU Philippe
+    ## 11  Jean-Luc     26          5.94          7.39      M POUTOU Philippe
+    ## 12  Jean-Luc     82          6.96          8.79      M POUTOU Philippe
+    ## 13  Jean-Luc    133          9.04         11.09      M POUTOU Philippe
+    ## 14  Jean-Luc     12          5.71          7.02      M POUTOU Philippe
+    ## 15  Jean-Luc     59         10.77         13.17      M POUTOU Philippe
+    ## 16  Jean-Luc     60          9.55         11.52      M POUTOU Philippe
+    ## 17  Jean-Luc     65          7.76          9.19      M POUTOU Philippe
+    ## 18  Jean-Luc     26          9.52         11.11      M POUTOU Philippe
+    ## 19  Jean-Luc      6          4.62          5.71      M POUTOU Philippe
+    ## 20  Jean-Luc     39         18.40         22.29      M POUTOU Philippe
+    ## 21  Jean-Luc     10         28.57         33.33      M POUTOU Philippe
+    ## 22  Jean-Luc     13          9.42         11.93      M POUTOU Philippe
+    ## 23  Jean-Luc      5          7.46          9.43      M POUTOU Philippe
+    ## 24  Jean-Luc      7          5.22          6.25      M POUTOU Philippe
+    ## 25  Jean-Luc    129         12.32         15.16      M POUTOU Philippe
+    ## 26  Jean-Luc     55         10.81         13.41      M POUTOU Philippe
+    ## 27  Jean-Luc     91         11.32         12.93      M POUTOU Philippe
+    ## 28  Jean-Luc     60          4.43          5.51      M POUTOU Philippe
+    ## 29  Jean-Luc    530          7.58          9.50      M POUTOU Philippe
+    ## 30  Jean-Luc     10          4.02          4.83      M POUTOU Philippe
+    ## 31  Jean-Luc     15          9.38         10.87      M POUTOU Philippe
+    ## 32  Jean-Luc     11          6.21          7.38      M POUTOU Philippe
+    ## 33  Jean-Luc     27          9.41         11.20      M POUTOU Philippe
+    ## 34  Jean-Luc     12          9.45         11.21      M POUTOU Philippe
+    ## 35  Jean-Luc     29         17.68         21.64      M POUTOU Philippe
+    ## 36  Jean-Luc    265          8.72         10.05      M POUTOU Philippe
+    ## 37  Jean-Luc     26          6.10          7.43      M POUTOU Philippe
+    ## 38  Jean-Luc     61          9.89         11.40      M POUTOU Philippe
+    ## 39  Jean-Luc     23          9.43         11.50      M POUTOU Philippe
+    ## 40  Jean-Luc     69          9.60         11.46      M POUTOU Philippe
+    ## 41  Jean-Luc    125          7.37          9.46      M POUTOU Philippe
+    ## 42  Jean-Luc    711         14.05         19.55      M POUTOU Philippe
+    ## 43  Jean-Luc     19          8.88         10.73      M POUTOU Philippe
+    ## 44  Jean-Luc     43          6.96          8.24      M POUTOU Philippe
+    ## 45  Jean-Luc     10          3.65          4.27      M POUTOU Philippe
+    ## 46  Jean-Luc    176          7.51          9.31      M POUTOU Philippe
+    ## 47  Jean-Luc     17         10.56         12.59      M POUTOU Philippe
+    ## 48  Jean-Luc     13          9.49         11.11      M POUTOU Philippe
+    ## 49  Jean-Luc      3          3.57          5.00      M POUTOU Philippe
+    ## 50  Jean-Luc      9          5.70          6.87      M POUTOU Philippe
+    ## 51  Jean-Luc      8          5.06          6.90      M POUTOU Philippe
+    ## 52  Jean-Luc     40          6.37          7.41      M POUTOU Philippe
+    ## 53  Jean-Luc      5          3.62          4.46      M POUTOU Philippe
+    ## 54  Jean-Luc      6          2.90          3.33      M POUTOU Philippe
+    ## 55  Jean-Luc     43          6.99          8.70      M POUTOU Philippe
+    ## 56  Jean-Luc      4          3.17          3.96      M POUTOU Philippe
+    ## 57  Jean-Luc      9          9.89         11.69      M POUTOU Philippe
+    ## 58  Jean-Luc     34          6.72          8.27      M POUTOU Philippe
+    ## 59  Jean-Luc   1258          7.76         10.68      M POUTOU Philippe
+    ## 60  Jean-Luc      7         10.45         11.11      M POUTOU Philippe
+    ## 61  Jean-Luc      1          0.83          0.99      M POUTOU Philippe
+    ## 62  Jean-Luc     20          3.42          3.94      M POUTOU Philippe
+    ## 63  Jean-Luc    288          7.99         10.60      M POUTOU Philippe
+    ## 64  Jean-Luc      6          6.06          7.79      M POUTOU Philippe
+    ## 65  Jean-Luc      1         10.00         10.00      M POUTOU Philippe
+    ## 66  Jean-Luc     68          6.03          7.22      M POUTOU Philippe
+    ## 67  Jean-Luc      5          4.50          5.10      M POUTOU Philippe
+    ## 68  Jean-Luc     43          7.82          9.73      M POUTOU Philippe
+    ## 69  Jean-Luc      3          3.70          4.35      M POUTOU Philippe
+    ## 70  Jean-Luc     93         10.78         12.77      M POUTOU Philippe
+    ## 71  Jean-Luc      2          1.92          2.30      M POUTOU Philippe
+    ## 72  Jean-Luc      2          3.64          4.26      M POUTOU Philippe
+    ## 73  Jean-Luc    119          6.73          8.29      M POUTOU Philippe
+    ## 74  Jean-Luc     33          7.07          9.02      M POUTOU Philippe
+    ## 75  Jean-Luc     23          6.80          7.80      M POUTOU Philippe
+    ## 76  Jean-Luc     32          5.36          6.68      M POUTOU Philippe
+    ## 77  Jean-Luc      3          2.04          2.52      M POUTOU Philippe
+    ## 78  Jean-Luc      8          4.06          4.79      M POUTOU Philippe
+    ## 79  Jean-Luc     16         10.06         11.19      M POUTOU Philippe
+    ## 80  Jean-Luc     14          7.78          8.75      M POUTOU Philippe
+    ## 81  Jean-Luc    128         11.10         13.13      M POUTOU Philippe
+    ## 82  Jean-Luc     11          7.38          8.46      M POUTOU Philippe
+    ## 83  Jean-Luc     78         11.87         14.23      M POUTOU Philippe
+    ## 84  Jean-Luc      5          3.57          4.50      M POUTOU Philippe
+    ## 85  Jean-Luc      4          5.13          6.67      M POUTOU Philippe
+    ## 86  Jean-Luc     47          7.79         10.17      M POUTOU Philippe
+    ## 87  Jean-Luc     23         19.83         23.00      M POUTOU Philippe
+    ## 88  Jean-Luc     14         12.28         15.38      M POUTOU Philippe
+    ## 89  Jean-Luc      6          3.45          4.29      M POUTOU Philippe
+    ## 90  Jean-Luc     32          9.82         11.81      M POUTOU Philippe
+    ## 91  Jean-Luc    459          6.17          7.55      M POUTOU Philippe
+    ## 92  Jean-Luc      1          1.54          1.92      M POUTOU Philippe
+    ## 93  Jean-Luc      7          7.45          8.64      M POUTOU Philippe
+    ## 94  Jean-Luc     30         10.71         12.66      M POUTOU Philippe
+    ## 95  Jean-Luc     32         12.31         13.91      M POUTOU Philippe
+    ## 96  Jean-Luc     31          9.12         10.95      M POUTOU Philippe
+    ## 97  Jean-Luc     17         12.06         14.91      M POUTOU Philippe
+    ## 98  Jean-Luc     33          8.53         10.61      M POUTOU Philippe
+    ## 99  Jean-Luc     58         12.72         15.03      M POUTOU Philippe
+    ## 100 Jean-Luc    106          6.54          7.91      M POUTOU Philippe
+    ## 101 Jean-Luc     35         10.26         12.32      M POUTOU Philippe
+    ## 102 Jean-Luc     24          7.84          9.45      M POUTOU Philippe
+    ## 103 Jean-Luc    132          8.66         10.28      M POUTOU Philippe
+    ## 104 Jean-Luc   1669         26.42         33.38      M POUTOU Philippe
+    ## 105 Jean-Luc     54          6.00          7.28      M POUTOU Philippe
+    ## 106 Jean-Luc     34          6.24          8.04      M POUTOU Philippe
+    ## 107 Jean-Luc     12          5.29          6.74      M POUTOU Philippe
+    ## 108 Jean-Luc     37          7.74          9.76      M POUTOU Philippe
+    ## 109 Jean-Luc      2          2.82          3.17      M POUTOU Philippe
+    ## 110 Jean-Luc     27          8.54         10.67      M POUTOU Philippe
+    ## 111 Jean-Luc     15          9.43         11.36      M POUTOU Philippe
+    ## 112 Jean-Luc     92         11.36         13.31      M POUTOU Philippe
+    ## 113 Jean-Luc      0          0.00          0.00      M POUTOU Philippe
+    ## 114 Jean-Luc     22          6.27          7.56      M POUTOU Philippe
+    ## 115 Jean-Luc     45         10.56         12.64      M POUTOU Philippe
+    ## 116 Jean-Luc      5          4.24          5.32      M POUTOU Philippe
+    ## 117 Jean-Luc    156         10.98         13.73      M POUTOU Philippe
+    ## 118 Jean-Luc      4          4.49          5.97      M POUTOU Philippe
     ##     Voix.4 X..Voix.Ins.4 X..Voix.Exp.4 Sexe.5   Nom.5 Prénom.5 Voix.5
-    ## 1       11          1.76          2.04  FALSE ARTHAUD Nathalie      8
-    ## 2        0          0.00          0.00  FALSE ARTHAUD Nathalie      0
-    ## 3        0          0.00          0.00  FALSE ARTHAUD Nathalie      0
-    ## 4        1          0.46          0.57  FALSE ARTHAUD Nathalie      2
-    ## 5        3          0.97          1.21  FALSE ARTHAUD Nathalie      7
-    ## 6        1          1.43          1.69  FALSE ARTHAUD Nathalie      0
-    ## 7        3          1.06          1.25  FALSE ARTHAUD Nathalie      0
-    ## 8       24          0.62          0.76  FALSE ARTHAUD Nathalie     11
-    ## 9        8          2.51          2.79  FALSE ARTHAUD Nathalie      2
-    ## 10       0          0.00          0.00  FALSE ARTHAUD Nathalie      0
-    ## 11       9          0.91          1.06  FALSE ARTHAUD Nathalie      5
-    ## 12       2          0.70          0.84  FALSE ARTHAUD Nathalie      0
-    ## 13       0          0.00          0.00  FALSE ARTHAUD Nathalie      0
-    ## 14       0          0.00          0.00  FALSE ARTHAUD Nathalie      0
-    ## 15       7          1.29          1.63  FALSE ARTHAUD Nathalie      1
-    ## 16       1          1.92          2.70  FALSE ARTHAUD Nathalie      1
-    ## 17       5          0.82          1.01  FALSE ARTHAUD Nathalie      2
-    ## 18      23          1.82          2.10  FALSE ARTHAUD Nathalie     11
-    ## 19       5          4.63          5.38  FALSE ARTHAUD Nathalie      1
-    ## 20      64          1.22          1.45  FALSE ARTHAUD Nathalie     21
-    ## 21       4          1.57          1.90  FALSE ARTHAUD Nathalie      0
-    ## 22       5          1.25          1.60  FALSE ARTHAUD Nathalie      0
-    ## 23       8          1.58          1.85  FALSE ARTHAUD Nathalie      2
-    ## 24       4          2.61          3.54  FALSE ARTHAUD Nathalie      0
-    ## 25       0          0.00          0.00  FALSE ARTHAUD Nathalie      0
-    ## 26     115          1.13          1.28  FALSE ARTHAUD Nathalie     34
-    ## 27       8          0.89          1.03  FALSE ARTHAUD Nathalie      4
-    ## 28     268          0.86          1.14  FALSE ARTHAUD Nathalie    132
-    ## 29       3          0.84          1.08  FALSE ARTHAUD Nathalie      4
-    ## 30       0          0.00          0.00  FALSE ARTHAUD Nathalie      0
-    ## 31       5          2.28          2.60  FALSE ARTHAUD Nathalie      0
-    ## 32       5          0.68          0.83  FALSE ARTHAUD Nathalie      2
-    ## 33       2          0.38          0.47  FALSE ARTHAUD Nathalie      3
-    ## 34       6          2.40          2.82  FALSE ARTHAUD Nathalie      0
-    ## 35       4          0.93          1.08  FALSE ARTHAUD Nathalie      3
-    ## 36       6          2.41          2.75  FALSE ARTHAUD Nathalie      0
-    ## 37       0          0.00          0.00  FALSE ARTHAUD Nathalie      0
-    ## 38       3          1.31          1.50  FALSE ARTHAUD Nathalie      3
-    ## 39       0          0.00          0.00  FALSE ARTHAUD Nathalie      3
-    ## 40      36          1.01          1.19  FALSE ARTHAUD Nathalie     15
-    ## 41      17          1.22          1.43  FALSE ARTHAUD Nathalie      8
-    ## 42       3          1.85          2.17  FALSE ARTHAUD Nathalie      0
-    ## 43       2          1.50          2.02  FALSE ARTHAUD Nathalie      0
-    ## 44       3          2.94          3.41  FALSE ARTHAUD Nathalie      0
-    ## 45       6          2.29          2.84  FALSE ARTHAUD Nathalie      0
-    ## 46      15          0.87          1.06  FALSE ARTHAUD Nathalie      6
-    ## 47      16          0.65          0.81  FALSE ARTHAUD Nathalie     10
-    ## 48       1          2.33          2.94  FALSE ARTHAUD Nathalie      1
+    ## 1        2          1.09          1.25  FALSE ARTHAUD Nathalie      5
+    ## 2      240          0.91          1.26  FALSE ARTHAUD Nathalie    127
+    ## 3       18          0.88          1.05  FALSE ARTHAUD Nathalie      8
+    ## 4       14          1.62          1.90  FALSE ARTHAUD Nathalie      6
+    ## 5        2          1.72          2.04  FALSE ARTHAUD Nathalie      0
+    ## 6        1          0.70          0.87  FALSE ARTHAUD Nathalie      0
+    ## 7        3          1.82          2.21  FALSE ARTHAUD Nathalie      1
+    ## 8        4          2.09          2.47  FALSE ARTHAUD Nathalie      1
+    ## 9        7          1.19          1.50  FALSE ARTHAUD Nathalie      5
+    ## 10       1          0.34          0.40  FALSE ARTHAUD Nathalie      1
+    ## 11       5          1.14          1.42  FALSE ARTHAUD Nathalie      3
+    ## 12      11          0.93          1.18  FALSE ARTHAUD Nathalie      6
+    ## 13      10          0.68          0.83  FALSE ARTHAUD Nathalie      9
+    ## 14       1          0.48          0.58  FALSE ARTHAUD Nathalie      0
+    ## 15       3          0.55          0.67  FALSE ARTHAUD Nathalie      7
+    ## 16       5          0.80          0.96  FALSE ARTHAUD Nathalie      2
+    ## 17      13          1.55          1.84  FALSE ARTHAUD Nathalie      4
+    ## 18       5          1.83          2.14  FALSE ARTHAUD Nathalie      5
+    ## 19       0          0.00          0.00  FALSE ARTHAUD Nathalie      0
+    ## 20       0          0.00          0.00  FALSE ARTHAUD Nathalie      2
+    ## 21       0          0.00          0.00  FALSE ARTHAUD Nathalie      0
+    ## 22       3          2.17          2.75  FALSE ARTHAUD Nathalie      1
+    ## 23       2          2.99          3.77  FALSE ARTHAUD Nathalie      0
+    ## 24       2          1.49          1.79  FALSE ARTHAUD Nathalie      3
+    ## 25      16          1.53          1.88  FALSE ARTHAUD Nathalie      7
+    ## 26       9          1.77          2.20  FALSE ARTHAUD Nathalie      4
+    ## 27       2          0.25          0.28  FALSE ARTHAUD Nathalie      2
+    ## 28      11          0.81          1.01  FALSE ARTHAUD Nathalie      6
+    ## 29      57          0.81          1.02  FALSE ARTHAUD Nathalie     26
+    ## 30       3          1.20          1.45  FALSE ARTHAUD Nathalie      0
+    ## 31       0          0.00          0.00  FALSE ARTHAUD Nathalie      0
+    ## 32       5          2.82          3.36  FALSE ARTHAUD Nathalie      0
+    ## 33       6          2.09          2.49  FALSE ARTHAUD Nathalie      0
+    ## 34       2          1.57          1.87  FALSE ARTHAUD Nathalie      1
+    ## 35       5          3.05          3.73  FALSE ARTHAUD Nathalie      0
+    ## 36      40          1.32          1.52  FALSE ARTHAUD Nathalie     14
+    ## 37       9          2.11          2.57  FALSE ARTHAUD Nathalie      6
+    ## 38       9          1.46          1.68  FALSE ARTHAUD Nathalie      5
+    ## 39       0          0.00          0.00  FALSE ARTHAUD Nathalie      0
+    ## 40       9          1.25          1.50  FALSE ARTHAUD Nathalie      5
+    ## 41      23          1.36          1.74  FALSE ARTHAUD Nathalie     19
+    ## 42      36          0.71          0.99  FALSE ARTHAUD Nathalie     25
+    ## 43       4          1.87          2.26  FALSE ARTHAUD Nathalie      4
+    ## 44       6          0.97          1.15  FALSE ARTHAUD Nathalie      2
+    ## 45       7          2.55          2.99  FALSE ARTHAUD Nathalie      2
+    ## 46      23          0.98          1.22  FALSE ARTHAUD Nathalie     10
+    ## 47       4          2.48          2.96  FALSE ARTHAUD Nathalie      0
+    ## 48       1          0.73          0.85  FALSE ARTHAUD Nathalie      1
     ## 49       0          0.00          0.00  FALSE ARTHAUD Nathalie      0
-    ## 50      12          1.48          1.78  FALSE ARTHAUD Nathalie      4
-    ## 51       4          1.36          1.53  FALSE ARTHAUD Nathalie      2
-    ## 52       2          1.72          2.17  FALSE ARTHAUD Nathalie      1
-    ## 53       1          0.70          0.85  FALSE ARTHAUD Nathalie      0
-    ## 54       2          0.69          0.79  FALSE ARTHAUD Nathalie      0
-    ## 55       6          1.26          1.47  FALSE ARTHAUD Nathalie      1
-    ## 56       5          0.55          0.67  FALSE ARTHAUD Nathalie      3
-    ## 57       2          0.53          0.63  FALSE ARTHAUD Nathalie      1
-    ## 58      22          1.31          1.53  FALSE ARTHAUD Nathalie     19
-    ## 59      70          1.33          1.66  FALSE ARTHAUD Nathalie     27
-    ## 60       4          5.41          6.15  FALSE ARTHAUD Nathalie      0
-    ## 61       3          2.16          2.65  FALSE ARTHAUD Nathalie      2
-    ## 62       4          1.19          1.44  FALSE ARTHAUD Nathalie      0
-    ## 63       3          1.53          1.97  FALSE ARTHAUD Nathalie      2
-    ## 64       0          0.00          0.00  FALSE ARTHAUD Nathalie      0
-    ## 65       5          3.23          3.85  FALSE ARTHAUD Nathalie      1
-    ## 66       1          0.24          0.30  FALSE ARTHAUD Nathalie      2
-    ## 67       3          0.99          1.30  FALSE ARTHAUD Nathalie      3
-    ## 68       4          1.64          1.98  FALSE ARTHAUD Nathalie      5
-    ## 69       6          3.66          4.08  FALSE ARTHAUD Nathalie      2
-    ## 70       0          0.00          0.00  FALSE ARTHAUD Nathalie      1
-    ## 71       2          6.25          7.14  FALSE ARTHAUD Nathalie      0
+    ## 50       0          0.00          0.00  FALSE ARTHAUD Nathalie      0
+    ## 51       0          0.00          0.00  FALSE ARTHAUD Nathalie      0
+    ## 52      12          1.91          2.22  FALSE ARTHAUD Nathalie      6
+    ## 53       0          0.00          0.00  FALSE ARTHAUD Nathalie      1
+    ## 54       1          0.48          0.56  FALSE ARTHAUD Nathalie      3
+    ## 55       4          0.65          0.81  FALSE ARTHAUD Nathalie      2
+    ## 56       0          0.00          0.00  FALSE ARTHAUD Nathalie      1
+    ## 57       1          1.10          1.30  FALSE ARTHAUD Nathalie      0
+    ## 58       2          0.40          0.49  FALSE ARTHAUD Nathalie      1
+    ## 59     174          1.07          1.48  FALSE ARTHAUD Nathalie     95
+    ## 60       0          0.00          0.00  FALSE ARTHAUD Nathalie      0
+    ## 61       2          1.65          1.98  FALSE ARTHAUD Nathalie      0
+    ## 62       9          1.54          1.78  FALSE ARTHAUD Nathalie      1
+    ## 63      36          1.00          1.32  FALSE ARTHAUD Nathalie     23
+    ## 64       2          2.02          2.60  FALSE ARTHAUD Nathalie      1
+    ## 65       0          0.00          0.00  FALSE ARTHAUD Nathalie      0
+    ## 66      12          1.06          1.27  FALSE ARTHAUD Nathalie     11
+    ## 67       2          1.80          2.04  FALSE ARTHAUD Nathalie      0
+    ## 68       9          1.64          2.04  FALSE ARTHAUD Nathalie      3
+    ## 69       1          1.23          1.45  FALSE ARTHAUD Nathalie      0
+    ## 70       6          0.70          0.82  FALSE ARTHAUD Nathalie      5
+    ## 71       0          0.00          0.00  FALSE ARTHAUD Nathalie      0
     ## 72       0          0.00          0.00  FALSE ARTHAUD Nathalie      0
-    ## 73       0          0.00          0.00  FALSE ARTHAUD Nathalie      0
-    ## 74       0          0.00          0.00  FALSE ARTHAUD Nathalie      1
-    ## 75       0          0.00          0.00  FALSE ARTHAUD Nathalie      0
-    ## 76       3          2.68          3.45  FALSE ARTHAUD Nathalie      0
-    ## 77       0          0.00          0.00  FALSE ARTHAUD Nathalie      0
-    ## 78      19          0.73          0.91  FALSE ARTHAUD Nathalie      6
-    ## 79      17          0.78          1.05  FALSE ARTHAUD Nathalie      9
-    ## 80      16          1.86          2.30  FALSE ARTHAUD Nathalie     11
-    ## 81       4          1.72          2.03  FALSE ARTHAUD Nathalie      0
-    ## 82       1          0.52          0.63  FALSE ARTHAUD Nathalie      0
-    ## 83       3          1.72          1.99  FALSE ARTHAUD Nathalie      3
-    ## 84       9          2.44          2.71  FALSE ARTHAUD Nathalie      1
-    ## 85       1          0.45          0.53  FALSE ARTHAUD Nathalie      1
-    ## 86      11          1.43          1.72  FALSE ARTHAUD Nathalie      6
-    ## 87       0          0.00          0.00  FALSE ARTHAUD Nathalie      2
-    ## 88      28          0.77          0.94  FALSE ARTHAUD Nathalie      7
-    ## 89       2          0.50          0.56  FALSE ARTHAUD Nathalie      0
-    ## 90       0          0.00          0.00  FALSE ARTHAUD Nathalie      0
-    ## 91       0          0.00          0.00  FALSE ARTHAUD Nathalie      1
-    ## 92       4          0.85          1.01  FALSE ARTHAUD Nathalie      1
-    ## 93       2          0.63          0.74  FALSE ARTHAUD Nathalie      0
+    ## 73      16          0.90          1.11  FALSE ARTHAUD Nathalie     19
+    ## 74       6          1.28          1.64  FALSE ARTHAUD Nathalie      2
+    ## 75       4          1.18          1.36  FALSE ARTHAUD Nathalie      1
+    ## 76       5          0.84          1.04  FALSE ARTHAUD Nathalie      0
+    ## 77       2          1.36          1.68  FALSE ARTHAUD Nathalie      1
+    ## 78       0          0.00          0.00  FALSE ARTHAUD Nathalie      0
+    ## 79       4          2.52          2.80  FALSE ARTHAUD Nathalie      0
+    ## 80       1          0.56          0.63  FALSE ARTHAUD Nathalie      0
+    ## 81      10          0.87          1.03  FALSE ARTHAUD Nathalie      3
+    ## 82       2          1.34          1.54  FALSE ARTHAUD Nathalie      0
+    ## 83       5          0.76          0.91  FALSE ARTHAUD Nathalie      5
+    ## 84       1          0.71          0.90  FALSE ARTHAUD Nathalie      3
+    ## 85       1          1.28          1.67  FALSE ARTHAUD Nathalie      0
+    ## 86      17          2.82          3.68  FALSE ARTHAUD Nathalie      6
+    ## 87       4          3.45          4.00  FALSE ARTHAUD Nathalie      0
+    ## 88       1          0.88          1.10  FALSE ARTHAUD Nathalie      2
+    ## 89       1          0.57          0.71  FALSE ARTHAUD Nathalie      1
+    ## 90       3          0.92          1.11  FALSE ARTHAUD Nathalie      0
+    ## 91      43          0.58          0.71  FALSE ARTHAUD Nathalie     22
+    ## 92       1          1.54          1.92  FALSE ARTHAUD Nathalie      1
+    ## 93       0          0.00          0.00  FALSE ARTHAUD Nathalie      2
     ## 94       0          0.00          0.00  FALSE ARTHAUD Nathalie      2
-    ## 95       0          0.00          0.00  FALSE ARTHAUD Nathalie      3
-    ## 96       2          0.82          1.07  FALSE ARTHAUD Nathalie      1
-    ## 97       7          0.99          1.19  FALSE ARTHAUD Nathalie      1
-    ## 98       5          0.84          1.03  FALSE ARTHAUD Nathalie      2
-    ## 99       4          0.73          0.92  FALSE ARTHAUD Nathalie      3
-    ## 100      9          2.64          3.07  FALSE ARTHAUD Nathalie      5
-    ## 101     10          0.98          1.21  FALSE ARTHAUD Nathalie      6
-    ## 102      7          1.69          2.08  FALSE ARTHAUD Nathalie      2
-    ## 103     13          1.61          1.90  FALSE ARTHAUD Nathalie      4
-    ## 104     10          1.15          1.52  FALSE ARTHAUD Nathalie      3
-    ## 105      3          0.56          0.65  FALSE ARTHAUD Nathalie      6
-    ## 106     12          0.75          0.94  FALSE ARTHAUD Nathalie      5
-    ## 107     10          0.73          0.90  FALSE ARTHAUD Nathalie      5
-    ## 108     28          0.66          0.85  FALSE ARTHAUD Nathalie      6
-    ## 109     38          2.08          2.65  FALSE ARTHAUD Nathalie      6
-    ## 110      0          0.00          0.00  FALSE ARTHAUD Nathalie      0
-    ## 111      1          1.05          1.25  FALSE ARTHAUD Nathalie      2
-    ## 112      1          0.93          1.05  FALSE ARTHAUD Nathalie      0
-    ## 113     11          1.18          1.39  FALSE ARTHAUD Nathalie      8
-    ## 114      1          0.58          0.72  FALSE ARTHAUD Nathalie      1
-    ## 115      0          0.00          0.00  FALSE ARTHAUD Nathalie      2
-    ## 116      4          1.44          1.80  FALSE ARTHAUD Nathalie      0
-    ## 117     67          0.18          0.22  FALSE ARTHAUD Nathalie     22
+    ## 95       1          0.38          0.43  FALSE ARTHAUD Nathalie      4
+    ## 96      12          3.53          4.24  FALSE ARTHAUD Nathalie      1
+    ## 97       1          0.71          0.88  FALSE ARTHAUD Nathalie      1
+    ## 98       4          1.03          1.29  FALSE ARTHAUD Nathalie      1
+    ## 99       4          0.88          1.04  FALSE ARTHAUD Nathalie      4
+    ## 100     12          0.74          0.90  FALSE ARTHAUD Nathalie      8
+    ## 101      4          1.17          1.41  FALSE ARTHAUD Nathalie      1
+    ## 102      3          0.98          1.18  FALSE ARTHAUD Nathalie      5
+    ## 103     21          1.38          1.64  FALSE ARTHAUD Nathalie     18
+    ## 104     79          1.25          1.58  FALSE ARTHAUD Nathalie     34
+    ## 105      8          0.89          1.08  FALSE ARTHAUD Nathalie      0
+    ## 106     11          2.02          2.60  FALSE ARTHAUD Nathalie      1
+    ## 107      3          1.32          1.69  FALSE ARTHAUD Nathalie      1
+    ## 108      9          1.88          2.37  FALSE ARTHAUD Nathalie      2
+    ## 109      2          2.82          3.17  FALSE ARTHAUD Nathalie      3
+    ## 110      0          0.00          0.00  FALSE ARTHAUD Nathalie      2
+    ## 111      3          1.89          2.27  FALSE ARTHAUD Nathalie      1
+    ## 112     14          1.73          2.03  FALSE ARTHAUD Nathalie      5
+    ## 113      2          4.08          4.76  FALSE ARTHAUD Nathalie      0
+    ## 114      2          0.57          0.69  FALSE ARTHAUD Nathalie      0
+    ## 115      7          1.64          1.97  FALSE ARTHAUD Nathalie      3
+    ## 116      2          1.69          2.13  FALSE ARTHAUD Nathalie      1
+    ## 117     20          1.41          1.76  FALSE ARTHAUD Nathalie      4
+    ## 118      0          0.00          0.00  FALSE ARTHAUD Nathalie      0
     ##     X..Voix.Ins.5 X..Voix.Exp.5 Sexe.6     Nom.6 Prénom.6 Voix.6
-    ## 1            1.28          1.48      M CHEMINADE  Jacques      1
-    ## 2            0.00          0.00      M CHEMINADE  Jacques      0
-    ## 3            0.00          0.00      M CHEMINADE  Jacques      0
-    ## 4            0.92          1.14      M CHEMINADE  Jacques      0
-    ## 5            2.26          2.82      M CHEMINADE  Jacques      1
+    ## 1            2.73          3.13      M CHEMINADE  Jacques      2
+    ## 2            0.48          0.67      M CHEMINADE  Jacques     45
+    ## 3            0.39          0.47      M CHEMINADE  Jacques      4
+    ## 4            0.70          0.81      M CHEMINADE  Jacques      2
+    ## 5            0.00          0.00      M CHEMINADE  Jacques      0
     ## 6            0.00          0.00      M CHEMINADE  Jacques      0
-    ## 7            0.00          0.00      M CHEMINADE  Jacques      0
-    ## 8            0.28          0.35      M CHEMINADE  Jacques      5
-    ## 9            0.63          0.70      M CHEMINADE  Jacques      0
-    ## 10           0.00          0.00      M CHEMINADE  Jacques      0
-    ## 11           0.50          0.59      M CHEMINADE  Jacques      2
-    ## 12           0.00          0.00      M CHEMINADE  Jacques      1
-    ## 13           0.00          0.00      M CHEMINADE  Jacques      0
-    ## 14           0.00          0.00      M CHEMINADE  Jacques      0
-    ## 15           0.18          0.23      M CHEMINADE  Jacques      0
-    ## 16           1.92          2.70      M CHEMINADE  Jacques      0
-    ## 17           0.33          0.41      M CHEMINADE  Jacques      0
-    ## 18           0.87          1.00      M CHEMINADE  Jacques      7
-    ## 19           0.93          1.08      M CHEMINADE  Jacques      1
-    ## 20           0.40          0.48      M CHEMINADE  Jacques      7
-    ## 21           0.00          0.00      M CHEMINADE  Jacques      0
-    ## 22           0.00          0.00      M CHEMINADE  Jacques      1
-    ## 23           0.40          0.46      M CHEMINADE  Jacques      0
-    ## 24           0.00          0.00      M CHEMINADE  Jacques      1
-    ## 25           0.00          0.00      M CHEMINADE  Jacques      0
-    ## 26           0.33          0.38      M CHEMINADE  Jacques     21
-    ## 27           0.44          0.52      M CHEMINADE  Jacques      1
-    ## 28           0.42          0.56      M CHEMINADE  Jacques     71
-    ## 29           1.12          1.44      M CHEMINADE  Jacques      0
+    ## 7            0.61          0.74      M CHEMINADE  Jacques      1
+    ## 8            0.52          0.62      M CHEMINADE  Jacques      2
+    ## 9            0.85          1.07      M CHEMINADE  Jacques      0
+    ## 10           0.34          0.40      M CHEMINADE  Jacques      1
+    ## 11           0.68          0.85      M CHEMINADE  Jacques      2
+    ## 12           0.51          0.64      M CHEMINADE  Jacques      0
+    ## 13           0.61          0.75      M CHEMINADE  Jacques      6
+    ## 14           0.00          0.00      M CHEMINADE  Jacques      1
+    ## 15           1.28          1.56      M CHEMINADE  Jacques      1
+    ## 16           0.32          0.38      M CHEMINADE  Jacques      2
+    ## 17           0.48          0.57      M CHEMINADE  Jacques      0
+    ## 18           1.83          2.14      M CHEMINADE  Jacques      0
+    ## 19           0.00          0.00      M CHEMINADE  Jacques      0
+    ## 20           0.94          1.14      M CHEMINADE  Jacques      1
+    ## 21           0.00          0.00      M CHEMINADE  Jacques      1
+    ## 22           0.72          0.92      M CHEMINADE  Jacques      1
+    ## 23           0.00          0.00      M CHEMINADE  Jacques      0
+    ## 24           2.24          2.68      M CHEMINADE  Jacques      1
+    ## 25           0.67          0.82      M CHEMINADE  Jacques      2
+    ## 26           0.79          0.98      M CHEMINADE  Jacques      2
+    ## 27           0.25          0.28      M CHEMINADE  Jacques      0
+    ## 28           0.44          0.55      M CHEMINADE  Jacques      3
+    ## 29           0.37          0.47      M CHEMINADE  Jacques     10
     ## 30           0.00          0.00      M CHEMINADE  Jacques      0
     ## 31           0.00          0.00      M CHEMINADE  Jacques      1
-    ## 32           0.27          0.33      M CHEMINADE  Jacques      2
-    ## 33           0.57          0.70      M CHEMINADE  Jacques      1
-    ## 34           0.00          0.00      M CHEMINADE  Jacques      0
-    ## 35           0.70          0.81      M CHEMINADE  Jacques      2
-    ## 36           0.00          0.00      M CHEMINADE  Jacques      0
-    ## 37           0.00          0.00      M CHEMINADE  Jacques      3
-    ## 38           1.31          1.50      M CHEMINADE  Jacques      1
-    ## 39           1.74          2.03      M CHEMINADE  Jacques      0
-    ## 40           0.42          0.49      M CHEMINADE  Jacques      5
-    ## 41           0.57          0.67      M CHEMINADE  Jacques      2
-    ## 42           0.00          0.00      M CHEMINADE  Jacques      0
-    ## 43           0.00          0.00      M CHEMINADE  Jacques      0
-    ## 44           0.00          0.00      M CHEMINADE  Jacques      0
-    ## 45           0.00          0.00      M CHEMINADE  Jacques      0
-    ## 46           0.35          0.42      M CHEMINADE  Jacques      2
-    ## 47           0.41          0.50      M CHEMINADE  Jacques      5
-    ## 48           2.33          2.94      M CHEMINADE  Jacques      1
+    ## 32           0.00          0.00      M CHEMINADE  Jacques      0
+    ## 33           0.00          0.00      M CHEMINADE  Jacques      0
+    ## 34           0.79          0.93      M CHEMINADE  Jacques      0
+    ## 35           0.00          0.00      M CHEMINADE  Jacques      0
+    ## 36           0.46          0.53      M CHEMINADE  Jacques     10
+    ## 37           1.41          1.71      M CHEMINADE  Jacques      2
+    ## 38           0.81          0.93      M CHEMINADE  Jacques      1
+    ## 39           0.00          0.00      M CHEMINADE  Jacques      2
+    ## 40           0.70          0.83      M CHEMINADE  Jacques      2
+    ## 41           1.12          1.44      M CHEMINADE  Jacques      2
+    ## 42           0.49          0.69      M CHEMINADE  Jacques     11
+    ## 43           1.87          2.26      M CHEMINADE  Jacques      0
+    ## 44           0.32          0.38      M CHEMINADE  Jacques      0
+    ## 45           0.73          0.85      M CHEMINADE  Jacques      1
+    ## 46           0.43          0.53      M CHEMINADE  Jacques      4
+    ## 47           0.00          0.00      M CHEMINADE  Jacques      1
+    ## 48           0.73          0.85      M CHEMINADE  Jacques      1
     ## 49           0.00          0.00      M CHEMINADE  Jacques      0
-    ## 50           0.49          0.59      M CHEMINADE  Jacques      3
-    ## 51           0.68          0.76      M CHEMINADE  Jacques      0
-    ## 52           0.86          1.09      M CHEMINADE  Jacques      1
-    ## 53           0.00          0.00      M CHEMINADE  Jacques      0
-    ## 54           0.00          0.00      M CHEMINADE  Jacques      0
-    ## 55           0.21          0.25      M CHEMINADE  Jacques      1
-    ## 56           0.33          0.40      M CHEMINADE  Jacques      0
-    ## 57           0.26          0.31      M CHEMINADE  Jacques      0
-    ## 58           1.13          1.32      M CHEMINADE  Jacques      2
-    ## 59           0.51          0.64      M CHEMINADE  Jacques      3
-    ## 60           0.00          0.00      M CHEMINADE  Jacques      0
-    ## 61           1.44          1.77      M CHEMINADE  Jacques      0
-    ## 62           0.00          0.00      M CHEMINADE  Jacques      1
-    ## 63           1.02          1.32      M CHEMINADE  Jacques      0
-    ## 64           0.00          0.00      M CHEMINADE  Jacques      0
-    ## 65           0.65          0.77      M CHEMINADE  Jacques      0
-    ## 66           0.49          0.60      M CHEMINADE  Jacques      0
-    ## 67           0.99          1.30      M CHEMINADE  Jacques      0
-    ## 68           2.05          2.48      M CHEMINADE  Jacques      0
-    ## 69           1.22          1.36      M CHEMINADE  Jacques      0
-    ## 70           0.53          0.63      M CHEMINADE  Jacques      1
+    ## 50           0.00          0.00      M CHEMINADE  Jacques      1
+    ## 51           0.00          0.00      M CHEMINADE  Jacques      0
+    ## 52           0.96          1.11      M CHEMINADE  Jacques      2
+    ## 53           0.72          0.89      M CHEMINADE  Jacques      0
+    ## 54           1.45          1.67      M CHEMINADE  Jacques      1
+    ## 55           0.33          0.40      M CHEMINADE  Jacques      1
+    ## 56           0.79          0.99      M CHEMINADE  Jacques      1
+    ## 57           0.00          0.00      M CHEMINADE  Jacques      0
+    ## 58           0.20          0.24      M CHEMINADE  Jacques      2
+    ## 59           0.59          0.81      M CHEMINADE  Jacques     29
+    ## 60           0.00          0.00      M CHEMINADE  Jacques      1
+    ## 61           0.00          0.00      M CHEMINADE  Jacques      1
+    ## 62           0.17          0.20      M CHEMINADE  Jacques      2
+    ## 63           0.64          0.85      M CHEMINADE  Jacques     12
+    ## 64           1.01          1.30      M CHEMINADE  Jacques      0
+    ## 65           0.00          0.00      M CHEMINADE  Jacques      0
+    ## 66           0.98          1.17      M CHEMINADE  Jacques      5
+    ## 67           0.00          0.00      M CHEMINADE  Jacques      0
+    ## 68           0.55          0.68      M CHEMINADE  Jacques      3
+    ## 69           0.00          0.00      M CHEMINADE  Jacques      1
+    ## 70           0.58          0.69      M CHEMINADE  Jacques      5
     ## 71           0.00          0.00      M CHEMINADE  Jacques      0
     ## 72           0.00          0.00      M CHEMINADE  Jacques      0
-    ## 73           0.00          0.00      M CHEMINADE  Jacques      0
-    ## 74           1.28          1.82      M CHEMINADE  Jacques      0
-    ## 75           0.00          0.00      M CHEMINADE  Jacques      0
-    ## 76           0.00          0.00      M CHEMINADE  Jacques      0
-    ## 77           0.00          0.00      M CHEMINADE  Jacques      0
-    ## 78           0.23          0.29      M CHEMINADE  Jacques      0
-    ## 79           0.41          0.56      M CHEMINADE  Jacques      2
-    ## 80           1.28          1.58      M CHEMINADE  Jacques      1
-    ## 81           0.00          0.00      M CHEMINADE  Jacques      0
+    ## 73           1.07          1.32      M CHEMINADE  Jacques      1
+    ## 74           0.43          0.55      M CHEMINADE  Jacques      0
+    ## 75           0.30          0.34      M CHEMINADE  Jacques      1
+    ## 76           0.00          0.00      M CHEMINADE  Jacques      1
+    ## 77           0.68          0.84      M CHEMINADE  Jacques      0
+    ## 78           0.00          0.00      M CHEMINADE  Jacques      2
+    ## 79           0.00          0.00      M CHEMINADE  Jacques      0
+    ## 80           0.00          0.00      M CHEMINADE  Jacques      0
+    ## 81           0.26          0.31      M CHEMINADE  Jacques      2
     ## 82           0.00          0.00      M CHEMINADE  Jacques      0
-    ## 83           1.72          1.99      M CHEMINADE  Jacques      0
-    ## 84           0.27          0.30      M CHEMINADE  Jacques      0
-    ## 85           0.45          0.53      M CHEMINADE  Jacques      0
-    ## 86           0.78          0.94      M CHEMINADE  Jacques      1
-    ## 87           1.13          1.41      M CHEMINADE  Jacques      0
-    ## 88           0.19          0.24      M CHEMINADE  Jacques      7
-    ## 89           0.00          0.00      M CHEMINADE  Jacques      0
-    ## 90           0.00          0.00      M CHEMINADE  Jacques      0
-    ## 91           1.32          1.82      M CHEMINADE  Jacques      1
-    ## 92           0.21          0.25      M CHEMINADE  Jacques      2
-    ## 93           0.00          0.00      M CHEMINADE  Jacques      0
-    ## 94           1.48          1.60      M CHEMINADE  Jacques      2
-    ## 95           3.16          3.49      M CHEMINADE  Jacques      0
-    ## 96           0.41          0.53      M CHEMINADE  Jacques      1
-    ## 97           0.14          0.17      M CHEMINADE  Jacques      0
-    ## 98           0.34          0.41      M CHEMINADE  Jacques      2
-    ## 99           0.55          0.69      M CHEMINADE  Jacques      2
-    ## 100          1.47          1.71      M CHEMINADE  Jacques      5
-    ## 101          0.59          0.73      M CHEMINADE  Jacques      5
-    ## 102          0.48          0.60      M CHEMINADE  Jacques      0
-    ## 103          0.50          0.58      M CHEMINADE  Jacques      2
-    ## 104          0.35          0.45      M CHEMINADE  Jacques      1
-    ## 105          1.12          1.31      M CHEMINADE  Jacques      1
-    ## 106          0.31          0.39      M CHEMINADE  Jacques      3
-    ## 107          0.37          0.45      M CHEMINADE  Jacques      3
-    ## 108          0.14          0.18      M CHEMINADE  Jacques      6
-    ## 109          0.33          0.42      M CHEMINADE  Jacques      3
-    ## 110          0.00          0.00      M CHEMINADE  Jacques      0
-    ## 111          2.11          2.50      M CHEMINADE  Jacques      0
-    ## 112          0.00          0.00      M CHEMINADE  Jacques      0
-    ## 113          0.86          1.01      M CHEMINADE  Jacques      1
-    ## 114          0.58          0.72      M CHEMINADE  Jacques      0
-    ## 115          1.41          1.89      M CHEMINADE  Jacques      0
-    ## 116          0.00          0.00      M CHEMINADE  Jacques      0
-    ## 117          0.06          0.07      M CHEMINADE  Jacques     57
+    ## 83           0.76          0.91      M CHEMINADE  Jacques      1
+    ## 84           2.14          2.70      M CHEMINADE  Jacques      0
+    ## 85           0.00          0.00      M CHEMINADE  Jacques      0
+    ## 86           1.00          1.30      M CHEMINADE  Jacques      1
+    ## 87           0.00          0.00      M CHEMINADE  Jacques      0
+    ## 88           1.75          2.20      M CHEMINADE  Jacques      0
+    ## 89           0.57          0.71      M CHEMINADE  Jacques      1
+    ## 90           0.00          0.00      M CHEMINADE  Jacques      1
+    ## 91           0.30          0.36      M CHEMINADE  Jacques      9
+    ## 92           1.54          1.92      M CHEMINADE  Jacques      0
+    ## 93           2.13          2.47      M CHEMINADE  Jacques      0
+    ## 94           0.71          0.84      M CHEMINADE  Jacques      1
+    ## 95           1.54          1.74      M CHEMINADE  Jacques      1
+    ## 96           0.29          0.35      M CHEMINADE  Jacques      0
+    ## 97           0.71          0.88      M CHEMINADE  Jacques      0
+    ## 98           0.26          0.32      M CHEMINADE  Jacques      0
+    ## 99           0.88          1.04      M CHEMINADE  Jacques      1
+    ## 100          0.49          0.60      M CHEMINADE  Jacques      5
+    ## 101          0.29          0.35      M CHEMINADE  Jacques      0
+    ## 102          1.63          1.97      M CHEMINADE  Jacques      5
+    ## 103          1.18          1.40      M CHEMINADE  Jacques      3
+    ## 104          0.54          0.68      M CHEMINADE  Jacques      8
+    ## 105          0.00          0.00      M CHEMINADE  Jacques      1
+    ## 106          0.18          0.24      M CHEMINADE  Jacques      2
+    ## 107          0.44          0.56      M CHEMINADE  Jacques      0
+    ## 108          0.42          0.53      M CHEMINADE  Jacques      4
+    ## 109          4.23          4.76      M CHEMINADE  Jacques      0
+    ## 110          0.63          0.79      M CHEMINADE  Jacques      2
+    ## 111          0.63          0.76      M CHEMINADE  Jacques      0
+    ## 112          0.62          0.72      M CHEMINADE  Jacques      2
+    ## 113          0.00          0.00      M CHEMINADE  Jacques      0
+    ## 114          0.00          0.00      M CHEMINADE  Jacques      0
+    ## 115          0.70          0.84      M CHEMINADE  Jacques      1
+    ## 116          0.85          1.06      M CHEMINADE  Jacques      0
+    ## 117          0.28          0.35      M CHEMINADE  Jacques      4
+    ## 118          0.00          0.00      M CHEMINADE  Jacques      0
     ##     X..Voix.Ins.6 X..Voix.Exp.6 Sexe.7  Nom.7 Prénom.7 Voix.7
-    ## 1            0.16          0.19      M BAYROU François     57
-    ## 2            0.00          0.00      M BAYROU François      7
-    ## 3            0.00          0.00      M BAYROU François      8
-    ## 4            0.00          0.00      M BAYROU François     14
-    ## 5            0.32          0.40      M BAYROU François     24
-    ## 6            0.00          0.00      M BAYROU François      8
-    ## 7            0.00          0.00      M BAYROU François     16
-    ## 8            0.13          0.16      M BAYROU François    220
-    ## 9            0.00          0.00      M BAYROU François     43
-    ## 10           0.00          0.00      M BAYROU François      8
-    ## 11           0.20          0.24      M BAYROU François     54
-    ## 12           0.35          0.42      M BAYROU François     16
-    ## 13           0.00          0.00      M BAYROU François      1
-    ## 14           0.00          0.00      M BAYROU François      5
-    ## 15           0.00          0.00      M BAYROU François     27
-    ## 16           0.00          0.00      M BAYROU François      0
-    ## 17           0.00          0.00      M BAYROU François     44
-    ## 18           0.55          0.64      M BAYROU François    114
-    ## 19           0.93          1.08      M BAYROU François      8
-    ## 20           0.13          0.16      M BAYROU François    478
-    ## 21           0.00          0.00      M BAYROU François     22
-    ## 22           0.25          0.32      M BAYROU François     29
-    ## 23           0.00          0.00      M BAYROU François     31
-    ## 24           0.65          0.88      M BAYROU François      3
-    ## 25           0.00          0.00      M BAYROU François      9
-    ## 26           0.21          0.23      M BAYROU François   1004
-    ## 27           0.11          0.13      M BAYROU François     57
-    ## 28           0.23          0.30      M BAYROU François   2606
-    ## 29           0.00          0.00      M BAYROU François     29
-    ## 30           0.00          0.00      M BAYROU François     10
-    ## 31           0.46          0.52      M BAYROU François     22
-    ## 32           0.27          0.33      M BAYROU François     53
-    ## 33           0.19          0.23      M BAYROU François     40
-    ## 34           0.00          0.00      M BAYROU François     29
-    ## 35           0.47          0.54      M BAYROU François     36
-    ## 36           0.00          0.00      M BAYROU François     12
-    ## 37           1.60          1.97      M BAYROU François     14
-    ## 38           0.44          0.50      M BAYROU François     12
-    ## 39           0.00          0.00      M BAYROU François     13
-    ## 40           0.14          0.16      M BAYROU François    212
-    ## 41           0.14          0.17      M BAYROU François     79
-    ## 42           0.00          0.00      M BAYROU François     12
-    ## 43           0.00          0.00      M BAYROU François     17
-    ## 44           0.00          0.00      M BAYROU François      9
-    ## 45           0.00          0.00      M BAYROU François     19
-    ## 46           0.12          0.14      M BAYROU François    160
-    ## 47           0.20          0.25      M BAYROU François    180
-    ## 48           2.33          2.94      M BAYROU François      1
-    ## 49           0.00          0.00      M BAYROU François      3
-    ## 50           0.37          0.45      M BAYROU François     54
-    ## 51           0.00          0.00      M BAYROU François     24
-    ## 52           0.86          1.09      M BAYROU François      7
-    ## 53           0.00          0.00      M BAYROU François     18
-    ## 54           0.00          0.00      M BAYROU François     28
-    ## 55           0.21          0.25      M BAYROU François     57
-    ## 56           0.00          0.00      M BAYROU François     94
-    ## 57           0.00          0.00      M BAYROU François     39
-    ## 58           0.12          0.14      M BAYROU François    205
-    ## 59           0.06          0.07      M BAYROU François    263
-    ## 60           0.00          0.00      M BAYROU François      7
-    ## 61           0.00          0.00      M BAYROU François      9
-    ## 62           0.30          0.36      M BAYROU François     29
-    ## 63           0.00          0.00      M BAYROU François     20
-    ## 64           0.00          0.00      M BAYROU François      6
-    ## 65           0.00          0.00      M BAYROU François     24
-    ## 66           0.00          0.00      M BAYROU François     24
-    ## 67           0.00          0.00      M BAYROU François     15
-    ## 68           0.00          0.00      M BAYROU François     28
-    ## 69           0.00          0.00      M BAYROU François     11
-    ## 70           0.53          0.63      M BAYROU François     13
-    ## 71           0.00          0.00      M BAYROU François      6
-    ## 72           0.00          0.00      M BAYROU François      3
-    ## 73           0.00          0.00      M BAYROU François      2
-    ## 74           0.00          0.00      M BAYROU François      2
-    ## 75           0.00          0.00      M BAYROU François      1
-    ## 76           0.00          0.00      M BAYROU François      4
-    ## 77           0.00          0.00      M BAYROU François      2
-    ## 78           0.00          0.00      M BAYROU François     88
-    ## 79           0.09          0.12      M BAYROU François     44
-    ## 80           0.12          0.14      M BAYROU François     31
-    ## 81           0.00          0.00      M BAYROU François     19
-    ## 82           0.00          0.00      M BAYROU François     11
-    ## 83           0.00          0.00      M BAYROU François      9
-    ## 84           0.00          0.00      M BAYROU François     21
-    ## 85           0.00          0.00      M BAYROU François     16
-    ## 86           0.13          0.16      M BAYROU François     51
-    ## 87           0.00          0.00      M BAYROU François     12
-    ## 88           0.19          0.24      M BAYROU François    583
-    ## 89           0.00          0.00      M BAYROU François     51
-    ## 90           0.00          0.00      M BAYROU François     13
-    ## 91           1.32          1.82      M BAYROU François      7
-    ## 92           0.43          0.50      M BAYROU François     16
-    ## 93           0.00          0.00      M BAYROU François     28
-    ## 94           1.48          1.60      M BAYROU François      4
-    ## 95           0.00          0.00      M BAYROU François      5
-    ## 96           0.41          0.53      M BAYROU François     21
-    ## 97           0.00          0.00      M BAYROU François     66
-    ## 98           0.34          0.41      M BAYROU François     31
-    ## 99           0.36          0.46      M BAYROU François     27
-    ## 100          1.47          1.71      M BAYROU François     47
-    ## 101          0.49          0.60      M BAYROU François     64
-    ## 102          0.00          0.00      M BAYROU François     19
-    ## 103          0.25          0.29      M BAYROU François     67
-    ## 104          0.12          0.15      M BAYROU François     60
-    ## 105          0.19          0.22      M BAYROU François     27
-    ## 106          0.19          0.24      M BAYROU François    114
-    ## 107          0.22          0.27      M BAYROU François    107
-    ## 108          0.14          0.18      M BAYROU François    360
-    ## 109          0.16          0.21      M BAYROU François    147
-    ## 110          0.00          0.00      M BAYROU François     16
-    ## 111          0.00          0.00      M BAYROU François      9
-    ## 112          0.00          0.00      M BAYROU François     19
-    ## 113          0.11          0.13      M BAYROU François     74
-    ## 114          0.00          0.00      M BAYROU François     10
-    ## 115          0.00          0.00      M BAYROU François      6
-    ## 116          0.00          0.00      M BAYROU François     28
-    ## 117          0.15          0.19      M BAYROU François   2292
+    ## 1            1.09          1.25      M BAYROU François      9
+    ## 2            0.17          0.24      M BAYROU François   1453
+    ## 3            0.19          0.23      M BAYROU François    192
+    ## 4            0.23          0.27      M BAYROU François     70
+    ## 5            0.00          0.00      M BAYROU François      5
+    ## 6            0.00          0.00      M BAYROU François      6
+    ## 7            0.61          0.74      M BAYROU François      8
+    ## 8            1.05          1.23      M BAYROU François      8
+    ## 9            0.00          0.00      M BAYROU François     25
+    ## 10           0.34          0.40      M BAYROU François     13
+    ## 11           0.46          0.57      M BAYROU François     25
+    ## 12           0.00          0.00      M BAYROU François     68
+    ## 13           0.41          0.50      M BAYROU François    107
+    ## 14           0.48          0.58      M BAYROU François     24
+    ## 15           0.18          0.22      M BAYROU François     41
+    ## 16           0.32          0.38      M BAYROU François     43
+    ## 17           0.00          0.00      M BAYROU François     80
+    ## 18           0.00          0.00      M BAYROU François     26
+    ## 19           0.00          0.00      M BAYROU François      8
+    ## 20           0.47          0.57      M BAYROU François      8
+    ## 21           2.86          3.33      M BAYROU François      2
+    ## 22           0.72          0.92      M BAYROU François      7
+    ## 23           0.00          0.00      M BAYROU François     12
+    ## 24           0.75          0.89      M BAYROU François     10
+    ## 25           0.19          0.24      M BAYROU François     50
+    ## 26           0.39          0.49      M BAYROU François     42
+    ## 27           0.00          0.00      M BAYROU François     72
+    ## 28           0.22          0.28      M BAYROU François    118
+    ## 29           0.14          0.18      M BAYROU François    369
+    ## 30           0.00          0.00      M BAYROU François     12
+    ## 31           0.63          0.72      M BAYROU François     12
+    ## 32           0.00          0.00      M BAYROU François     15
+    ## 33           0.00          0.00      M BAYROU François     10
+    ## 34           0.00          0.00      M BAYROU François      8
+    ## 35           0.00          0.00      M BAYROU François     10
+    ## 36           0.33          0.38      M BAYROU François    349
+    ## 37           0.47          0.57      M BAYROU François     27
+    ## 38           0.16          0.19      M BAYROU François     68
+    ## 39           0.82          1.00      M BAYROU François     18
+    ## 40           0.28          0.33      M BAYROU François     48
+    ## 41           0.12          0.15      M BAYROU François    129
+    ## 42           0.22          0.30      M BAYROU François    183
+    ## 43           0.00          0.00      M BAYROU François      9
+    ## 44           0.00          0.00      M BAYROU François     57
+    ## 45           0.36          0.43      M BAYROU François     17
+    ## 46           0.17          0.21      M BAYROU François    186
+    ## 47           0.62          0.74      M BAYROU François     11
+    ## 48           0.73          0.85      M BAYROU François     14
+    ## 49           0.00          0.00      M BAYROU François      9
+    ## 50           0.63          0.76      M BAYROU François     10
+    ## 51           0.00          0.00      M BAYROU François     13
+    ## 52           0.32          0.37      M BAYROU François     64
+    ## 53           0.00          0.00      M BAYROU François      6
+    ## 54           0.48          0.56      M BAYROU François     33
+    ## 55           0.16          0.20      M BAYROU François     36
+    ## 56           0.79          0.99      M BAYROU François     10
+    ## 57           0.00          0.00      M BAYROU François     10
+    ## 58           0.40          0.49      M BAYROU François     33
+    ## 59           0.18          0.25      M BAYROU François    997
+    ## 60           1.49          1.59      M BAYROU François     15
+    ## 61           0.83          0.99      M BAYROU François      6
+    ## 62           0.34          0.39      M BAYROU François     91
+    ## 63           0.33          0.44      M BAYROU François    211
+    ## 64           0.00          0.00      M BAYROU François     11
+    ## 65           0.00          0.00      M BAYROU François      1
+    ## 66           0.44          0.53      M BAYROU François    113
+    ## 67           0.00          0.00      M BAYROU François      5
+    ## 68           0.55          0.68      M BAYROU François     37
+    ## 69           1.23          1.45      M BAYROU François      4
+    ## 70           0.58          0.69      M BAYROU François     60
+    ## 71           0.00          0.00      M BAYROU François      7
+    ## 72           0.00          0.00      M BAYROU François      2
+    ## 73           0.06          0.07      M BAYROU François    123
+    ## 74           0.00          0.00      M BAYROU François     26
+    ## 75           0.30          0.34      M BAYROU François     17
+    ## 76           0.17          0.21      M BAYROU François     60
+    ## 77           0.00          0.00      M BAYROU François     12
+    ## 78           1.02          1.20      M BAYROU François      8
+    ## 79           0.00          0.00      M BAYROU François     11
+    ## 80           0.00          0.00      M BAYROU François     10
+    ## 81           0.17          0.21      M BAYROU François     59
+    ## 82           0.00          0.00      M BAYROU François      9
+    ## 83           0.15          0.18      M BAYROU François     24
+    ## 84           0.00          0.00      M BAYROU François     13
+    ## 85           0.00          0.00      M BAYROU François     14
+    ## 86           0.17          0.22      M BAYROU François     71
+    ## 87           0.00          0.00      M BAYROU François     15
+    ## 88           0.00          0.00      M BAYROU François     12
+    ## 89           0.57          0.71      M BAYROU François      9
+    ## 90           0.31          0.37      M BAYROU François     43
+    ## 91           0.12          0.15      M BAYROU François    677
+    ## 92           0.00          0.00      M BAYROU François      3
+    ## 93           0.00          0.00      M BAYROU François     11
+    ## 94           0.36          0.42      M BAYROU François     27
+    ## 95           0.38          0.43      M BAYROU François     20
+    ## 96           0.00          0.00      M BAYROU François     22
+    ## 97           0.00          0.00      M BAYROU François      8
+    ## 98           0.00          0.00      M BAYROU François     20
+    ## 99           0.22          0.26      M BAYROU François     27
+    ## 100          0.31          0.37      M BAYROU François    156
+    ## 101          0.00          0.00      M BAYROU François     37
+    ## 102          1.63          1.97      M BAYROU François     13
+    ## 103          0.20          0.23      M BAYROU François     88
+    ## 104          0.13          0.16      M BAYROU François    171
+    ## 105          0.11          0.13      M BAYROU François     85
+    ## 106          0.37          0.47      M BAYROU François     31
+    ## 107          0.00          0.00      M BAYROU François     15
+    ## 108          0.84          1.06      M BAYROU François     31
+    ## 109          0.00          0.00      M BAYROU François      2
+    ## 110          0.63          0.79      M BAYROU François     24
+    ## 111          0.00          0.00      M BAYROU François     25
+    ## 112          0.25          0.29      M BAYROU François     59
+    ## 113          0.00          0.00      M BAYROU François      4
+    ## 114          0.00          0.00      M BAYROU François     24
+    ## 115          0.23          0.28      M BAYROU François     23
+    ## 116          0.00          0.00      M BAYROU François      6
+    ## 117          0.28          0.35      M BAYROU François     73
+    ## 118          0.00          0.00      M BAYROU François      6
     ##     X..Voix.Ins.7 X..Voix.Exp.7 Sexe.8         Nom.8 Prénom.8 Voix.8
-    ## 1            9.12         10.58      M DUPONT-AIGNAN  Nicolas      6
-    ## 2            3.41          4.05      M DUPONT-AIGNAN  Nicolas      1
-    ## 3            7.27          8.60      M DUPONT-AIGNAN  Nicolas      0
-    ## 4            6.45          8.00      M DUPONT-AIGNAN  Nicolas      8
-    ## 5            7.74          9.68      M DUPONT-AIGNAN  Nicolas      9
-    ## 6           11.43         13.56      M DUPONT-AIGNAN  Nicolas      1
-    ## 7            5.63          6.67      M DUPONT-AIGNAN  Nicolas      3
-    ## 8            5.69          7.01      M DUPONT-AIGNAN  Nicolas     57
-    ## 9           13.48         14.98      M DUPONT-AIGNAN  Nicolas      5
-    ## 10           4.47          5.23      M DUPONT-AIGNAN  Nicolas      0
-    ## 11           5.45          6.38      M DUPONT-AIGNAN  Nicolas     11
-    ## 12           5.63          6.72      M DUPONT-AIGNAN  Nicolas      2
-    ## 13           1.28          1.47      M DUPONT-AIGNAN  Nicolas      1
-    ## 14           5.56          6.94      M DUPONT-AIGNAN  Nicolas      2
-    ## 15           4.96          6.28      M DUPONT-AIGNAN  Nicolas      6
-    ## 16           0.00          0.00      M DUPONT-AIGNAN  Nicolas      1
-    ## 17           7.24          8.92      M DUPONT-AIGNAN  Nicolas     10
-    ## 18           9.00         10.39      M DUPONT-AIGNAN  Nicolas     18
-    ## 19           7.41          8.60      M DUPONT-AIGNAN  Nicolas      2
-    ## 20           9.11         10.83      M DUPONT-AIGNAN  Nicolas     77
-    ## 21           8.63         10.43      M DUPONT-AIGNAN  Nicolas      3
-    ## 22           7.25          9.27      M DUPONT-AIGNAN  Nicolas      8
-    ## 23           6.14          7.18      M DUPONT-AIGNAN  Nicolas     21
-    ## 24           1.96          2.65      M DUPONT-AIGNAN  Nicolas      0
-    ## 25          12.16         14.52      M DUPONT-AIGNAN  Nicolas      4
-    ## 26           9.88         11.19      M DUPONT-AIGNAN  Nicolas    153
-    ## 27           6.31          7.37      M DUPONT-AIGNAN  Nicolas     18
-    ## 28           8.37         11.04      M DUPONT-AIGNAN  Nicolas    320
-    ## 29           8.15         10.47      M DUPONT-AIGNAN  Nicolas      7
-    ## 30           7.81          9.01      M DUPONT-AIGNAN  Nicolas      2
-    ## 31          10.05         11.46      M DUPONT-AIGNAN  Nicolas      3
-    ## 32           7.22          8.85      M DUPONT-AIGNAN  Nicolas     23
-    ## 33           7.63          9.35      M DUPONT-AIGNAN  Nicolas      7
-    ## 34          11.60         13.62      M DUPONT-AIGNAN  Nicolas      4
-    ## 35           8.37          9.70      M DUPONT-AIGNAN  Nicolas      5
-    ## 36           4.82          5.50      M DUPONT-AIGNAN  Nicolas      4
-    ## 37           7.49          9.21      M DUPONT-AIGNAN  Nicolas      3
-    ## 38           5.24          6.00      M DUPONT-AIGNAN  Nicolas      3
-    ## 39           7.56          8.78      M DUPONT-AIGNAN  Nicolas      3
-    ## 40           5.92          6.99      M DUPONT-AIGNAN  Nicolas     40
-    ## 41           5.65          6.66      M DUPONT-AIGNAN  Nicolas     23
-    ## 42           7.41          8.70      M DUPONT-AIGNAN  Nicolas      4
-    ## 43          12.78         17.17      M DUPONT-AIGNAN  Nicolas      3
-    ## 44           8.82         10.23      M DUPONT-AIGNAN  Nicolas      1
-    ## 45           7.25          9.00      M DUPONT-AIGNAN  Nicolas      5
-    ## 46           9.28         11.27      M DUPONT-AIGNAN  Nicolas     33
-    ## 47           7.35          9.06      M DUPONT-AIGNAN  Nicolas     41
-    ## 48           2.33          2.94      M DUPONT-AIGNAN  Nicolas      1
-    ## 49           9.68         11.11      M DUPONT-AIGNAN  Nicolas      0
-    ## 50           6.64          8.01      M DUPONT-AIGNAN  Nicolas     15
-    ## 51           8.16          9.16      M DUPONT-AIGNAN  Nicolas      6
-    ## 52           6.03          7.61      M DUPONT-AIGNAN  Nicolas      1
-    ## 53          12.68         15.25      M DUPONT-AIGNAN  Nicolas      2
-    ## 54           9.66         11.11      M DUPONT-AIGNAN  Nicolas      6
-    ## 55          12.00         14.00      M DUPONT-AIGNAN  Nicolas     13
-    ## 56          10.42         12.63      M DUPONT-AIGNAN  Nicolas     13
-    ## 57          10.29         12.23      M DUPONT-AIGNAN  Nicolas      6
-    ## 58          12.22         14.30      M DUPONT-AIGNAN  Nicolas     39
-    ## 59           5.00          6.24      M DUPONT-AIGNAN  Nicolas     80
-    ## 60           9.46         10.77      M DUPONT-AIGNAN  Nicolas      2
-    ## 61           6.47          7.96      M DUPONT-AIGNAN  Nicolas      3
-    ## 62           8.63         10.47      M DUPONT-AIGNAN  Nicolas      4
-    ## 63          10.20         13.16      M DUPONT-AIGNAN  Nicolas      4
-    ## 64           7.41          9.09      M DUPONT-AIGNAN  Nicolas      4
-    ## 65          15.48         18.46      M DUPONT-AIGNAN  Nicolas      1
-    ## 66           5.84          7.25      M DUPONT-AIGNAN  Nicolas     15
-    ## 67           4.95          6.49      M DUPONT-AIGNAN  Nicolas      7
-    ## 68          11.48         13.86      M DUPONT-AIGNAN  Nicolas      2
-    ## 69           6.71          7.48      M DUPONT-AIGNAN  Nicolas      6
-    ## 70           6.91          8.23      M DUPONT-AIGNAN  Nicolas      3
-    ## 71          18.75         21.43      M DUPONT-AIGNAN  Nicolas      1
-    ## 72           6.52          7.32      M DUPONT-AIGNAN  Nicolas      2
-    ## 73           2.41          3.39      M DUPONT-AIGNAN  Nicolas      0
-    ## 74           2.56          3.64      M DUPONT-AIGNAN  Nicolas      0
-    ## 75           2.44          2.94      M DUPONT-AIGNAN  Nicolas      0
-    ## 76           3.57          4.60      M DUPONT-AIGNAN  Nicolas      3
-    ## 77           3.64          4.26      M DUPONT-AIGNAN  Nicolas      1
-    ## 78           3.38          4.21      M DUPONT-AIGNAN  Nicolas     39
-    ## 79           2.02          2.72      M DUPONT-AIGNAN  Nicolas     22
-    ## 80           3.60          4.45      M DUPONT-AIGNAN  Nicolas     16
-    ## 81           8.19          9.64      M DUPONT-AIGNAN  Nicolas      5
-    ## 82           5.70          6.88      M DUPONT-AIGNAN  Nicolas      3
-    ## 83           5.17          5.96      M DUPONT-AIGNAN  Nicolas      6
-    ## 84           5.69          6.33      M DUPONT-AIGNAN  Nicolas      4
-    ## 85           7.24          8.51      M DUPONT-AIGNAN  Nicolas      3
-    ## 86           6.64          7.99      M DUPONT-AIGNAN  Nicolas      6
-    ## 87           6.78          8.45      M DUPONT-AIGNAN  Nicolas      1
-    ## 88          16.06         19.58      M DUPONT-AIGNAN  Nicolas     37
-    ## 89          12.72         14.41      M DUPONT-AIGNAN  Nicolas      7
-    ## 90          28.89         33.33      M DUPONT-AIGNAN  Nicolas      2
-    ## 91           9.21         12.73      M DUPONT-AIGNAN  Nicolas      0
-    ## 92           3.40          4.02      M DUPONT-AIGNAN  Nicolas      5
-    ## 93           8.81         10.41      M DUPONT-AIGNAN  Nicolas     11
-    ## 94           2.96          3.20      M DUPONT-AIGNAN  Nicolas      3
-    ## 95           5.26          5.81      M DUPONT-AIGNAN  Nicolas      1
-    ## 96           8.64         11.23      M DUPONT-AIGNAN  Nicolas      2
-    ## 97           9.38         11.26      M DUPONT-AIGNAN  Nicolas     17
-    ## 98           5.24          6.37      M DUPONT-AIGNAN  Nicolas      7
-    ## 99           4.91          6.21      M DUPONT-AIGNAN  Nicolas      8
-    ## 100         13.78         16.04      M DUPONT-AIGNAN  Nicolas      5
-    ## 101          6.29          7.74      M DUPONT-AIGNAN  Nicolas     16
-    ## 102          4.59          5.65      M DUPONT-AIGNAN  Nicolas      6
-    ## 103          8.32          9.78      M DUPONT-AIGNAN  Nicolas     18
-    ## 104          6.90          9.09      M DUPONT-AIGNAN  Nicolas      6
-    ## 105          5.06          5.88      M DUPONT-AIGNAN  Nicolas      7
-    ## 106          7.11          8.94      M DUPONT-AIGNAN  Nicolas     29
-    ## 107          7.84          9.67      M DUPONT-AIGNAN  Nicolas     15
-    ## 108          8.53         10.87      M DUPONT-AIGNAN  Nicolas     83
-    ## 109          8.03         10.24      M DUPONT-AIGNAN  Nicolas     45
-    ## 110         11.27         13.68      M DUPONT-AIGNAN  Nicolas      0
-    ## 111          9.47         11.25      M DUPONT-AIGNAN  Nicolas      2
-    ## 112         17.59         20.00      M DUPONT-AIGNAN  Nicolas      1
-    ## 113          7.96          9.36      M DUPONT-AIGNAN  Nicolas     21
-    ## 114          5.85          7.19      M DUPONT-AIGNAN  Nicolas      7
-    ## 115          4.23          5.66      M DUPONT-AIGNAN  Nicolas      1
-    ## 116         10.07         12.61      M DUPONT-AIGNAN  Nicolas      4
-    ## 117          6.19          7.45      M DUPONT-AIGNAN  Nicolas    255
+    ## 1            4.92          5.63      M DUPONT-AIGNAN  Nicolas      3
+    ## 2            5.50          7.65      M DUPONT-AIGNAN  Nicolas    295
+    ## 3            9.35         11.21      M DUPONT-AIGNAN  Nicolas     34
+    ## 4            8.12          9.50      M DUPONT-AIGNAN  Nicolas     15
+    ## 5            4.31          5.10      M DUPONT-AIGNAN  Nicolas      1
+    ## 6            4.23          5.22      M DUPONT-AIGNAN  Nicolas      1
+    ## 7            4.85          5.88      M DUPONT-AIGNAN  Nicolas      0
+    ## 8            4.19          4.94      M DUPONT-AIGNAN  Nicolas      4
+    ## 9            4.27          5.35      M DUPONT-AIGNAN  Nicolas      5
+    ## 10           4.48          5.18      M DUPONT-AIGNAN  Nicolas      1
+    ## 11           5.71          7.10      M DUPONT-AIGNAN  Nicolas      4
+    ## 12           5.77          7.29      M DUPONT-AIGNAN  Nicolas     26
+    ## 13           7.27          8.92      M DUPONT-AIGNAN  Nicolas     29
+    ## 14          11.43         14.04      M DUPONT-AIGNAN  Nicolas      1
+    ## 15           7.48          9.15      M DUPONT-AIGNAN  Nicolas     11
+    ## 16           6.85          8.25      M DUPONT-AIGNAN  Nicolas     11
+    ## 17           9.55         11.32      M DUPONT-AIGNAN  Nicolas     16
+    ## 18           9.52         11.11      M DUPONT-AIGNAN  Nicolas      4
+    ## 19           6.15          7.62      M DUPONT-AIGNAN  Nicolas      5
+    ## 20           3.77          4.57      M DUPONT-AIGNAN  Nicolas      1
+    ## 21           5.71          6.67      M DUPONT-AIGNAN  Nicolas      1
+    ## 22           5.07          6.42      M DUPONT-AIGNAN  Nicolas      1
+    ## 23          17.91         22.64      M DUPONT-AIGNAN  Nicolas      1
+    ## 24           7.46          8.93      M DUPONT-AIGNAN  Nicolas      3
+    ## 25           4.78          5.88      M DUPONT-AIGNAN  Nicolas     21
+    ## 26           8.25         10.24      M DUPONT-AIGNAN  Nicolas     15
+    ## 27           8.96         10.23      M DUPONT-AIGNAN  Nicolas     11
+    ## 28           8.72         10.85      M DUPONT-AIGNAN  Nicolas     28
+    ## 29           5.28          6.61      M DUPONT-AIGNAN  Nicolas     67
+    ## 30           4.82          5.80      M DUPONT-AIGNAN  Nicolas      3
+    ## 31           7.50          8.70      M DUPONT-AIGNAN  Nicolas      3
+    ## 32           8.47         10.07      M DUPONT-AIGNAN  Nicolas      5
+    ## 33           3.48          4.15      M DUPONT-AIGNAN  Nicolas      1
+    ## 34           6.30          7.48      M DUPONT-AIGNAN  Nicolas      0
+    ## 35           6.10          7.46      M DUPONT-AIGNAN  Nicolas      2
+    ## 36          11.48         13.23      M DUPONT-AIGNAN  Nicolas     50
+    ## 37           6.34          7.71      M DUPONT-AIGNAN  Nicolas      8
+    ## 38          11.02         12.71      M DUPONT-AIGNAN  Nicolas     11
+    ## 39           7.38          9.00      M DUPONT-AIGNAN  Nicolas      2
+    ## 40           6.68          7.97      M DUPONT-AIGNAN  Nicolas     13
+    ## 41           7.61          9.76      M DUPONT-AIGNAN  Nicolas     25
+    ## 42           3.62          5.03      M DUPONT-AIGNAN  Nicolas     43
+    ## 43           4.21          5.08      M DUPONT-AIGNAN  Nicolas      3
+    ## 44           9.22         10.92      M DUPONT-AIGNAN  Nicolas      8
+    ## 45           6.20          7.26      M DUPONT-AIGNAN  Nicolas      2
+    ## 46           7.94          9.84      M DUPONT-AIGNAN  Nicolas     49
+    ## 47           6.83          8.15      M DUPONT-AIGNAN  Nicolas      3
+    ## 48          10.22         11.97      M DUPONT-AIGNAN  Nicolas      2
+    ## 49          10.71         15.00      M DUPONT-AIGNAN  Nicolas      0
+    ## 50           6.33          7.63      M DUPONT-AIGNAN  Nicolas      5
+    ## 51           8.23         11.21      M DUPONT-AIGNAN  Nicolas      0
+    ## 52          10.19         11.85      M DUPONT-AIGNAN  Nicolas     15
+    ## 53           4.35          5.36      M DUPONT-AIGNAN  Nicolas      1
+    ## 54          15.94         18.33      M DUPONT-AIGNAN  Nicolas      3
+    ## 55           5.85          7.29      M DUPONT-AIGNAN  Nicolas     12
+    ## 56           7.94          9.90      M DUPONT-AIGNAN  Nicolas      3
+    ## 57          10.99         12.99      M DUPONT-AIGNAN  Nicolas      0
+    ## 58           6.52          8.03      M DUPONT-AIGNAN  Nicolas     12
+    ## 59           6.15          8.46      M DUPONT-AIGNAN  Nicolas    263
+    ## 60          22.39         23.81      M DUPONT-AIGNAN  Nicolas      1
+    ## 61           4.96          5.94      M DUPONT-AIGNAN  Nicolas      0
+    ## 62          15.56         17.95      M DUPONT-AIGNAN  Nicolas     10
+    ## 63           5.86          7.76      M DUPONT-AIGNAN  Nicolas     58
+    ## 64          11.11         14.29      M DUPONT-AIGNAN  Nicolas      3
+    ## 65          10.00         10.00      M DUPONT-AIGNAN  Nicolas      0
+    ## 66          10.02         12.00      M DUPONT-AIGNAN  Nicolas     19
+    ## 67           4.50          5.10      M DUPONT-AIGNAN  Nicolas      2
+    ## 68           6.73          8.37      M DUPONT-AIGNAN  Nicolas     14
+    ## 69           4.94          5.80      M DUPONT-AIGNAN  Nicolas      1
+    ## 70           6.95          8.24      M DUPONT-AIGNAN  Nicolas     18
+    ## 71           6.73          8.05      M DUPONT-AIGNAN  Nicolas      4
+    ## 72           3.64          4.26      M DUPONT-AIGNAN  Nicolas      1
+    ## 73           6.95          8.57      M DUPONT-AIGNAN  Nicolas     28
+    ## 74           5.57          7.10      M DUPONT-AIGNAN  Nicolas     12
+    ## 75           5.03          5.76      M DUPONT-AIGNAN  Nicolas      4
+    ## 76          10.05         12.53      M DUPONT-AIGNAN  Nicolas      5
+    ## 77           8.16         10.08      M DUPONT-AIGNAN  Nicolas      5
+    ## 78           4.06          4.79      M DUPONT-AIGNAN  Nicolas      2
+    ## 79           6.92          7.69      M DUPONT-AIGNAN  Nicolas      3
+    ## 80           5.56          6.25      M DUPONT-AIGNAN  Nicolas      4
+    ## 81           5.12          6.05      M DUPONT-AIGNAN  Nicolas      9
+    ## 82           6.04          6.92      M DUPONT-AIGNAN  Nicolas      1
+    ## 83           3.65          4.38      M DUPONT-AIGNAN  Nicolas      4
+    ## 84           9.29         11.71      M DUPONT-AIGNAN  Nicolas      3
+    ## 85          17.95         23.33      M DUPONT-AIGNAN  Nicolas      0
+    ## 86          11.77         15.37      M DUPONT-AIGNAN  Nicolas      6
+    ## 87          12.93         15.00      M DUPONT-AIGNAN  Nicolas      0
+    ## 88          10.53         13.19      M DUPONT-AIGNAN  Nicolas      2
+    ## 89           5.17          6.43      M DUPONT-AIGNAN  Nicolas      2
+    ## 90          13.19         15.87      M DUPONT-AIGNAN  Nicolas      5
+    ## 91           9.10         11.14      M DUPONT-AIGNAN  Nicolas    111
+    ## 92           4.62          5.77      M DUPONT-AIGNAN  Nicolas      0
+    ## 93          11.70         13.58      M DUPONT-AIGNAN  Nicolas      1
+    ## 94           9.64         11.39      M DUPONT-AIGNAN  Nicolas      2
+    ## 95           7.69          8.70      M DUPONT-AIGNAN  Nicolas     15
+    ## 96           6.47          7.77      M DUPONT-AIGNAN  Nicolas      5
+    ## 97           5.67          7.02      M DUPONT-AIGNAN  Nicolas      4
+    ## 98           5.17          6.43      M DUPONT-AIGNAN  Nicolas     10
+    ## 99           5.92          6.99      M DUPONT-AIGNAN  Nicolas     13
+    ## 100          9.63         11.64      M DUPONT-AIGNAN  Nicolas     34
+    ## 101         10.85         13.03      M DUPONT-AIGNAN  Nicolas      9
+    ## 102          4.25          5.12      M DUPONT-AIGNAN  Nicolas      4
+    ## 103          5.77          6.85      M DUPONT-AIGNAN  Nicolas     19
+    ## 104          2.71          3.42      M DUPONT-AIGNAN  Nicolas     51
+    ## 105          9.44         11.46      M DUPONT-AIGNAN  Nicolas     10
+    ## 106          5.69          7.33      M DUPONT-AIGNAN  Nicolas     10
+    ## 107          6.61          8.43      M DUPONT-AIGNAN  Nicolas      7
+    ## 108          6.49          8.18      M DUPONT-AIGNAN  Nicolas     12
+    ## 109          2.82          3.17      M DUPONT-AIGNAN  Nicolas      1
+    ## 110          7.59          9.49      M DUPONT-AIGNAN  Nicolas      4
+    ## 111         15.72         18.94      M DUPONT-AIGNAN  Nicolas      3
+    ## 112          7.28          8.54      M DUPONT-AIGNAN  Nicolas     19
+    ## 113          8.16          9.52      M DUPONT-AIGNAN  Nicolas      0
+    ## 114          6.84          8.25      M DUPONT-AIGNAN  Nicolas     10
+    ## 115          5.40          6.46      M DUPONT-AIGNAN  Nicolas      8
+    ## 116          5.08          6.38      M DUPONT-AIGNAN  Nicolas      2
+    ## 117          5.14          6.43      M DUPONT-AIGNAN  Nicolas     31
+    ## 118          6.74          8.96      M DUPONT-AIGNAN  Nicolas      1
     ##     X..Voix.Ins.8 X..Voix.Exp.8 Sexe.9    Nom.9 Prénom.9 Voix.9
-    ## 1            0.96          1.11      M HOLLANDE François    117
-    ## 2            0.49          0.58      M HOLLANDE François     61
-    ## 3            0.00          0.00      M HOLLANDE François     16
-    ## 4            3.69          4.57      M HOLLANDE François     26
-    ## 5            2.90          3.63      M HOLLANDE François     46
-    ## 6            1.43          1.69      M HOLLANDE François     17
-    ## 7            1.06          1.25      M HOLLANDE François     74
-    ## 8            1.47          1.82      M HOLLANDE François    533
-    ## 9            1.57          1.74      M HOLLANDE François     71
-    ## 10           0.00          0.00      M HOLLANDE François     73
-    ## 11           1.11          1.30      M HOLLANDE François    286
-    ## 12           0.70          0.84      M HOLLANDE François     31
-    ## 13           1.28          1.47      M HOLLANDE François      4
-    ## 14           2.22          2.78      M HOLLANDE François     12
-    ## 15           1.10          1.40      M HOLLANDE François    126
-    ## 16           1.92          2.70      M HOLLANDE François     15
-    ## 17           1.64          2.03      M HOLLANDE François    108
-    ## 18           1.42          1.64      M HOLLANDE François    349
-    ## 19           1.85          2.15      M HOLLANDE François     18
-    ## 20           1.47          1.74      M HOLLANDE François   1519
-    ## 21           1.18          1.42      M HOLLANDE François     46
-    ## 22           2.00          2.56      M HOLLANDE François     68
-    ## 23           4.16          4.86      M HOLLANDE François    123
-    ## 24           0.00          0.00      M HOLLANDE François     44
-    ## 25           5.41          6.45      M HOLLANDE François     12
-    ## 26           1.51          1.71      M HOLLANDE François   2959
-    ## 27           1.99          2.33      M HOLLANDE François    251
-    ## 28           1.03          1.36      M HOLLANDE François   8426
-    ## 29           1.97          2.53      M HOLLANDE François     52
-    ## 30           1.56          1.80      M HOLLANDE François     24
-    ## 31           1.37          1.56      M HOLLANDE François     35
-    ## 32           3.13          3.84      M HOLLANDE François    126
-    ## 33           1.34          1.64      M HOLLANDE François     96
-    ## 34           1.60          1.88      M HOLLANDE François     43
-    ## 35           1.16          1.35      M HOLLANDE François    120
-    ## 36           1.61          1.83      M HOLLANDE François     44
-    ## 37           1.60          1.97      M HOLLANDE François     25
-    ## 38           1.31          1.50      M HOLLANDE François     53
-    ## 39           1.74          2.03      M HOLLANDE François     38
-    ## 40           1.12          1.32      M HOLLANDE François    972
-    ## 41           1.65          1.94      M HOLLANDE François    427
-    ## 42           2.47          2.90      M HOLLANDE François     48
-    ## 43           2.26          3.03      M HOLLANDE François     15
-    ## 44           0.98          1.14      M HOLLANDE François     33
-    ## 45           1.91          2.37      M HOLLANDE François     63
-    ## 46           1.91          2.32      M HOLLANDE François    374
-    ## 47           1.67          2.06      M HOLLANDE François    444
-    ## 48           2.33          2.94      M HOLLANDE François      9
-    ## 49           0.00          0.00      M HOLLANDE François      4
-    ## 50           1.85          2.23      M HOLLANDE François    189
-    ## 51           2.04          2.29      M HOLLANDE François     52
-    ## 52           0.86          1.09      M HOLLANDE François     29
-    ## 53           1.41          1.69      M HOLLANDE François     14
-    ## 54           2.07          2.38      M HOLLANDE François     55
-    ## 55           2.74          3.19      M HOLLANDE François     84
-    ## 56           1.44          1.75      M HOLLANDE François    167
-    ## 57           1.58          1.88      M HOLLANDE François     82
-    ## 58           2.32          2.72      M HOLLANDE François    377
-    ## 59           1.52          1.90      M HOLLANDE François   1547
-    ## 60           2.70          3.08      M HOLLANDE François     17
-    ## 61           2.16          2.65      M HOLLANDE François     23
-    ## 62           1.19          1.44      M HOLLANDE François     53
-    ## 63           2.04          2.63      M HOLLANDE François     50
-    ## 64           4.94          6.06      M HOLLANDE François      2
-    ## 65           0.65          0.77      M HOLLANDE François     18
-    ## 66           3.65          4.53      M HOLLANDE François     77
-    ## 67           2.31          3.03      M HOLLANDE François     48
-    ## 68           0.82          0.99      M HOLLANDE François     49
-    ## 69           3.66          4.08      M HOLLANDE François     27
-    ## 70           1.60          1.90      M HOLLANDE François     44
-    ## 71           3.13          3.57      M HOLLANDE François      3
-    ## 72           4.35          4.88      M HOLLANDE François      5
-    ## 73           0.00          0.00      M HOLLANDE François     21
-    ## 74           0.00          0.00      M HOLLANDE François     12
-    ## 75           0.00          0.00      M HOLLANDE François     10
-    ## 76           2.68          3.45      M HOLLANDE François     19
-    ## 77           1.82          2.13      M HOLLANDE François     22
-    ## 78           1.50          1.87      M HOLLANDE François    483
-    ## 79           1.01          1.36      M HOLLANDE François    572
-    ## 80           1.86          2.30      M HOLLANDE François    181
-    ## 81           2.16          2.54      M HOLLANDE François     52
-    ## 82           1.55          1.88      M HOLLANDE François     39
-    ## 83           3.45          3.97      M HOLLANDE François     35
-    ## 84           1.08          1.20      M HOLLANDE François    108
-    ## 85           1.36          1.60      M HOLLANDE François     41
-    ## 86           0.78          0.94      M HOLLANDE François    234
-    ## 87           0.56          0.70      M HOLLANDE François     43
-    ## 88           1.02          1.24      M HOLLANDE François    893
-    ## 89           1.75          1.98      M HOLLANDE François     91
-    ## 90           4.44          5.13      M HOLLANDE François     14
-    ## 91           0.00          0.00      M HOLLANDE François     18
-    ## 92           1.06          1.26      M HOLLANDE François    108
-    ## 93           3.46          4.09      M HOLLANDE François     47
-    ## 94           2.22          2.40      M HOLLANDE François     37
-    ## 95           1.05          1.16      M HOLLANDE François     21
-    ## 96           0.82          1.07      M HOLLANDE François     41
-    ## 97           2.41          2.90      M HOLLANDE François    128
-    ## 98           1.18          1.44      M HOLLANDE François    140
-    ## 99           1.45          1.84      M HOLLANDE François    156
-    ## 100          1.47          1.71      M HOLLANDE François     69
-    ## 101          1.57          1.93      M HOLLANDE François    216
-    ## 102          1.45          1.79      M HOLLANDE François     95
-    ## 103          2.24          2.63      M HOLLANDE François    203
-    ## 104          0.69          0.91      M HOLLANDE François    114
-    ## 105          1.31          1.53      M HOLLANDE François     87
-    ## 106          1.81          2.27      M HOLLANDE François    286
-    ## 107          1.10          1.36      M HOLLANDE François    288
-    ## 108          1.97          2.51      M HOLLANDE François    770
-    ## 109          2.46          3.13      M HOLLANDE François    400
-    ## 110          0.00          0.00      M HOLLANDE François     25
-    ## 111          2.11          2.50      M HOLLANDE François     10
-    ## 112          0.93          1.05      M HOLLANDE François     13
-    ## 113          2.26          2.65      M HOLLANDE François    254
-    ## 114          4.09          5.04      M HOLLANDE François     28
-    ## 115          0.70          0.94      M HOLLANDE François     15
-    ## 116          1.44          1.80      M HOLLANDE François     52
-    ## 117          0.69          0.83      M HOLLANDE François   3132
+    ## 1            1.64          1.88      M HOLLANDE François     27
+    ## 2            1.12          1.55      M HOLLANDE François   6278
+    ## 3            1.66          1.98      M HOLLANDE François    483
+    ## 4            1.74          2.04      M HOLLANDE François    207
+    ## 5            0.86          1.02      M HOLLANDE François     16
+    ## 6            0.70          0.87      M HOLLANDE François     25
+    ## 7            0.00          0.00      M HOLLANDE François     28
+    ## 8            2.09          2.47      M HOLLANDE François     37
+    ## 9            0.85          1.07      M HOLLANDE François    154
+    ## 10           0.34          0.40      M HOLLANDE François    126
+    ## 11           0.91          1.14      M HOLLANDE François     54
+    ## 12           2.21          2.79      M HOLLANDE François    227
+    ## 13           1.97          2.42      M HOLLANDE François    400
+    ## 14           0.48          0.58      M HOLLANDE François     59
+    ## 15           2.01          2.46      M HOLLANDE François    161
+    ## 16           1.75          2.11      M HOLLANDE François    170
+    ## 17           1.91          2.26      M HOLLANDE François    235
+    ## 18           1.47          1.71      M HOLLANDE François     65
+    ## 19           3.85          4.76      M HOLLANDE François     22
+    ## 20           0.47          0.57      M HOLLANDE François     41
+    ## 21           2.86          3.33      M HOLLANDE François      8
+    ## 22           0.72          0.92      M HOLLANDE François     31
+    ## 23           1.49          1.89      M HOLLANDE François     12
+    ## 24           2.24          2.68      M HOLLANDE François     23
+    ## 25           2.01          2.47      M HOLLANDE François    255
+    ## 26           2.95          3.66      M HOLLANDE François    140
+    ## 27           1.37          1.56      M HOLLANDE François    207
+    ## 28           2.07          2.57      M HOLLANDE François    233
+    ## 29           0.96          1.20      M HOLLANDE François   1272
+    ## 30           1.20          1.45      M HOLLANDE François     53
+    ## 31           1.88          2.17      M HOLLANDE François     35
+    ## 32           2.82          3.36      M HOLLANDE François     38
+    ## 33           0.35          0.41      M HOLLANDE François     85
+    ## 34           0.00          0.00      M HOLLANDE François     28
+    ## 35           1.22          1.49      M HOLLANDE François     28
+    ## 36           1.65          1.90      M HOLLANDE François    938
+    ## 37           1.88          2.29      M HOLLANDE François    100
+    ## 38           1.78          2.06      M HOLLANDE François    145
+    ## 39           0.82          1.00      M HOLLANDE François     54
+    ## 40           1.81          2.16      M HOLLANDE François     99
+    ## 41           1.47          1.89      M HOLLANDE François    288
+    ## 42           0.85          1.18      M HOLLANDE François   1230
+    ## 43           1.40          1.69      M HOLLANDE François     39
+    ## 44           1.29          1.53      M HOLLANDE François     86
+    ## 45           0.73          0.85      M HOLLANDE François     45
+    ## 46           2.09          2.59      M HOLLANDE François    513
+    ## 47           1.86          2.22      M HOLLANDE François     38
+    ## 48           1.46          1.71      M HOLLANDE François     23
+    ## 49           0.00          0.00      M HOLLANDE François     16
+    ## 50           3.16          3.82      M HOLLANDE François     23
+    ## 51           0.00          0.00      M HOLLANDE François     19
+    ## 52           2.39          2.78      M HOLLANDE François    164
+    ## 53           0.72          0.89      M HOLLANDE François     23
+    ## 54           1.45          1.67      M HOLLANDE François     34
+    ## 55           1.95          2.43      M HOLLANDE François    100
+    ## 56           2.38          2.97      M HOLLANDE François      9
+    ## 57           0.00          0.00      M HOLLANDE François     13
+    ## 58           2.37          2.92      M HOLLANDE François     50
+    ## 59           1.62          2.23      M HOLLANDE François   3443
+    ## 60           1.49          1.59      M HOLLANDE François      8
+    ## 61           0.00          0.00      M HOLLANDE François     19
+    ## 62           1.71          1.97      M HOLLANDE François     61
+    ## 63           1.61          2.13      M HOLLANDE François    789
+    ## 64           3.03          3.90      M HOLLANDE François     13
+    ## 65           0.00          0.00      M HOLLANDE François      1
+    ## 66           1.68          2.02      M HOLLANDE François    183
+    ## 67           1.80          2.04      M HOLLANDE François     17
+    ## 68           2.55          3.17      M HOLLANDE François     66
+    ## 69           1.23          1.45      M HOLLANDE François      9
+    ## 70           2.09          2.47      M HOLLANDE François    218
+    ## 71           3.85          4.60      M HOLLANDE François     19
+    ## 72           1.82          2.13      M HOLLANDE François     22
+    ## 73           1.58          1.95      M HOLLANDE François    339
+    ## 74           2.57          3.28      M HOLLANDE François     78
+    ## 75           1.18          1.36      M HOLLANDE François     81
+    ## 76           0.84          1.04      M HOLLANDE François     83
+    ## 77           3.40          4.20      M HOLLANDE François     22
+    ## 78           1.02          1.20      M HOLLANDE François     22
+    ## 79           1.89          2.10      M HOLLANDE François     38
+    ## 80           2.22          2.50      M HOLLANDE François     47
+    ## 81           0.78          0.92      M HOLLANDE François    314
+    ## 82           0.67          0.77      M HOLLANDE François     35
+    ## 83           0.61          0.73      M HOLLANDE François    256
+    ## 84           2.14          2.70      M HOLLANDE François     28
+    ## 85           0.00          0.00      M HOLLANDE François     18
+    ## 86           1.00          1.30      M HOLLANDE François    103
+    ## 87           0.00          0.00      M HOLLANDE François     19
+    ## 88           1.75          2.20      M HOLLANDE François     17
+    ## 89           1.15          1.43      M HOLLANDE François     16
+    ## 90           1.53          1.85      M HOLLANDE François     47
+    ## 91           1.49          1.83      M HOLLANDE François   1425
+    ## 92           0.00          0.00      M HOLLANDE François     27
+    ## 93           1.06          1.23      M HOLLANDE François     22
+    ## 94           0.71          0.84      M HOLLANDE François     41
+    ## 95           5.77          6.52      M HOLLANDE François     63
+    ## 96           1.47          1.77      M HOLLANDE François     45
+    ## 97           2.84          3.51      M HOLLANDE François     16
+    ## 98           2.58          3.22      M HOLLANDE François     72
+    ## 99           2.85          3.37      M HOLLANDE François     78
+    ## 100          2.10          2.54      M HOLLANDE François    243
+    ## 101          2.64          3.17      M HOLLANDE François     51
+    ## 102          1.31          1.57      M HOLLANDE François     75
+    ## 103          1.25          1.48      M HOLLANDE François    381
+    ## 104          0.81          1.02      M HOLLANDE François   1290
+    ## 105          1.11          1.35      M HOLLANDE François    167
+    ## 106          1.83          2.36      M HOLLANDE François    102
+    ## 107          3.08          3.93      M HOLLANDE François     12
+    ## 108          2.51          3.17      M HOLLANDE François    124
+    ## 109          1.41          1.59      M HOLLANDE François     13
+    ## 110          1.27          1.58      M HOLLANDE François     64
+    ## 111          1.89          2.27      M HOLLANDE François     36
+    ## 112          2.35          2.75      M HOLLANDE François    209
+    ## 113          0.00          0.00      M HOLLANDE François      3
+    ## 114          2.85          3.44      M HOLLANDE François     53
+    ## 115          1.88          2.25      M HOLLANDE François     69
+    ## 116          1.69          2.13      M HOLLANDE François     18
+    ## 117          2.18          2.73      M HOLLANDE François    333
+    ## 118          1.12          1.49      M HOLLANDE François     18
     ##     X..Voix.Ins.9 X..Voix.Exp.9
-    ## 1           18.72         21.71
-    ## 2           29.76         35.26
-    ## 3           14.55         17.20
-    ## 4           11.98         14.86
-    ## 5           14.84         18.55
-    ## 6           24.29         28.81
-    ## 7           26.06         30.83
-    ## 8           13.79         16.99
-    ## 9           22.26         24.74
-    ## 10          40.78         47.71
-    ## 11          28.86         33.77
-    ## 12          10.92         13.03
-    ## 13           5.13          5.88
-    ## 14          13.33         16.67
-    ## 15          23.16         29.30
-    ## 16          28.85         40.54
-    ## 17          17.76         21.91
-    ## 18          27.57         31.81
-    ## 19          16.67         19.35
-    ## 20          28.96         34.41
-    ## 21          18.04         21.80
-    ## 22          17.00         21.73
-    ## 23          24.36         28.47
-    ## 24          28.76         38.94
-    ## 25          16.22         19.35
-    ## 26          29.11         32.99
-    ## 27          27.80         32.47
-    ## 28          27.08         35.69
-    ## 29          14.61         18.77
-    ## 30          18.75         21.62
-    ## 31          15.98         18.23
-    ## 32          17.17         21.04
-    ## 33          18.32         22.43
-    ## 34          17.20         20.19
-    ## 35          27.91         32.35
-    ## 36          17.67         20.18
-    ## 37          13.37         16.45
-    ## 38          23.14         26.50
-    ## 39          22.09         25.68
-    ## 40          27.14         32.06
-    ## 41          30.54         36.00
-    ## 42          29.63         34.78
-    ## 43          11.28         15.15
-    ## 44          32.35         37.50
-    ## 45          24.05         29.86
-    ## 46          21.68         26.34
-    ## 47          18.14         22.36
-    ## 48          20.93         26.47
-    ## 49          12.90         14.81
-    ## 50          23.25         28.04
-    ## 51          17.69         19.85
-    ## 52          25.00         31.52
-    ## 53           9.86         11.86
-    ## 54          18.97         21.83
-    ## 55          17.68         20.64
-    ## 56          18.51         22.45
-    ## 57          21.64         25.71
-    ## 58          22.47         26.29
-    ## 59          29.41         36.72
-    ## 60          22.97         26.15
-    ## 61          16.55         20.35
-    ## 62          15.77         19.13
-    ## 63          25.51         32.89
-    ## 64           2.47          3.03
-    ## 65          11.61         13.85
-    ## 66          18.73         23.26
-    ## 67          15.84         20.78
-    ## 68          20.08         24.26
-    ## 69          16.46         18.37
-    ## 70          23.40         27.85
-    ## 71           9.38         10.71
-    ## 72          10.87         12.20
-    ## 73          25.30         35.59
-    ## 74          15.38         21.82
-    ## 75          24.39         29.41
-    ## 76          16.96         21.84
-    ## 77          40.00         46.81
-    ## 78          18.54         23.11
-    ## 79          26.29         35.37
-    ## 80          21.00         26.01
-    ## 81          22.41         26.40
-    ## 82          20.21         24.38
-    ## 83          20.11         23.18
-    ## 84          29.27         32.53
-    ## 85          18.55         21.81
-    ## 86          30.47         36.68
-    ## 87          24.29         30.28
-    ## 88          24.60         30.00
-    ## 89          22.69         25.71
-    ## 90          31.11         35.90
-    ## 91          23.68         32.73
-    ## 92          22.98         27.14
-    ## 93          14.78         17.47
-    ## 94          27.41         29.60
-    ## 95          22.11         24.42
-    ## 96          16.87         21.93
-    ## 97          18.18         21.84
-    ## 98          23.65         28.75
-    ## 99          28.36         35.86
-    ## 100         20.23         23.55
-    ## 101         21.24         26.12
-    ## 102         22.95         28.27
-    ## 103         25.22         29.64
-    ## 104         13.12         17.27
-    ## 105         16.29         18.95
-    ## 106         17.84         22.43
-    ## 107         21.10         26.04
-    ## 108         18.25         23.26
-    ## 109         21.85         27.86
-    ## 110         17.61         21.37
-    ## 111         10.53         12.50
-    ## 112         12.04         13.68
-    ## 113         27.31         32.11
-    ## 114         16.37         20.14
-    ## 115         10.56         14.15
-    ## 116         18.71         23.42
-    ## 117          8.46         10.17
+    ## 1           14.75         16.88
+    ## 2           23.75         33.07
+    ## 3           23.52         28.20
+    ## 4           24.01         28.09
+    ## 5           13.79         16.33
+    ## 6           17.61         21.74
+    ## 7           16.97         20.59
+    ## 8           19.37         22.84
+    ## 9           26.28         32.98
+    ## 10          43.45         50.20
+    ## 11          12.33         15.34
+    ## 12          19.27         24.33
+    ## 13          27.19         33.36
+    ## 14          28.10         34.50
+    ## 15          29.38         35.94
+    ## 16          27.07         32.63
+    ## 17          28.04         33.24
+    ## 18          23.81         27.78
+    ## 19          16.92         20.95
+    ## 20          19.34         23.43
+    ## 21          22.86         26.67
+    ## 22          22.46         28.44
+    ## 23          17.91         22.64
+    ## 24          17.16         20.54
+    ## 25          24.36         29.96
+    ## 26          27.50         34.15
+    ## 27          25.75         29.40
+    ## 28          17.22         21.42
+    ## 29          18.18         22.80
+    ## 30          21.29         25.60
+    ## 31          21.88         25.36
+    ## 32          21.47         25.50
+    ## 33          29.62         35.27
+    ## 34          22.05         26.17
+    ## 35          17.07         20.90
+    ## 36          30.87         35.57
+    ## 37          23.47         28.57
+    ## 38          23.50         27.10
+    ## 39          22.13         27.00
+    ## 40          13.77         16.45
+    ## 41          16.98         21.79
+    ## 42          24.31         33.82
+    ## 43          18.22         22.03
+    ## 44          13.92         16.48
+    ## 45          16.42         19.23
+    ## 46          21.90         27.14
+    ## 47          23.60         28.15
+    ## 48          16.79         19.66
+    ## 49          19.05         26.67
+    ## 50          14.56         17.56
+    ## 51          12.03         16.38
+    ## 52          26.11         30.37
+    ## 53          16.67         20.54
+    ## 54          16.43         18.89
+    ## 55          16.26         20.24
+    ## 56           7.14          8.91
+    ## 57          14.29         16.88
+    ## 58           9.88         12.17
+    ## 59          21.25         29.23
+    ## 60          11.94         12.70
+    ## 61          15.70         18.81
+    ## 62          10.43         12.03
+    ## 63          21.90         29.03
+    ## 64          13.13         16.88
+    ## 65          10.00         10.00
+    ## 66          16.22         19.43
+    ## 67          15.32         17.35
+    ## 68          12.00         14.93
+    ## 69          11.11         13.04
+    ## 70          25.26         29.95
+    ## 71          18.27         21.84
+    ## 72          40.00         46.81
+    ## 73          19.16         23.62
+    ## 74          16.70         21.31
+    ## 75          23.96         27.46
+    ## 76          13.90         17.33
+    ## 77          14.97         18.49
+    ## 78          11.17         13.17
+    ## 79          23.90         26.57
+    ## 80          26.11         29.38
+    ## 81          27.23         32.21
+    ## 82          23.49         26.92
+    ## 83          38.96         46.72
+    ## 84          20.00         25.23
+    ## 85          23.08         30.00
+    ## 86          17.08         22.29
+    ## 87          16.38         19.00
+    ## 88          14.91         18.68
+    ## 89           9.20         11.43
+    ## 90          14.42         17.34
+    ## 91          19.16         23.45
+    ## 92          41.54         51.92
+    ## 93          23.40         27.16
+    ## 94          14.64         17.30
+    ## 95          24.23         27.39
+    ## 96          13.24         15.90
+    ## 97          11.35         14.04
+    ## 98          18.60         23.15
+    ## 99          17.11         20.21
+    ## 100         15.00         18.13
+    ## 101         14.96         17.96
+    ## 102         24.51         29.53
+    ## 103         25.00         29.67
+    ## 104         20.42         25.80
+    ## 105         18.56         22.51
+    ## 106         18.72         24.11
+    ## 107          5.29          6.74
+    ## 108         25.94         32.72
+    ## 109         18.31         20.63
+    ## 110         20.25         25.30
+    ## 111         22.64         27.27
+    ## 112         25.80         30.25
+    ## 113          6.12          7.14
+    ## 114         15.10         18.21
+    ## 115         16.20         19.38
+    ## 116         15.25         19.15
+    ## 117         23.43         29.31
+    ## 118         20.22         26.87
 
 ``` r
 df_zones_communes %>% filter(LIBGEO %in% sample_pres)
 ```
 
     ##     CODGEO                        LIBGEO DEP REG      EPCI NATURE_EPCI ARR
-    ## 1    01122          Cormaranche-en-Bugey  01  84 240100578          CC 011
-    ## 2    02097                      Boncourt  02  32 240200576          CC 022
-    ## 3    02271                      Dravegny  02  32 200072031          CA 021
-    ## 4    02518                     Montlevon  02  32 200072031          CA 021
-    ## 5    03139                      Laprugne  03  84 200071363          CA 033
-    ## 6    03222                 Saint-Caprais  03  84 240300558          CC 031
-    ## 7    03241        Saint-Léopardin-d'Augy  03  84 200071140          CA 032
-    ## 8    06075                        Levens  06  93 200030195          ME 062
-    ## 9    07314                        Silhac  07  84 200071413          CA 072
-    ## 10   09173                       Loubens  09  76 200067791          CA 091
-    ## 11   09289              Lorp-Sentaraille  09  76 200067940          CC 093
-    ## 12   10121                     Dampierre  10  44 200071777          CC 103
-    ## 13   10154           Fontenay-de-Bossery  10  44 200006716          CC 102
-    ## 14   11110                     Coustouge  11  76 200035863          CC 113
-    ## 15   11261                          Moux  11  76 200035863          CC 113
-    ## 16   11282           Peyrefitte-du-Razès  11  76 200043776          CC 112
-    ## 17   12036                       Brommat  12  76 200067171          CC 122
-    ## 18   12138              Marcillac-Vallon  12  76 241200641          CC 122
-    ## 19   16358     Saint-Yrieix-sur-Charente  16  75 200071827          CA 161
-    ## 20   17023                         Aujac  17  75 200041689          CC 175
-    ## 21   17355               Sainte-Lheurine  17  75 200041523          CC 171
-    ## 22   18201                 Saint-Caprais  18  24 241800457          CC 181
-    ## 23   21121                Bussy-la-Pesle  21  27 200039055          CC 212
-    ## 24   22187                        Plérin  22  53 200069409          CA 224
-    ## 25   22256             Quemper-Guézennec  22  53 200067981          CA 222
-    ## 26   22278                  Saint-Brieuc  22  53 200069409          CA 224
-    ## 27   27002                          Acon  27  28 200066462          CC 273
-    ## 28   27081                      Boncourt  27  28 200071454          CA 273
-    ## 29   28050                      Boncourt  28  24 200040277          CA 283
-    ## 30   28226                    Maillebois  28  24 200040277          CA 283
-    ## 31   28275                         Néron  28  24 200069953          CC 283
-    ## 32   28407                      Vichères  28  24 200006971          CC 284
-    ## 33   29294                     Le Tréhou  29  53 242900801          CC 291
-    ## 34   2B238              Poggio-di-Venaco  2B  94 242020071          CC 2B3
-    ## 35   30013                    Argilliers  30  76 243000684          CC 302
-    ## 36   30022                         Aujac  30  76 200066918          CA 301
-    ## 37   30099                          Cros  30  76 200034411          CC 303
-    ## 38   30205                 Pougnadoresse  30  76 200034379          CC 302
-    ## 39   31182                    Fenouillet  31  76 243100518          ME 313
-    ## 40   31239               L'Isle-en-Dodon  31  76 200072643          CC 312
-    ## 41   32007                       Ardizas  32  76 200034726          CC 322
-    ## 42   32326                     Pouylebon  32  76 243200425          CC 323
-    ## 43   32467                 Saint-Caprais  32  76 200042372          CC 321
-    ## 44   33250                       Loubens  33  75 200044394          CC 333
-    ## 45   38105                       Chirens  38  84 243800984          CA 381
-    ## 46   38261                      Morestel  38  84 200068542          CC 382
-    ## 47   39136                      Chemenot  39  27 200069615          CC 392
-    ## 48   39190                     Dampierre  39  27 243900560          CC 391
-    ## 49   39220                     Falletans  39  27 200010650          CA 391
-    ## 50   39342                         Monay  39  27 200071595          CC 391
-    ## 51   41001                        Ambloy  41  24 200072072          CA 412
-    ## 52   41166                         Oisly  41  24 200072064          CC 413
-    ## 53   42098                     Fourneaux  42  84 244200630          CC 422
-    ## 54   42156                       Neulise  42  84 244200630          CC 422
-    ## 55   42306                    Tarentaise  42  84 244200622          CC 423
-    ## 56   44048                        Couffé  44  52 244400552          CC 445
-    ## 57   44210                       Trignac  44  52 244400644          CA 443
-    ## 58   46250                 Saint-Caprais  46  76 200035327          CC 463
-    ## 59   47011                         Anthé  47  75 200068930          CC 473
-    ## 60   47309                    Tombeboeuf  47  75 244701405          CC 473
-    ## 61   50192                     Fourneaux  50  28 200066389          CA 504
-    ## 62   51621             Vienne-le-Château  51  44 200042703          CC 515
-    ## 63   52163                     Dampierre  52  44 200072999          CC 522
-    ## 64   53138                    Longuefuye  53  52 245300447          CC 531
-    ## 65   54082                      Boncourt  54  44 200070845          CC 541
-    ## 66   54172         Doncourt-lès-Longuyon  54  44 200043693          CC 541
-    ## 67   55044                       Belrain  55  44 200066140          CC 552
-    ## 68   55323         Martincourt-sur-Meuse  55  44 200066132          CC 553
-    ## 69   55544                      Velosnes  55  44 245501259          CC 553
-    ## 70   58014                     Arzembouy  58  27 200068088          CC 584
-    ## 71   58043                Bussy-la-Pesle  58  27 200067692          CC 582
-    ## 72   58162                    Menestreau  58  27 200067916          CC 584
-    ## 73   58284                         Talon  58  27 200067692          CC 582
-    ## 74   59037            Avesnes-les-Aubert  59  32 200030633          CC 592
-    ## 75   59361                      Lourches  59  32 200042190          CA 596
-    ## 76   60387       Marseille-en-Beauvaisis  60  32 246000848          CC 601
-    ## 77   61451 Saint-Quentin-les-Chardonnets  61  28 200071520          CC 612
-    ## 78   62084                         Barly  62  32 200069482          CC 621
-    ## 79   62475                       Ivergny  62  32 200069482          CC 621
-    ## 80   62676                       Quernes  62  32 200072460          CA 622
-    ## 81   62797                     Siracourt  62  32 200069672          CC 621
-    ## 82   63048                  Bourg-Lastic  63  84 200071215          CC 634
-    ## 83   63129                          Cros  63  84 200069169          CC 633
-    ## 84   64132                       Bizanos  64  75 200067254          CA 643
-    ## 85   64183                  Caubios-Loos  64  75 200067239          CC 643
-    ## 86   65217                      Hautaget  65  76 200070829          CC 652
-    ## 87   66077                    Fenouillet  66  76 246600423          CC 663
-    ## 88   66165                         Rodès  66  76 246600415          CC 663
-    ## 89   69138                    Montromant  69  84 200066587          CC 692
-    ## 90   70262                  Genevreuille  70  27 247000664          CC 701
-    ## 91   70479            Sauvigney-lès-Gray  70  27 200036549          CC 702
-    ## 92   70572              Vitrey-sur-Mance  70  27 200036150          CC 702
-    ## 93   71404                  Saint-Désert  71  27 247100589          CA 712
-    ## 94   73117                     Fourneaux  73  84 200070340          CC 733
-    ## 95   74290                    Vallorcine  74  84 200023372          CC 742
-    ## 96   76298                    Ganzeville  76  28 200069821          CA 762
-    ## 97   76514        Quévreville-la-Poterie  76  28 200023414          ME 763
-    ## 98   77180              Férolles-Attilly  77  11 200023125          CC 775
-    ## 99   77369                        Poincy  77  11 200072130          CA 771
-    ## 100  78238               Flins-sur-Seine  78  11 200059889          CU 781
-    ## 101  78299                   Hardricourt  78  11 200059889          CU 781
-    ## 102  78380                         Maule  78  11 200034130          CC 783
-    ## 103  79171              Mauzé-Thouarsais  79  75 247900798          CC 791
-    ## 104  80055                         Barly  80  32 200070951          CC 802
-    ## 105  80667                     Remaugies  80  32 200070977          CC 803
-    ## 106  81229                    Roquevidal  81  76 200034023          CC 812
-    ## 107  86235      Saint-Maurice-la-Clouère  86  75 200070035          CC 862
-    ## 108  88318                      Moyemont  88  44 200005957          CC 881
-    ## 109  88363                       Punerot  88  44 200068559          CC 882
-    ## 110  89479                   Vincelottes  89  27 200067114          CA 891
-    ## 111  92051             Neuilly-sur-Seine  92  11 200054781          ME 922
+    ## 1    02528                 Mortefontaine  02  32 200071991          CC 024
+    ## 2    03185                     Montluçon  03  84 200071082          CA 031
+    ## 3    03195               Néris-les-Bains  03  84 200071512          CC 031
+    ## 4    04001                        Aiglun  04  93 200067437          CA 043
+    ## 5    06001                        Aiglun  06  93 200039931          CC 061
+    ## 6    07318                      Tauriers  07  84 240700617          CC 071
+    ## 7    09177                       Madière  09  76 200066231          CC 092
+    ## 8    09206                   Montferrier  09  76 240900464          CC 092
+    ## 9    09269        Saint-Martin-de-Caralp  09  76 200067791          CA 091
+    ## 10   10153                Fontaine-Mâcon  10  44 200006716          CC 102
+    ## 11   10220  Maizières-la-Grande-Paroisse  10  44 200000545          CC 102
+    ## 12   14530                      Ranville  14  28 200065563          CC 143
+    ## 13   15057              Cros-de-Montvert  15  84 200066678          CC 151
+    ## 14   16368                          Sers  16  75 200071827          CA 161
+    ## 15   17059                     Bourgneuf  17  75 241700434          CA 173
+    ## 16   17118                      Corignac  17  75 200041523          CC 171
+    ## 17   17213                         Lozay  17  75 200041689          CC 175
+    ## 18   18056                        Chassy  18  24 200007177          CC 181
+    ## 19   18060                      Chaumont  18  24 241800432          CC 182
+    ## 20   21006               Aisey-sur-Seine  21  27 242101434          CC 213
+    ## 21   21309                     Griselles  21  27 242101434          CC 213
+    ## 22   21437                    Montmançon  21  27 200070902          CC 212
+    ## 23   24133                   La Coquille  24  75 242400752          CC 242
+    ## 24   24585      Villefranche-du-Périgord  24  75 200041440          CC 244
+    ## 25   25195          Dannemarie-sur-Crète  25  27 242500361          CA 251
+    ## 26   30156                  Marguerittes  30  76 243000643          CA 302
+    ## 27   30187                    Navacelles  30  76 200035129          CC 301
+    ## 28   32346                    Roquebrune  32  76 243200607          CC 321
+    ## 29   33359                    Roquebrune  33  75 200044394          CC 333
+    ## 30   33472   Saint-Sauveur-de-Puynormand  33  75 200070092          CA 335
+    ## 31   34212                       Poujols  34  76 200017341          CC 342
+    ## 32   34262                 Saint-Guiraud  34  76 243400694          CC 342
+    ## 33   35177                    La Mézière  35  53 243500667          CC 353
+    ## 34   36053                         Ciron  36  24 243600319          CC 361
+    ## 35   37186                  Pont-de-Ruan  37  24 200072650          CC 372
+    ## 36   40062            Campet-et-Lamolère  40  75 244000808          CA 402
+    ## 37   41233                        Sambin  41  24 200030385          CA 411
+    ## 38   41238             Savigny-sur-Braye  41  24 200072072          CA 412
+    ## 39   42183                  La Ricamarie  42  84 244200770          CU 423
+    ## 40   45076    La Chapelle-Saint-Sépulcre  45  24 200067668          CC 451
+    ## 41   45161                     Griselles  45  24 244500419          CC 451
+    ## 42   45326                    Tournoisis  45  24 200035764          CC 452
+    ## 43   45327                       Traînou  45  24 244500484          CC 452
+    ## 44   46039                      Brengues  46  76 200067361          CC 462
+    ## 45   47227                       Ruffiac  47  75 244701355          CC 472
+    ## 46   48046                      Chaulhac  48  76 200069185          CC 482
+    ## 47   50384            Octeville-l'Avenel  50  28 200067205          CA 502
+    ## 48   50517    Saint-Martin-de-Varreville  50  28 200042729          CC 502
+    ## 49   51063            Binson-et-Orquigny  51  44 200066850          CC 513
+    ## 50   51086                        Breuil  51  44 200067213          CU 513
+    ## 51   51390                        Moussy  51  44 200067684          CA 512
+    ## 52   51577                       Tramery  51  44 200067213          CU 513
+    ## 53   51626 La Villeneuve-lès-Charleville  51  44 245100888          CC 512
+    ## 54   52088                      Ceffonds  52  44 200068666          CA 523
+    ## 55   52121                      Chaumont  52  44 200068658          CA 521
+    ## 56   52301                  Maisoncelles  52  44 200069664          CC 521
+    ## 57   52433              Romain-sur-Meuse  52  44 200069664          CC 521
+    ## 58   53116                      Le Horps  53  52 200055887          CC 533
+    ## 59   54157                    Dieulouard  54  44 200041515          CC 543
+    ## 60   55017           Autrécourt-sur-Aire  55  44 200066140          CC 551
+    ## 61   55140                         Cunel  55  44 200066132          CC 553
+    ## 62   56200                       Ruffiac  56  53 200066785          CC 563
+    ## 63   57225                       Fonteny  57  44 245701206          CC 575
+    ## 64   57232                  Francaltroff  57  44 245701206          CC 575
+    ## 65   57380      Laneuveville-lès-Lorquin  57  44 200068146          CC 575
+    ## 66   58057        Chantenay-Saint-Imbert  58  27 245804497          CC 583
+    ## 67   58184                        Moussy  58  27 200068088          CC 584
+    ## 68   58284                         Talon  58  27 200067692          CC 582
+    ## 69   59497                     Renescure  59  32 200040947          CC 594
+    ## 70   60298                      Hanvoile  60  32 246000848          CC 601
+    ## 71   60413      Montagny-Sainte-Félicité  60  32 246000871          CC 604
+    ## 72   60432                 Mortefontaine  60  32 246000764          CC 604
+    ## 73   61103                      Chaumont  61  28 200069458          CC 613
+    ## 74   61299               Moussonvilliers  61  28 200068856          CC 613
+    ## 75   61427      Saint-Martin-l'Aiguillon  61  28 200071652          CC 611
+    ## 76   62293                         Embry  62  32 200069235          CC 624
+    ## 77   62391                    Guarbecque  62  32 200072460          CA 622
+    ## 78   62562                    Matringhem  62  32 200069235          CC 624
+    ## 79   63091         Charbonnier-les-Mines  63  84 200070407          CA 633
+    ## 80   63256                    Novacelles  63  84 200070761          CC 631
+    ## 81   64044                         Arget  64  75 200067239          CC 643
+    ## 82   64350                     Louhossoa  64  75 200067106          CA 641
+    ## 83   65067                         Barry  65  76 200069300          CA 653
+    ## 84   65424                          Sers  65  76 200070811          CC 651
+    ## 85   67142                    Fort-Louis  67  44 200041325          CC 672
+    ## 86   69212         Saint-Jean-des-Vignes  69  84 200040574          CC 692
+    ## 87   69271                      Chassieu  69  84 200046977          ME 691
+    ## 88   70553                    Villargent  70  27 247000714          CC 701
+    ## 89   71012                        Artaix  71  27 247100639          CC 713
+    ## 90   71111                        Chassy  71  27 200070316          CC 713
+    ## 91   72097                   Coulombiers  72  52 200072700          CC 722
+    ## 92   72178                  Maisoncelles  72  52 200072684          CC 722
+    ## 93   73040                       Bessans  73  84 200070340          CC 733
+    ## 94   73053                     Bourgneuf  73  84 200041010          CC 732
+    ## 95   74024                          Ayse  74  84 200000172          CC 742
+    ## 96   74065                      Chaumont  74  84 200070852          CC 743
+    ## 97   76194            Criquebeuf-en-Caux  76  28 200069821          CA 762
+    ## 98   76305          Gonfreville-l'Orcher  76  28 247600596          CA 762
+    ## 99   77209                     Gouvernes  77  11 247700594          CA 775
+    ## 100  77321            Mousseaux-lès-Bray  77  11 200040251          CC 773
+    ## 101  77421      Saint-Mars-Vieux-Maisons  77  11 200072544          CC 773
+    ## 102  79161                         Luzay  79  75 247900798          CC 791
+    ## 103  80139                        Breuil  80  32 200070985          CC 804
+    ## 104  81231                     Rouairoux  81  76 248100745          CC 812
+    ## 105  82082              Lacapelle-Livron  82  76 248200107          CC 822
+    ## 106  86083                   Coulombiers  86  75 200069854          CA 863
+    ## 107  88298                     Ménarmont  88  44 200005957          CC 881
+    ## 108  89088                        Chassy  89  27 248900524          CC 891
+    ## 109  89093                      Chaumont  89  27 248900896          CC 893
+    ## 110  90105                Villars-le-Sec  90  27 249000241          CC 901
+    ## 111  95058               Bernes-sur-Oise  95  11 249500489          CC 953
+    ## 112  95438                        Moussy  95  11 200035970          CC 953
     ##       CV ZE2010 UU2010 TUU2014 TDUU2014 AU2010 TAU2014 CATAEU2010 BV2012
-    ## 1   0110   8203  01000       0        5    540       1        222  01185
-    ## 2   0206   2204  02000       0        4    000       0        400  51454
-    ## 3   0205   2201  02000       0        3    029       8        112  51250
-    ## 4   0204   2201  02000       0        4    997       0        120  02168
-    ## 5   0308   8303  03000       0        4    000       0        400  03165
-    ## 6   0307   8301  03000       0        2    000       0        400  03084
-    ## 7   0302   8302  03000       0        4    000       0        400  03036
-    ## 8   0624   9307  06108       1       14    007       9        112  06088
-    ## 9   0717   8208  07000       0        4    000       0        400  07338
-    ## 10  0913   7301  09000       0        4    997       0        120  09225
-    ## 11  0911   7302  09203       2       22    267       2        211  09261
-    ## 12  1002   2102  10000       0        4    000       0        400  10006
-    ## 13  1007   2102  10000       0        2    998       0        300  10268
-    ## 14  1107   9103  11000       0        3    000       0        400  11203
-    ## 15  1118   9101  11000       0        5    998       0        300  11203
-    ## 16  1114   9102  11000       0        1    000       0        400  09194
-    ## 17  1201   7304  12000       0        5    000       0        400  12164
-    ## 18  1221   7304  12000       0        6    104       6        112  12138
-    ## 19  1614   5403  16601       6       61    049       7        111  16015
-    ## 20  1702   5405  17000       0        4    000       0        400  17224
-    ## 21  1707   5405  17000       0        5    000       0        400  17197
-    ## 22  1817   2401  18000       0        5    057       7        112  18207
-    ## 23  2123   2603  21000       0        2    025       8        112  21231
-    ## 24  2218   5305  22501       5       52    051       7        111  22278
-    ## 25  2201   5302  22000       0        6    998       0        300  22162
-    ## 26  2299   5305  22501       5       52    051       7        111  22278
-    ## 27  2722   2302  27000       0        4    997       0        120  28348
-    ## 28  2711   2302  27000       0        3    077       7        112  27448
-    ## 29  2801   2406  00361       3       32    001      10        112  27230
-    ## 30  2814   2406  28000       0        5    997       0        120  27679
-    ## 31  2810   2406  28000       0        5    001      10        112  28227
-    ## 32  2813     54  28000       0        4    263       2        212  28280
-    ## 33  2921   5306  29000       0        5    998       0        300  29103
-    ## 34  2B11   9406  2B000       0        4    393       1        222  2B096
-    ## 35  3016   9106  30000       0        4    998       0        300  30212
-    ## 36  3008   9104  30000       0        3    000       0        400  30037
-    ## 37  3015   9110  30000       0        4    000       0        400  30263
-    ## 38  3020   9105  30000       0        4    997       0        120  30334
-    ## 39  3105     61  31701       7       73    004       9        111  31555
-    ## 40  3106     61  31000       0        6    000       0        400  31239
-    ## 41  3211     61  32000       0        4    004       9        112  31098
-    ## 42  3216   7307  32000       0        3    000       0        400  32256
-    ## 43  3205   7307  32000       0        3    997       0        120  32147
-    ## 44  3327   7204  33000       0        4    998       0        300  33352
-    ## 45  3808   8210  38701       7       73    010       9        111  38185
-    ## 46  3817   8209  38129       3       32    002       9        112  38261
-    ## 47  3903   4306  39000       0        1    997       0        120  39434
-    ## 48  3910   4301  39103       1       11    041       8        112  25527
-    ## 49  3902   4305  39000       0        4    124       6        112  39198
-    ## 50  3903   4306  39000       0        3    997       0        120  39434
-    ## 51  4106   2415  41000       0        3    997       0        120  41149
-    ## 52  4107   2413  41000       0        4    998       0        300  41059
-    ## 53  4204   8212  42000       0        5    998       0        300  69006
-    ## 54  4204   8212  42000       0        6    998       0        300  42011
-    ## 55  4208     60  42000       0        4    017       9        112  42218
-    ## 56  4401   5203  44000       0        7    008       9        112  44003
-    ## 57  4427   5204  44601       6       62    046       8        111  44184
-    ## 58  4615   7308  46000       0        2    000       0        400  46225
-    ## 59  4709   7211  47000       0        4    997       0        120  47323
-    ## 60  4712   7210  47000       0        4    998       0        300  47168
-    ## 61  5009   2510  50000       0        3    998       0        300  50601
-    ## 62  5101   2103  51000       0        5    000       0        400  51507
-    ## 63  5211   2106  52000       0        4    998       0        300  52332
-    ## 64  5301   5209  53000       0        4    227       4        212  53062
-    ## 65  5404   4107  54000       0        3    998       0        300  54273
-    ## 66  5411   4101  54000       0        4    115       6        112  54322
-    ## 67  5508   4105  55000       0        1    182       4        112  55029
-    ## 68  5514   4106  55000       0        2    998       0        300  55502
-    ## 69  5511   4101  55000       0        3    115       6        112  54322
-    ## 70  5801     52  58000       0        2    000       0        400  58218
-    ## 71  5804   2605  58000       0        2    000       0        400  58079
-    ## 72  5815     52  58000       0        3    000       0        400  58086
-    ## 73  5803     52  58000       0        1    000       0        400  58083
-    ## 74  5911   3116  59124       1       13    997       0        120  59139
-    ## 75  5914   3115  59701       7       72    026       8        111  59606
-    ## 76  6011   2207  60000       0        6    067       7        112  60286
-    ## 77  6111   2512  61000       0        4    997       0        120  61486
-    ## 78  6207   3121  62000       0        4    062       7        112  62063
-    ## 79  6207   3121  62000       0        4    997       0        120  62361
-    ## 80  6201   3123  62000       0        4    027       8        112  62119
-    ## 81  6238   3121  62000       0        4    364       1        212  62767
-    ## 82  6328   8310  63000       0        5    000       0        400  63047
-    ## 83  6329   8310  63000       0        3    000       0        400  19028
-    ## 84  6420   7214  64601       6       62    042       8        111  64445
-    ## 85  6425   7214  64000       0        5    042       8        112  64445
-    ## 86  6515   7310  65000       0        2    998       0        300  31390
-    ## 87  6615   9115  66000       0        2    000       0        400  11304
-    ## 88  6602   9116  66000       0        5    997       0        120  66088
-    ## 89  6902   8214  69000       0        4    002       9        112  69220
-    ## 90  7007   4309  70000       0        3    997       0        120  70310
-    ## 91  7002   4308  70000       0        3    264       2        212  70279
-    ## 92  7005   4309  70000       0        4    000       0        400  70292
-    ## 93  7117   2608  71000       0        5    060       7        112  71221
-    ## 94  7310   8217  73109       1       13    567       1        221  73157
-    ## 95  7410   8221  74000       0        4    998       0        300  74056
-    ## 96  7611   2306  76000       0        5    207       4        212  76259
-    ## 97  7606   2307  76101       1       11    012       9        112  76540
-    ## 98  7716   1117  77000       0        6    001      10        112  75056
-    ## 99  7706   1104  77501       5       52    001      10        112  77284
-    ## 100 7801   1111  00851       8       80    001      10        111  75056
-    ## 101 7811   1111  00851       8       80    001      10        111  75056
-    ## 102 7801   1111  78301       3       31    001      10        112  78380
-    ## 103 7916   5401  79000       0        7    211       4        212  79329
-    ## 104 8014   2210  80000       0        3    998       0        300  80253
-    ## 105 8022   2210  80000       0        3    998       0        300  80561
-    ## 106 8115     61  81000       0        3    997       0        120  81140
-    ## 107 8610   5413  86105       1       13    039       8        112  86103
-    ## 108 8803   4112  88000       0        4    998       0        300  88367
-    ## 109 8810   4103  88000       0        3    997       0        120  88321
-    ## 110 8921   2612  89000       0        4    096       6        112  89024
-    ## 111 9221   1101  00851       8       80    001      10        111  75056
+    ## 1   0220   2206  02000       0        4    001      10        112  02795
+    ## 2   0397   8301  03501       5       51    108       6        111  03185
+    ## 3   0311   8301  03103       1       12    108       6        112  03082
+    ## 4   0405   9301  04000       0        6    218       4        112  04070
+    ## 5   0626   9307  06000       0        2    007       9        112  06099
+    ## 6   0715   8205  07402       4       44    139       6        111  07019
+    ## 7   0907   7301  09000       0        3    183       5        112  09225
+    ## 8   0909   7301  09000       0        5    000       0        400  09160
+    ## 9   0913   7301  09000       0        4    998       0        300  09122
+    ## 10  1007   2102  10000       0        5    998       0        300  10268
+    ## 11  1009   2102  10301       3       32    289       2        211  10323
+    ## 12  1404   2502  14111       1       12    022       8        112  14118
+    ## 13  1513   8304  15000       0        4    125       6        112  15014
+    ## 14  1604   5403  16000       0        5    049       7        112  16015
+    ## 15  1706   5409  17000       0        6    047       8        112  17300
+    ## 16  1727   5404  17000       0        4    998       0        300  17240
+    ## 17  1718   5406  17000       0        3    998       0        300  17347
+    ## 18  1802   2401  18000       0        4    997       0        120  18033
+    ## 19  1809   2401  18000       0        2    000       0        400  18242
+    ## 20  2105   2602  21000       0        3    336       1        222  21154
+    ## 21  2105   2602  21000       0        3    000       0        400  21154
+    ## 22  2102   2603  21000       0        4    025       8        112  21038
+    ## 23  2421   7202  24000       0        6    000       0        400  87032
+    ## 24  2423   7211  24000       0        5    000       0        400  46225
+    ## 25  2504   4301  25000       0        6    041       8        112  25527
+    ## 26  3009   9106  30601       6       62    040       8        111  30189
+    ## 27  3018   9104  30000       0        4    078       7        112  30007
+    ## 28  3208   7307  32000       0        4    998       0        300  32462
+    ## 29  3327   7204  33000       0        4    000       0        400  33289
+    ## 30  3321   7205  33000       0        4    998       0        300  33478
+    ## 31  3411   9109  34214       2       22    385       1        221  34142
+    ## 32  3409   9109  34000       0        4    015       9        112  34239
+    ## 33  3514   5312  35127       1       14    011       9        112  35238
+    ## 34  3603   2409  36000       0        5    998       0        300  36018
+    ## 35  3711   2412  37104       1       13    018       8        112  37159
+    ## 36  4010     50  40000       0        4    122       6        112  40192
+    ## 37  4104   2413  41000       0        5    065       7        112  41059
+    ## 38  4109   2415  41000       0        7    000       0        400  72269
+    ## 39  4215     60  00753       7       72    017       9        111  42218
+    ## 40  4504   2417  45000       0        4    119       6        112  45208
+    ## 41  4504   2417  45000       0        5    997       0        120  45145
+    ## 42  4510   2418  45000       0        4    021       8        112  45248
+    ## 43  4506   2418  45108       1       13    021       8        112  45234
+    ## 44  4605   7309  46000       0        4    997       0        120  46102
+    ## 45  4708   7210  47000       0        3    998       0        300  47052
+    ## 46  4811   9113  48000       0        2    000       0        400  48140
+    ## 47  5026   2507  50000       0        4    998       0        300  50562
+    ## 48  5005   2507  50000       0        3    000       0        400  50099
+    ## 49  5106   2104  51000       0        3    000       0        400  51217
+    ## 50  5109   2105  51000       0        4    029       8        112  51250
+    ## 51  5108   2104  51401       4       43    175       5        111  51230
+    ## 52  5106   2105  51000       0        3    029       8        112  51250
+    ## 53  5121   2104  51000       0        3    998       0        300  51535
+    ## 54  5217   2107  52102       1       12    000       0        400  52331
+    ## 55  5298   2106  52401       4       41    161       5        111  52121
+    ## 56  5212   2106  52000       0        2    000       0        400  88321
+    ## 57  5212   2106  52000       0        3    000       0        400  88321
+    ## 58  5309   5210  53000       0        5    000       0        400  53127
+    ## 59  5402   4103  54112       1       14    997       0        120  54431
+    ## 60  5508   4106  55000       0        3    998       0        300  51507
+    ## 61  5506   4106  55000       0        1    000       0        400  55502
+    ## 62  5610   5318  56000       0        6    998       0        300  56124
+    ## 63  5723   4103  57000       0        3    998       0        300  57132
+    ## 64  5723   4108  57000       0        5    998       0        300  57483
+    ## 65  5717   4109  57000       0        3    171       5        112  57630
+    ## 66  5816   2606  58000       0        6    997       0        120  58264
+    ## 67  5801     52  58000       0        3    000       0        400  58218
+    ## 68  5803     52  58000       0        1    000       0        400  58083
+    ## 69  5921   3113  59000       0        7    997       0        120  62765
+    ## 70  6011   2207  60000       0        5    067       7        112  76312
+    ## 71  6015     56  60000       0        4    001      10        112  60500
+    ## 72  6020     56  60000       0        5    001      10        112  95250
+    ## 73  6121   2513  61000       0        3    000       0        400  61181
+    ## 74  6120     51  61000       0        4    000       0        400  27679
+    ## 75  6115   2511  61000       0        4    000       0        400  61168
+    ## 76  6225   3127  62000       0        4    000       0        400  62268
+    ## 77  6201   3123  00752       7       72    027       8        111  62119
+    ## 78  6225   3127  62000       0        3    998       0        300  62364
+    ## 79  6306   8311  63000       0        5    997       0        120  63050
+    ## 80  6302   8309  63000       0        3    000       0        400  63010
+    ## 81  6402   7214  64000       0        2    998       0        300  64063
+    ## 82  6403   7212  64000       0        5    036       8        112  64160
+    ## 83  6509   7310  65203       2       21    072       7        112  65440
+    ## 84  6516   7310  65000       0        3    000       0        400  65295
+    ## 85  6701   4201  67000       0        4    000       0        400  67180
+    ## 86  6904   8213  00758       7       73    002       9        111  69123
+    ## 87  69ZZ   8214  00758       7       73    002       9        111  69123
+    ## 88  7017   4302  70000       0        3    000       0        400  70561
+    ## 89  7125   2611  71000       0        4    000       0        400  71275
+    ## 90  7118   2611  71000       0        4    389       1        222  71230
+    ## 91  7220     51  72000       0        4    997       0        120  72138
+    ## 92  7218   5213  72000       0        3    998       0        300  72090
+    ## 93  7310   8217  73000       0        4    000       0        400  73157
+    ## 94  7318   8216  73000       0        5    045       8        112  73270
+    ## 95  7405   8219  74502       5       52    100       6        111  74081
+    ## 96  7413   8219  74000       0        4    037       8        112  74269
+    ## 97  7611   2306  76000       0        4    207       4        212  76259
+    ## 98  7616   2306  76701       7       71    032       8        111  76351
+    ## 99  7709   1102  00851       8       80    001      10        111  75056
+    ## 100 7718   1108  77116       1       13    001      10        112  77051
+    ## 101 7705   1103  77000       0        4    001      10        112  77182
+    ## 102 7917   5401  79000       0        5    211       4        212  79329
+    ## 103 8018   2210  80000       0        2    998       0        300  80410
+    ## 104 8117   7312  81000       0        4    000       0        400  34284
+    ## 105 8212   7313  82000       0        3    000       0        400  82037
+    ## 106 8609   5413  86000       0        6    039       8        112  86139
+    ## 107 8811   4112  88000       0        2    998       0        300  54039
+    ## 108 8908   2612  89000       0        4    096       6        112  89003
+    ## 109 8914   2614  89000       0        5    001      10        112  77305
+    ## 110 9006   4302  90000       0        3    998       0        300  90009
+    ## 111 9514     56  00459       4       43    001      10        112  95487
+    ## 112 9516   1119  95000       0        3    001      10        112  95370
 
 ``` r
 df_zones_communes$dept<-str_sub(df_zones_communes$CODGEO,1,end=2) %>% as.numeric()
@@ -2346,7 +2361,7 @@ str(comm@data)
 
 ``` r
 plot(comm, col = comm@data$suffrage_cat, border='black',lwd=0.001)
-legend("bottomleft", legend = legende, fill = palette, cex=0.6, title = "Temps de parcours moyen (minutes)")
+legend("bottomleft", legend = legende, fill = palette, cex=0.6, title = "Vote Le Pen 2012")
 ```
 
 ![](elections_france_files/figure-markdown_github/unnamed-chunk-21-1.png)
