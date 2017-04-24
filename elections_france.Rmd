@@ -1,0 +1,153 @@
+---
+title: "Elections France 2017"
+output:
+  html_document: default
+  html_notebook: default
+---
+```{r}
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(GGally)
+
+library("sp")
+library("rgdal")
+
+library("RColorBrewer")
+library("classInt")
+
+
+library("ggmap")
+library("maptools")
+
+
+```
+
+
+```{r}
+df_chomage<-read.csv('data/chomages_France.csv',sep=';',stringsAsFactors = F,skip = 1)
+
+df_chomage$ZE2010<- df_chomage$ZE2010 %>% as.numeric()
+df_zones_communes<- read.csv('data/code_geo_communes.csv',sep=';',stringsAsFactors = 1)
+df_pres<-read.csv('data/Pres 2012.csv',stringsAsFactors = F,sep=';')
+
+
+
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+```{r}
+
+sample_communes<-sample_n(df_zones_communes,50) %>% select(LIBGEO) %>% .$LIBGEO
+sample_pres<-sample_n(df_pres,100) %>% select(Libellé.de.la.commune)%>% .$Libellé.de.la.commune
+```
+
+```{r}
+
+df_pres %>% filter (Libellé.de.la.commune %in% sample_pres)
+df_zones_communes %>% filter(LIBGEO %in% sample_pres)
+```
+
+```{r}
+df_zones_communes$dept<-str_sub(df_zones_communes$CODGEO,1,end=2) %>% as.numeric()
+df_zones_communes$communes<-str_sub(df_zones_communes$CODGEO,3)%>% as.numeric()
+str(df_zones_communes)
+```
+
+```{r}
+df_pres_merged<-merge(df_pres,df_zones_communes, by.y = c('dept','communes'),by.x = c('Code.du.département','Code.de.la.commune'),all.x = TRUE)
+#str(df_pres_merged)
+#df_pres_merged[is.na(df_pres_merged$ZE2010),]$Libellé.de.la.commune
+```
+```{r}
+nrow(df_pres_merged[is.na(df_pres_merged$ZE2010),])/nrow(df_pres)*100
+
+```
+
+```{r}
+df_zones_communes %>% filter(grepl("Song",LIBGEO))
+```
+```{r}
+df_pres %>% filter(grepl("Natt",Libellé.de.la.commune))
+```
+```{r}
+df_pres_merged_chomage<-merge(df_pres_merged,df_chomage,by = 'ZE2010',all.x=T)
+dim(df_pres_merged_chomage)
+sum(is.na(df_pres_merged_chomage$X2016.T4))
+
+df_pres_merged_chomage <- df_pres_merged_chomage %>% filter(!is.na(X2016.T4))
+dim(df_pres_merged_chomage)
+```
+
+```{r}
+head(df_pres_merged_chomage)
+```
+```{r}
+ggpairs(df_pres_merged_chomage,columns = c("X2016.T4","X..Voix.Exp.1","X..Voix.Exp.2","X..Voix.Exp.3"))
+```
+
+```{r}
+# Emplacement de l'archive décompressée, à remplacer par le votre
+pathToShp <- "data/GEOFLA/1_DONNEES_LIVRAISON_2016-06-00236/GEOFLA_2-2_SHP_LAMB93_FR-ED161/COMMUNE/"
+# Description des données via orgInfo
+# Attention à ne pas mettre l'extension à la fin du nom
+ogrInfo(dsn = pathToShp,layer="COMMUNE")
+```
+
+```{r}
+# Import via la fonction readOGR de rgdal
+# Pour info, d'autres outils existent (ex : fonction readShapeSpatial() du package maptools)
+comm <- readOGR(dsn = pathToShp, layer="COMMUNE", stringsAsFactors=FALSE)
+```
+```{r}
+# Description de la structure globale
+str(comm, 2)
+```
+```{r}
+# Description de la structure des données associées 
+str(comm@data, 2)
+```
+
+```{r}
+# Représentation de toutes les communes d'IDF
+plot(comm[comm$CODE_REG=="11",])
+# Ajout sur le graphique précédent (via add = TRUE) des communes d'intérêt, remplies en rouge (via col="red") 
+plot(comm[comm$CODE_REG=="11" & comm$POPULATION>5000,], col="red",add=T)
+```
+
+```{r}
+comm@data <- left_join(comm@data, df_pres_merged_chomage, by = c("INSEE_COM" = "CODGEO"))
+```
+
+```{r}
+# Filtrage des données pour ne garder que la région Ile-De-France
+idf <- comm[comm@data$CODE_REG=="11",]
+# Vérification
+str(idf, 2)
+```
+```{r}
+# Découpage du temps de trajet en 5 classes via la méthodes des quantiles : idenfication des bornes (breaks, ou brks)
+classSuffrages <- classIntervals(idf@data$X..Voix.Exp.1, 5, style = "quantile")
+# Choix d'une palette de couleur pour les 5 catégories
+palette <- brewer.pal(n = 5, name = "YlOrRd")
+
+
+# Application de ce découpage à variable temps, sauvegarde dans temps_cat
+# On stocke, pour chaque observation, la valeur de la couleur correspondante
+idf@data$suffrage_cat <- as.character(cut(idf@data$X..Voix.Exp.1, breaks = classSuffrages$brks, labels = palette, include.lowest = TRUE))
+
+# On stocke l'information des classes pour créer une légende 
+legende <- as.character(levels(cut(idf@data$X..Voix.Exp.1, breaks = classSuffrages$brks, include.lowest = TRUE, right = FALSE)))
+
+# Vérification
+str(idf@data)
+```
+
+```{r}
+plot(idf, col = idf@data$suffrage_cat, border = "black")
+legend("bottomleft", legend = legende, fill = palette, cex=0.6, title = "Temps de parcours moyen (minutes)")
+```
+
