@@ -185,6 +185,7 @@ legende_chomage <- as.character(levels(cut(comm@data$X2016.T4, breaks = classCho
 plot(comm, col = comm@data$suffrage_cat, border='black',lwd=0.001)
 
 legend("bottomleft", legend = legende_LePen, fill = palette, cex=0.6, title = "Vote Le Pen 2017")
+##
 
 ```
 
