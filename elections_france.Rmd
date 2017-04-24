@@ -13,6 +13,7 @@ library("rgdal")
 
 library("RColorBrewer")
 library("classInt")
+library('plotrix')    # Créer des échelles de couleurs
 
 
 library("ggmap")
@@ -121,31 +122,87 @@ comm@data <- left_join(comm@data, df_pres_merged_chomage, by = c("INSEE_COM" = "
 ```
 
 ```{r}
-# Filtrage des données pour ne garder que la région Ile-De-France
-comm <- comm[comm@data$CODE_REG=="11",]
+# Filtrage des données pour ne garder que la région Bretagne
+comm <- comm[comm@data$CODE_REG=="53",]
 
 ```
 ```{r}
-# Découpage du temps de trajet en 5 classes via la méthodes des quantiles : idenfication des bornes (breaks, ou brks)
+# Découpage du taux de vote   en 5 classes via la méthodes des quantiles : idenfication des bornes (breaks, ou brks)
 classSuffrages <- classIntervals(comm@data$X..Voix.Exp.1, 5, style = "quantile")
 # Choix d'une palette de couleur pour les 5 catégories
 palette <- brewer.pal(n = 5, name = "YlOrRd")
 
 
-# Application de ce découpage à variable temps, sauvegarde dans temps_cat
+# Application de ce découpage à la variable suffrages, sauvegarde dans suffrage_cat
 # On stocke, pour chaque observation, la valeur de la couleur correspondante
 comm@data$suffrage_cat <- as.character(cut(comm@data$X..Voix.Exp.1, breaks = classSuffrages$brks, labels = palette, include.lowest = TRUE))
 
 # On stocke l'information des classes pour créer une légende 
 legende <- as.character(levels(cut(comm@data$X..Voix.Exp.1, breaks = classSuffrages$brks, include.lowest = TRUE, right = FALSE)))
 
-# Vérification
-str(comm@data)
+```
+
+
+```{r}
+# Découpage du taux de vote   en 5 classes via la méthodes des quantiles : idenfication des bornes (breaks, ou brks)
+classChomage <- classIntervals(comm@data$X2016.T4, 5, style = "quantile")
+# Choix d'une palette de couleur pour les 5 catégories
+palette <- brewer.pal(n = 5, name = "YlOrRd")
+
+
+# Application de ce découpage à la variable suffrages, sauvegarde dans suffrage_cat
+# On stocke, pour chaque observation, la valeur de la couleur correspondante
+comm@data$chomage_cat <- as.character(cut(comm@data$X2016.T4, breaks = classChomage$brks, labels = palette, include.lowest = TRUE))
+
+# On stocke l'information des classes pour créer une légende 
+legende <- as.character(levels(cut(comm@data$X2016.T4, breaks = classChomage$brks, include.lowest = TRUE, right = FALSE)))
 ```
 
 ```{r}
 plot(comm, col = comm@data$suffrage_cat, border='black',lwd=0.001)
+
 legend("bottomleft", legend = legende, fill = palette, cex=0.6, title = "Vote Le Pen 2012")
+
 ```
 
+  
+```{r}
+plot(comm, col = comm@data$chomage_cat, border='black',lwd=0.001)
+legend("bottomleft", legend = legende, fill = palette, cex=0.6, title = "Chomage T4 2016")
+```
+```{r}
+revenus <- read.csv('data/revenus.csv')
+communes <- merge(comm, revenus, by.x="INSEE_COM", by.y="COMMUNE")
+
+# Lecture des données cantonales
+cantons  <- read.csv('data/cantons.csv')
+
+# Jointure des données
+communes <- merge(communes, cantons, by="CANTON", all.x=TRUE)
+
+# Affectation de la moyenne cantonale aux communes sans données
+communes$REVENUS[is.na(communes$REVENUS)] <- communes$REVENUC[is.na(communes$REVENUS)]
+
+col <- findColours(classIntervals(
+            communes$REVENUS, 100, style="quantile"),
+            smoothColors("#FFFFD7",98,"#F3674C"))
+
+leg <- findColours(classIntervals(
+            round(communes$REVENUS,0), 4, style="quantile"),
+            smoothColors("#FFFFD7",2,"#F3674C"),
+            under="moins de", over="plus de", between="–",
+            cutlabels=FALSE)
+```
+
+
+```{r}
+plot(communes,   col=col, border=col, lwd=.1)
+
+
+legend("bottomleft",fill=attr(leg, "palette"),
+    legend=gsub("\\.", ",", names(attr(leg,"table"))),
+    title = "Revenu médian par UC :")
+
+
+```
 
