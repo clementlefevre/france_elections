@@ -133,6 +133,6 @@ ggplot(df.all.clean  %>% filter(Code.Insee.de.la.région %in% c(32,53,93)) %>% f
 ```
 
 ```{r}
-ggplot(df.all.clean %>% filter(Q213<30000) %>% filter(Code.Insee.de.la.région==53),aes(x=Q213,y=Q3_Q1,col=LE.PEN))+ geom_jitter(alpha=.3)+scale_color_gradientn(colours = rainbow(5))
+ggplot(df.all.clean %>% filter(Q213<30000) %>% filter(Code.Insee.de.la.région==53),aes(x=Q213,y=Q3_Q1,col=LE.PEN))+ geom_jitter(alpha=1)+scale_color_gradientn(colours = rainbow(5))
 ```
 
