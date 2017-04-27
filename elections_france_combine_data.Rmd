@@ -1,0 +1,49 @@
+---
+title: "Elections France 2017 Data Merge"
+output:  github_document
+---
+```{r}
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(GGally)
+```
+
+
+```{r}
+df_zones_communes<- read.csv('data/DOI/code_geo_communes.csv',sep=';',stringsAsFactors = 1)
+df_votes.2017<-head(read.csv('data/DOI/pres_1erTour_2017_commune_candidat.csv',stringsAsFactors = F),1000)
+df_population.2011<-read.csv('data/DOI/base-cc-evol-struct-pop-2011.csv',stringsAsFactors = F)
+df_emploi.dec.2016.sex<-read.csv('data/DOI/communes_internet_decembre_2016_gorf18oa_per_sex.csv',stringsAsFactors = F)
+df_emploi.dec.2016.age<-read.csv('data/DOI/communes_internet_decembre_2016_gorf18oa_per_age.csv',stringsAsFactors = F)
+df_misc.param<-read.csv('data/DOI/MDB-INSEE-V2.csv',stringsAsFactors = F)
+```
+
+### Remove comma on df_emploi
+
+```{r}
+df_emploi.dec.2016.age[,7:9]<-lapply(df_emploi.dec.2016.age[,7:9],function(x){as.numeric(gsub(",", "", x))})
+df_emploi.dec.2016.sex[,7:9]<-lapply(df_emploi.dec.2016.sex[,7:9],function(x){as.numeric(gsub(",", "", x))})
+
+```
+### Combine zone geo with votes :
+### Combine votes with population structure :
+```{r}
+df_zones_communes$dept<-str_sub(df_zones_communes$CODGEO,1,end=2) %>% as.numeric()
+df_zones_communes$communes<-str_sub(df_zones_communes$CODGEO,3)%>% as.numeric()
+
+
+
+df_votes.2017<-merge(df_votes.2017,df_zones_communes, by.y = c('dept','communes'),by.x = c('Code.du.département','Code.de.la.commune'),all.x = TRUE)
+df_votes.2017$CODGEO<-as.character(df_votes.2017$CODGEO)
+
+```
+
+```{r}
+df_merge_1<- merge(df_votes.2017, df_population.2011,by='CODGEO')
+df_merge_1<-merge(df_merge_1,df_emploi.dec.2016.sex,x.by='CODGEO',y.by='Code.Insee.de.la.commune')
+df_merge_1<-merge(df_merge_1,df_emploi.dec.2016.age,x.by='CODGEO',y.by='Code.Insee.de.la.commune')
+df_merge_1<-merge(df_merge_1,df_misc.param,by='CODGEO')
+head(df_merge_1)
+```
+

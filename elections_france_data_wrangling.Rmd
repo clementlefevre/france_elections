@@ -1,5 +1,5 @@
 ---
-title: "Elections France 2017"
+title: "Elections France 2017 Data Wrangling"
 output:  github_document
 ---
 ```{r}
@@ -15,7 +15,6 @@ library("RColorBrewer")
 library("classInt")
 library('plotrix')    # Créer des échelles de couleurs
 
-
 library("ggmap")
 library("maptools")
 
@@ -24,25 +23,23 @@ library("maptools")
 
 
 ```{r}
-df_chomage<-read.csv('data/chomages_France.csv',sep=';',stringsAsFactors = F,skip = 1)
-
-df_chomage$ZE2010<- df_chomage$ZE2010 %>% as.numeric()
+df_chomage<-read.csv('data/unemployment.csv',stringsAsFactors = F)
 df_zones_communes<- read.csv('data/code_geo_communes.csv',sep=';',stringsAsFactors = 1)
-df_pres<-read.csv('data/Pres_Tour1_2017.csv',stringsAsFactors = F,sep=';')
+df_votes.2017<-read.csv('data/DOI/Pres_Tour1_2017.csv',stringsAsFactors = F,sep=';')
 
 ```
 
 Clean the mess with the votes results (the score are ranked per columns !!!)
 
 ```{r}
-df_test<-(df_pres)
-
-colos_Exp<-grep('X..Voix.Exp',colnames(df_pres),value = T)
-colos_name<-grep('Nom',colnames(df_test),value = T)
-colos_Voix<-grep('^Voix',colnames(df_test),value = T)
 
 
-filtered_df_pres<-df_test %>% select_(.dots = c(colos_Exp,colos_name,colos_Voix,"Code.de.la.commune", "Libellé.de.la.commune","Code.du.département","Libellé.du.département","Votants"))
+colos_Exp<-grep('X..Voix.Exp',colnames(df_votes.2017),value = T)
+colos_name<-grep('Nom',colnames(df_votes.2017),value = T)
+colos_Voix<-grep('^Voix',colnames(df_votes.2017),value = T)
+
+
+filtered_df_pres<-df_votes.2017 %>% select_(.dots = c(colos_Exp,colos_name,colos_Voix,"Code.de.la.commune", "Libellé.de.la.commune","Code.du.département","Libellé.du.département","Votants"))
 
 gather_name<-filtered_df_pres %>% gather(key,'Nom',starts_with('Nom')) 
 gather_scores<- filtered_df_pres%>% gather(key,'Score',starts_with('X..Voix.Exp'))
@@ -51,25 +48,27 @@ gather_voix<- filtered_df_pres%>% gather(key,'Voix',starts_with('Voix'))
 
 gather_name_scores<- data.frame(select(gather_scores, Score), select(gather_name,Nom,Code.de.la.commune, Libellé.de.la.commune,Code.du.département,Libellé.du.département,Votants),select(gather_voix,Voix))
 
-df_pres<-gather_name_scores
+df_votes.2017<-gather_name_scores
 
-ggplot(gather_name_scores,aes(x=Nom,y=Score, col=Nom))+ geom_boxplot()
+ggplot(df_votes.2017,aes(x=Nom,y=Score, col=Nom))+ geom_boxplot()
 
 ```
 ```{r}
-gather_name_scores %>% filter(Code.du.département==73  &  grepl("Peis",Libellé.de.la.commune))
+df_votes.2017 %>% filter(Code.du.département==73  &  grepl("Peis",Libellé.de.la.commune))
 ```
 
 top LE PEN :
 ```{r}
-gather_name_scores %>% filter(Nom=='LE PEN' & Score>70)  %>% arrange(desc(Votants))
+df_votes.2017 %>% filter(Nom=='LE PEN' & Score>70)  %>% arrange(desc(Votants))
 ```
 
 Spread candidate names :
 ```{r}
-df_pres_clean<- df_pres   %>% group_by(Code.du.département,Libellé.du.département,
+df_votes.2017<- df_votes.2017   %>% group_by(Code.du.département,Libellé.du.département,
                                        Code.de.la.commune,Libellé.de.la.commune,Nom) %>% summarise(Mean_Score=mean(Score)) %>% spread(Nom,Mean_Score)
-filter(df_pres_clean,grepl('^Peis',Libellé.de.la.commune)& Code.du.département==73)
+filter(df_votes.2017,grepl('^Peis',Libellé.de.la.commune)& Code.du.département==73)
+
+write.csv(df_votes.2017,'data/DOI/pres_1erTour_2017_commune_candidat.csv',sep=';')
 
 ```
 
@@ -83,10 +82,7 @@ str(df_zones_communes)
 
 ```{r}
 df_pres_merged<-merge(df_pres_clean,df_zones_communes, by.y = c('dept','communes'),by.x = c('Code.du.département','Code.de.la.commune'),all.x = TRUE)
-#str(df_pres_merged)
-#df_pres_merged[is.na(df_pres_merged$ZE2010),]$Libellé.de.la.commune
-```
-```{r}
+
 nrow(df_pres_merged[is.na(df_pres_merged$ZE2010),])/nrow(df_pres)*100
 
 ```
