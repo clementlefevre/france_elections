@@ -7,7 +7,9 @@ library(dplyr)
 library(tidyr)
 library(stringr)
 library(GGally)
+library(ggcorrplot)
 ```
+
 
 
 ```{r}
@@ -17,6 +19,9 @@ df_population.2011<-read.csv('data/DOI/base-cc-evol-struct-pop-2011.csv',strings
 df_emploi.dec.2016.sex<-read.csv('data/DOI/communes_internet_decembre_2016_gorf18oa_per_sex.csv',stringsAsFactors = F)
 df_emploi.dec.2016.age<-read.csv('data/DOI/communes_internet_decembre_2016_gorf18oa_per_age.csv',stringsAsFactors = F)
 df_misc.param<-read.csv('data/DOI/MDB-INSEE-V2.csv',stringsAsFactors = F)
+
+candidats<-c("ARTHAUD","ASSELINEAU","CHEMINADE","DUPONT.AIGNAN","FILLON","HAMON","LASSALLE","LE.PEN","MACRON","MÉLENCHON","POUTOU")
+
 ```
 
 ### Remove comma on df_emploi
@@ -59,7 +64,6 @@ df.all$POP_Active_Female<- df.all %>% select(one_of(POP_Active_Female_cols)) %>%
 df.all<-df.all%>% mutate(POP_Active_Female_NoJob=Femmes/POP_Active_Female)
 
 
-# per age class
 
 
 
@@ -68,5 +72,41 @@ df.all<-df.all%>% mutate(POP_Active_Female_NoJob=Femmes/POP_Active_Female)
 Focus on one city :
 ```{r}
 df.all %>% filter(CODGEO==41269) %>% gather()
+```
+```{r}
+
+corr <- round(cor(df.all %>% select(one_of(c(candidats,"Taux.étudiants","POP_Active_Male_NoJob","POP_Active_Female_NoJob")))%>% na.omit()),1)
+
+# Plot
+ggcorrplot(corr, hc.order = TRUE, 
+           type = "lower", 
+           lab = FALSE, 
+           lab_size = 3, 
+           method="square", 
+           colors = c("cyan4", "white", "red3"), 
+           title="Correlogram of Selected Features", 
+           ggtheme=theme_bw)
+```
+
+```{r}
+ggplot(df.all,aes(x=Score.PIB)) + geom_histogram(bins = 100)
+ggplot(df.all,aes(x=P11_POP,y=P11_POP)) + geom_boxplot()
+df.all[which.min(df.all$P11_POP),]
+summary(df.all$P11_POP)
+
+```
+```{r}
+df.all_numeric<-df.all %>% select(-contains('C11')) %>% select(-contains('P11')) %>% select_if(is.numeric)
+str(df.all_numeric)
+```
+
+```{r}
+candidats_one<-candidats[!candidats %in% c('LE.PEN')]
+candidats_one
+model1<-lm(LE.PEN~.,data=df.all_numeric %>% select(-one_of(candidats_one)))
+```
+
+```{r}
+summary(model1)
 ```
 
