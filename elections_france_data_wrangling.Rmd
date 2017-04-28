@@ -6,25 +6,12 @@ output:  github_document
 library(dplyr)
 library(tidyr)
 library(stringr)
-library(GGally)
-
-library("sp")
-library("rgdal")
-
-library("RColorBrewer")
-library("classInt")
-library('plotrix')    # Créer des échelles de couleurs
-
-library("ggmap")
-library("maptools")
-
-
 ```
 
 
 ```{r}
 df_chomage<-read.csv('data/unemployment.csv',stringsAsFactors = F)
-df_zones_communes<- read.csv('data/code_geo_communes.csv',sep=';',stringsAsFactors = 1)
+df_zones_communes<- read.csv('data/DOI/code_geo_communes.csv',sep=';',stringsAsFactors = 1)
 df_votes.2017<-read.csv('data/DOI/Pres_Tour1_2017.csv',stringsAsFactors = F,sep=';')
 
 ```
@@ -39,14 +26,14 @@ colos_name<-grep('Nom',colnames(df_votes.2017),value = T)
 colos_Voix<-grep('^Voix',colnames(df_votes.2017),value = T)
 
 
-filtered_df_pres<-df_votes.2017 %>% select_(.dots = c(colos_Exp,colos_name,colos_Voix,"Code.de.la.commune", "Libellé.de.la.commune","Code.du.département","Libellé.du.département","Votants"))
+filtered_df_pres<-df_votes.2017 %>% select_(.dots = c(colos_Exp,colos_name,colos_Voix,"Code.de.la.commune", "Libellé.de.la.commune","Code.du.département","Libellé.du.département","Votants","Inscrits","Abstentions" ,"Exprimés","X..Abs.Ins","X..Exp.Vot"))
 
 gather_name<-filtered_df_pres %>% gather(key,'Nom',starts_with('Nom')) 
 gather_scores<- filtered_df_pres%>% gather(key,'Score',starts_with('X..Voix.Exp'))
 gather_voix<- filtered_df_pres%>% gather(key,'Voix',starts_with('Voix'))
 
 
-gather_name_scores<- data.frame(select(gather_scores, Score), select(gather_name,Nom,Code.de.la.commune, Libellé.de.la.commune,Code.du.département,Libellé.du.département,Votants),select(gather_voix,Voix))
+gather_name_scores<- data.frame(select(gather_scores, Score), select(gather_name,Nom,Code.de.la.commune, Libellé.de.la.commune,Code.du.département,Libellé.du.département,Votants,Inscrits,Abstentions,Exprimés,X..Abs.Ins,X..Exp.Vot),select(gather_voix,Voix))
 
 df_votes.2017<-gather_name_scores
 
@@ -65,164 +52,11 @@ df_votes.2017 %>% filter(Nom=='LE PEN' & Score>70)  %>% arrange(desc(Votants))
 Spread candidate names :
 ```{r}
 df_votes.2017<- df_votes.2017   %>% group_by(Code.du.département,Libellé.du.département,
-                                       Code.de.la.commune,Libellé.de.la.commune,Nom) %>% summarise(Mean_Score=mean(Score)) %>% spread(Nom,Mean_Score)
+                                       Code.de.la.commune,Libellé.de.la.commune,Nom,Votants,Inscrits,Abstentions,Exprimés,X..Abs.Ins,X..Exp.Vot) %>% summarise(Mean_Score=mean(Score)) %>% spread(Nom,Mean_Score)
 filter(df_votes.2017,grepl('^Peis',Libellé.de.la.commune)& Code.du.département==73)
 
-write.csv(df_votes.2017,'data/DOI/pres_1erTour_2017_commune_candidat.csv',sep=';')
+write.csv(df_votes.2017,'data/DOI/pres_1erTour_2017_commune_candidat.csv')
 
 ```
 
-
-
-```{r}
-df_zones_communes$dept<-str_sub(df_zones_communes$CODGEO,1,end=2) %>% as.numeric()
-df_zones_communes$communes<-str_sub(df_zones_communes$CODGEO,3)%>% as.numeric()
-str(df_zones_communes)
-```
-
-```{r}
-df_pres_merged<-merge(df_pres_clean,df_zones_communes, by.y = c('dept','communes'),by.x = c('Code.du.département','Code.de.la.commune'),all.x = TRUE)
-
-nrow(df_pres_merged[is.na(df_pres_merged$ZE2010),])/nrow(df_pres)*100
-
-```
-
-
-```{r}
-df_pres_merged_chomage<-merge(df_pres_merged,df_chomage,by = 'ZE2010',all.x=T)
-dim(df_pres_merged_chomage)
-sum(is.na(df_pres_merged_chomage$X2016.T4))
-
-df_pres_merged_chomage <- df_pres_merged_chomage %>% filter(!is.na(X2016.T4))
-dim(df_pres_merged_chomage)
-```
-
-```{r}
-head(df_pres_merged_chomage)
-```
-```{r}
-# rename Le Pen
-names(df_pres_merged_chomage)[names(df_pres_merged_chomage) == 'LE PEN'] <- 'LE_PEN'
-ggpairs(df_pres_merged_chomage,columns = c("X2016.T4","LE_PEN","MÉLENCHON","FILLON","MACRON"))
-str(df_pres_merged_chomage)
-```
-
-```{r}
-# Emplacement de l'archive décompressée, à remplacer par le votre
-pathToShp <- "data/GEOFLA/1_DONNEES_LIVRAISON_2016-06-00236/GEOFLA_2-2_SHP_LAMB93_FR-ED161/COMMUNE/"
-# Description des données via orgInfo
-# Attention à ne pas mettre l'extension à la fin du nom
-ogrInfo(dsn = pathToShp,layer="COMMUNE")
-```
-
-```{r}
-# Import via la fonction readOGR de rgdal
-# Pour info, d'autres outils existent (ex : fonction readShapeSpatial() du package maptools)
-comm <- readOGR(dsn = pathToShp, layer="COMMUNE", stringsAsFactors=FALSE)
-```
-```{r}
-# Description de la structure globale
-str(comm, 2)
-```
-```{r}
-# Description de la structure des données associées 
-str(comm@data, 2)
-```
-
-```{r}
-# Représentation de toutes les communes d'IDF
-plot(comm[comm$CODE_REG=="11",])
-# Ajout sur le graphique précédent (via add = TRUE) des communes d'intérêt, remplies en rouge (via col="red") 
-plot(comm[comm$CODE_REG=="11" & comm$POPULATION>5000,], col="red",add=T)
-```
-
-```{r}
-comm@data <- left_join(comm@data, df_pres_merged_chomage, by = c("INSEE_COM" = "CODGEO"))
-```
-
-```{r}
-# Filtrage des données pour ne garder que la région Bretagne
-comm <- comm[comm@data$CODE_REG=="53",]
-
-```
-```{r}
-# Découpage du taux de vote   en 5 classes via la méthodes des quantiles : idenfication des bornes (breaks, ou brks)
-classSuffrages <- classIntervals(comm@data$LE_PEN, 5, style = "quantile")
-# Choix d'une palette de couleur pour les 5 catégories
-palette <- brewer.pal(n = 5, name = "YlOrRd")
-
-
-# Application de ce découpage à la variable suffrages, sauvegarde dans suffrage_cat
-# On stocke, pour chaque observation, la valeur de la couleur correspondante
-comm@data$suffrage_cat <- as.character(cut(comm@data$LE_PEN, breaks = classSuffrages$brks, labels = palette, include.lowest = TRUE))
-
-# On stocke l'information des classes pour créer une légende 
-legende_LePen <- as.character(levels(cut(comm@data$LE_PEN, breaks = classSuffrages$brks, include.lowest = TRUE, right = FALSE)))
-
-```
-
-
-```{r}
-# Découpage du taux de vote   en 5 classes via la méthodes des quantiles : idenfication des bornes (breaks, ou brks)
-classChomage <- classIntervals(comm@data$X2016.T4, 5, style = "quantile")
-# Choix d'une palette de couleur pour les 5 catégories
-palette <- brewer.pal(n = 5, name = "YlOrRd")
-
-
-# Application de ce découpage à la variable suffrages, sauvegarde dans suffrage_cat
-# On stocke, pour chaque observation, la valeur de la couleur correspondante
-comm@data$chomage_cat <- as.character(cut(comm@data$X2016.T4, breaks = classChomage$brks, labels = palette, include.lowest = TRUE))
-
-# On stocke l'information des classes pour créer une légende 
-legende_chomage <- as.character(levels(cut(comm@data$X2016.T4, breaks = classChomage$brks, include.lowest = TRUE, right = FALSE)))
-```
-
-```{r}
-plot(comm, col = comm@data$suffrage_cat, border='black',lwd=0.001)
-
-legend("bottomleft", legend = legende_LePen, fill = palette, cex=0.6, title = "Vote Le Pen 2017")
-##
-
-```
-
-  
-```{r}
-plot(comm, col = comm@data$chomage_cat, border='black',lwd=0.001)
-legend("bottomleft", legend = legende_chomage, fill = palette, cex=0.6, title = "Chomage T4 2016")
-```
-```{r}
-revenus <- read.csv('data/revenus.csv')
-communes <- merge(comm, revenus, by.x="INSEE_COM", by.y="COMMUNE")
-
-# Lecture des données cantonales
-cantons  <- read.csv('data/cantons.csv')
-
-# Jointure des données
-communes <- merge(communes, cantons, by="CANTON", all.x=TRUE)
-
-# Affectation de la moyenne cantonale aux communes sans données
-communes$REVENUS[is.na(communes$REVENUS)] <- communes$REVENUC[is.na(communes$REVENUS)]
-
-col <- findColours(classIntervals(
-            communes$REVENUS, 100, style="quantile"),
-            smoothColors("#FFFFD7",98,"#F3674C"))
-
-leg <- findColours(classIntervals(
-            round(communes$REVENUS,0), 4, style="quantile"),
-            smoothColors("#FFFFD7",2,"#F3674C"),
-            under="moins de", over="plus de", between="–",
-            cutlabels=FALSE)
-```
-
-
-```{r}
-plot(communes,   col=col, border=col, lwd=.1)
-
-
-legend("bottomleft",fill=attr(leg, "palette"),
-    legend=gsub("\\.", ",", names(attr(leg,"table"))),
-    title = "Revenu médian par UC :")
-
-
-```
 

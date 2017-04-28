@@ -1696,7 +1696,7 @@ summary(model1)
     ## F-statistic: 12.68 on 46 and 169 DF,  p-value: < 2.2e-16
 
 ``` r
-ggplot(df.all.clean  %>% filter(Code.Insee.de.la.région %in% c(32,53,93)) %>% filter(Population>10),aes(x=log(Q3_Q1),y=log(LE.PEN),col=Code.Insee.de.la.région))+geom_jitter(alpha=.3) #+geom_smooth(method = 'lm')
+ggplot(df.all.clean  %>% filter(Code.Insee.de.la.région %in% c(32,53,93)) %>% filter(Population>10),aes(x=log(Q3_Q1),y=log(MACRON),col=Code.Insee.de.la.région))+geom_jitter(alpha=.3) #+geom_smooth(method = 'lm')
 ```
 
     ## Warning: Removed 3247 rows containing missing values (geom_point).
@@ -1704,7 +1704,7 @@ ggplot(df.all.clean  %>% filter(Code.Insee.de.la.région %in% c(32,53,93)) %>% f
 ![](elections_france_combine_data_files/figure-markdown_github/unnamed-chunk-12-1.png)
 
 ``` r
-ggplot(df.all.clean %>% filter(Q213<30000) %>% filter(Code.Insee.de.la.région==53),aes(x=Q213,y=Q3_Q1,col=LE.PEN))+ geom_jitter(alpha=.3)+scale_color_gradientn(colours = rainbow(5))
+ggplot(df.all.clean %>% filter(Q213<30000) %>% filter(Code.Insee.de.la.région==53),aes(x=Q213,y=Q3_Q1,col=LE.PEN))+ geom_jitter(alpha=1)+scale_color_gradientn(colours = rainbow(5))
 ```
 
     ## Warning: Removed 800 rows containing missing values (geom_point).
