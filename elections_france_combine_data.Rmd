@@ -23,8 +23,22 @@ df_emploi.dec.2016.age<-read.csv('data/DOI/communes_internet_decembre_2016_gorf1
 df_misc.param<-read.csv('data/DOI/MDB-INSEE-V2.csv',stringsAsFactors = F)
 df_revenus<-read.csv('data/DOI/revenus_median.csv')
 
+# to fill missing Median Income Q213 and Income IQR Q3_Q1 using the Arrondissement value.
+df_revenus_ARR<-read.csv('data/DOI/FILO_DEC_ARR.csv')  %>% select(CODGEO,Q213,Q3_Q1)
+df_revenus_pauvrete<-read.csv('data/DOI/filo-revenu-pauvrete-menage-2013.csv') %>% select(CODGEO,MED13)
+
+# to fill missing Median Income MED13 using the Arrondissement value.
+df_revenus_pauvrete_ARR<-read.csv('data/DOI/filo-revenu-pauvrete-menage-2013_ARR.csv') %>% select(CODGEO,MED13)
+
+
 candidats<-c("ARTHAUD","ASSELINEAU","CHEMINADE","DUPONT.AIGNAN","FILLON","HAMON","LASSALLE","LE.PEN","MACRON","MÉLENCHON","POUTOU")
 
+```
+
+check missing CODEGEO 22007
+
+```{r}
+df_votes.2017 %>% filter(Code.du.département==22 & Code.de.la.commune==7)
 ```
 
 ### Remove comma on df_emploi
@@ -47,20 +61,45 @@ head(df_zones_communes)
 ### Combine zone geo with votes :
 
 ```{r}
-df_votes.2017<-merge(df_votes.2017,df_zones_communes, by.y = c('dept','communes'),by.x = c('Code.du.département','Code.de.la.commune'),all.x = TRUE)
+df_votes.2017<-merge(df_zones_communes, df_votes.2017,by.x = c('dept','communes'),by.y = c('Code.du.département','Code.de.la.commune'),all.x = TRUE)
 df_votes.2017$CODGEO<-as.character(df_votes.2017$CODGEO)
+df_votes.2017 %>% filter(CODGEO=="03310")
+
 
 ```
 ### Combine votes with population structure :
 ```{r}
-df.all<- merge(df_votes.2017, df_population.2011,by='CODGEO')
-df.all<-merge(df.all,df_emploi.dec.2016.sex,x.by='CODGEO',y.by='Code.Insee.de.la.commune')
-df.all<-merge(df.all,df_emploi.dec.2016.age,x.by='CODGEO',y.by='Code.Insee.de.la.commune')
-df.all<-merge(df.all,df_misc.param,by='CODGEO')
-df.all<-merge(df.all,df_revenus %>% select(-LIBGEO),by='CODGEO')
-head(df.all)
+df.all<- merge(df_votes.2017, df_population.2011,by='CODGEO',all.x=T)
+df.all %>% filter(CODGEO=="03310")
 ```
+
+```{r}
+df.all<-merge(df.all,df_emploi.dec.2016.sex,by.x='CODGEO',by.y ='Code.Insee.de.la.commune')
+```
+
 ### Add unemployment rate
+```{r}
+
+df.all<-merge(df.all,df_emploi.dec.2016.age,by.x='CODGEO',by.y ='Code.Insee.de.la.commune')
+df.all<-merge(df.all,df_misc.param,by='CODGEO')
+df.all<-merge(df.all,df_revenus %>% select(-LIBGEO),by='CODGEO',all.x=TRUE)
+
+df.all<-merge(df.all,df_revenus_pauvrete,by='CODGEO')
+
+df.all<-merge(df.all,df_revenus_pauvrete_ARR,by.x='ARR',by.y='CODGEO',suffixes = c('','_ARR'))
+df.all<-merge(df.all,df_revenus_ARR,by.x='ARR',by.y='CODGEO',by='CODGEO',suffixes = c('','_ARR'))
+
+df.all %>% filter(CODGEO=="32009")%>% select(Q213,Q213_ARR, MED13,MED13_ARR, Q3_Q1,Q3_Q1_ARR)
+```
+
+### Fill the missing Income values using the district media :
+
+```{r}
+df.all <- df.all %>%   mutate(MED13= if_else(is.na(MED13),MED13_ARR,MED13))
+df.all <- df.all %>%   mutate(Q213= if_else(is.na(Q213),Q213_ARR,Q213))
+df.all <- df.all %>%   mutate(Q3_Q1= if_else(is.na(Q3_Q1),Q3_Q1_ARR,Q3_Q1))
+df.all %>% filter(CODGEO=='32009') %>% select(Q213,MED13,Q3_Q1,MED13_ARR)
+```
 
 ```{r}
 # per sex
@@ -72,23 +111,16 @@ POP_Active_Female_cols<-grep('C11_F15P_C',colnames(df.all),value = T)
 df.all$POP_Active_Female<- df.all %>% select(one_of(POP_Active_Female_cols)) %>% rowSums(.)
 df.all<-df.all%>% mutate(POP_Active_Female_NoJob=Femmes/POP_Active_Female)
 
-
-
-
 df.all<- df.all %>% mutate(POP_Active_Agricole= C11_POP15P_CS1/(POP_Active_Female+POP_Active_Male))
 df.all<-df.all %>% mutate(POP_Active_Agricole_log= log(POP_Active_Agricole+1))
-
-
-
-
-
-
 ```
 
 Focus on one city :
 ```{r}
-df.all %>% filter(CODGEO==41269) %>% gather()
+df.all %>% filter(CODGEO==22056) %>% gather()
 ```
+
+
 ```{r}
 
 corr <- round(cor(df.all %>% select(one_of(c(candidats,"Taux.étudiants","POP_Active_Male_NoJob","POP_Active_Female_NoJob")))%>% na.omit()),1)
@@ -106,13 +138,13 @@ ggcorrplot(corr, hc.order = TRUE,
 
 ```{r}
 ggplot(df.all,aes(x=Score.PIB)) + geom_histogram(bins = 100)
-ggplot(df.all,aes(x=P11_POP,y=P11_POP)) + geom_boxplot()
+ggplot(df.all,aes(x=P11_POP,y=P11_POP,na.rm=T)) + geom_boxplot()
 df.all[which.min(df.all$P11_POP),]
 summary(df.all$P11_POP)
 
 ```
 
-### Clean features
+### Clean features and save
 ```{r}
 # Remove demographic classes data
 df.all.clean<-df.all %>% select(-contains('C11')) %>% select(-contains('P11'))
@@ -124,11 +156,12 @@ Ratio.Nb <- gsub("Nb.", "Ratio.", Nb.Columns)
 
 df.all.clean<-df.all.clean %>% mutate_each(funs(ratio=log(./Population+1)),contains('Nb.'))
 
+write.csv(df.all.clean,'data/DOI/elections_2017_First_round.csv')
 
 ```
 
 ```{r}
-bretagne<-df.all.clean %>% filter(Code.Insee.de.la.région==24) %>% filter(!is.na(Q3_Q1))
+bretagne<-df.all.clean %>% filter(REG==24) %>% filter(!is.na(Q3_Q1))
 bretagne$extremes<-bretagne$LE.PEN+bretagne$MÉLENCHON
 dim(bretagne)
 model1<-lm(LE.PEN~. ,data=bretagne %>%select(matches('LE.PEN|NoJob|Q213|Q3_Q1|GI13|RD|Score.PIB|_ratio|Population')))
@@ -136,11 +169,11 @@ summary(model1)
 ```
 
 ```{r}
-ggplot(df.all.clean  %>% filter(NCC =="BRETAGNE") %>% filter(Population>10),aes(x=Q3_Q1,y=LE.PEN,col=NCC))+geom_jitter(alpha=.3) #+geom_smooth(method = 'lm')
-ggplot(df.all.clean  %>% filter(Code.Insee.de.la.région %in% c(32,53,93)) %>% filter(Population<100000),aes(x=log(Population),y=(MACRON),col=NCC))+geom_jitter(alpha=.3) #+geom_smooth(method = 'lm')
+ggplot(df.all.clean  %>% filter(REG %in% c(32,53,93,44)) %>% filter(Population>10),aes(x=Q3_Q1,y=LE.PEN,col=NCC))+geom_jitter(alpha=.5) #+geom_smooth(method = 'lm')
+ggplot(df.all.clean  %>% filter(REG %in% c(93)) ,aes(x=(Q213),y=(LE.PEN),col=NCC))+geom_jitter(alpha=.3) #+geom_smooth(method = 'lm')
 ```
 
 ```{r}
-ggplot(df.all.clean %>% filter(Q213<30000) %>% filter(Code.Insee.de.la.région==53),aes(x=Q213,y=Q3_Q1,col=LE.PEN))+ geom_jitter(alpha=1)+scale_color_gradientn(colours = rainbow(5))
+ggplot(df.all.clean %>% filter(Q213<30000) %>% filter(REG==53),aes(x=Q213,y=Q3_Q1,col=LE.PEN))+ geom_jitter(alpha=1)+scale_color_gradientn(colours = rainbow(5))
 ```
 
