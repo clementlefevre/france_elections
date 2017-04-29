@@ -17,7 +17,7 @@ df_communes<- read.csv('data/DOI/OGR_Communes.csv',colClasses=c(INSEE_COM='chara
 
 df_communes<-df_communes %>%  mutate(CODE_COM=str_pad(CODE_COM, 3, pad = "0"))
 df_communes<-df_communes %>%  mutate(CODE_ARR=str_pad(CODE_ARR, 3, pad = "0"))
-df_communes<-df_communes %>%  unite(GEOCODE_ARR,CODE_DEPT,CODE_ARR,sep = '')
+df_communes<-df_communes %>%  unite(CODGEO_ARR,CODE_DEPT,CODE_ARR,sep = '')
 
 
 str(df_communes)
@@ -37,15 +37,47 @@ str(df.all)
 df.all %>% filter(INSEE_COM=='32009')
 ```
 
+### Combine with Population and add Unemployment rate
+
 ```{r}
 
+df.emploi.COM<-read.csv('data/DOI/base_cc_emploi_pop_active_13_COM.csv',stringsAsFactors = F, colClasses=c(CODGEO='character'))
+df.emploi.COM<- df.emploi.COM %>% mutate(CODGEO=str_pad(CODGEO, 5, pad = "0"))
 
-df_votes.2017<-read.csv('data/DOI/pres_1erTour_2017_commune_candidat.csv',stringsAsFactors = F)
-df_votes.2017$Code.du.département<- as.character(df_votes.2017$Code.du.département)
+add_employment_stats <- function(df){
+ df<- df %>% select(CODGEO,P13_ACT1564,P13_ACT1524,P13_ACT2554,P13_ACT5564,P13_CHOM1564
+,P13_HCHOM1564,P13_HCHOM1524,P13_HCHOM2554,P13_HCHOM5564,P13_FCHOM1564,P13_FCHOM1524,P13_FCHOM2554,P13_FCHOM5564,C13_ACT1564_CS1,C13_ACT1564_CS2,C13_ACT1564_CS3,C13_ACT1564_CS4,C13_ACT1564_CS5,C13_ACT1564_CS6,P13_ETUD1564,P13_RETR1564)
 
-df_population.2011<-read.csv('data/DOI/base-cc-evol-struct-pop-2011.csv',stringsAsFactors = F, colClasses=c(CODGEO='character'))
-df_emploi.dec.2016.sex<-read.csv('data/DOI/communes_internet_decembre_2016_gorf18oa_per_sex.csv',stringsAsFactors = F)
-df_emploi.dec.2016.age<-read.csv('data/DOI/communes_internet_decembre_2016_gorf18oa_per_age.csv',stringsAsFactors = F)
+df <- df %>% mutate(NoJob_all=P13_CHOM1564/P13_ACT1564)
+df <- df %>%mutate(NoJob_1524=(P13_HCHOM1524+P13_FCHOM1524)/P13_ACT1524)
+df <- df %>%mutate(NoJob_2554=(P13_HCHOM2554+P13_FCHOM2554)/P13_ACT2554)
+df <- df %>%mutate(NoJob_5564=(P13_HCHOM5564+P13_FCHOM5564)/P13_ACT5564)
+df <- df %>% mutate(Job_AGRO=C13_ACT1564_CS1/P13_ACT1564)
+df <- df %>% mutate(Job_ARTISAN=C13_ACT1564_CS2/P13_ACT1564)
+df <- df %>% mutate(Job_CADRE=C13_ACT1564_CS3/P13_ACT1564)
+df <- df %>% mutate(Job_INTERMED=C13_ACT1564_CS4/P13_ACT1564)
+df <- df %>% mutate(Job_EMPLOYE=C13_ACT1564_CS5/P13_ACT1564)
+df <- df %>% mutate(Job_OUVRIER=C13_ACT1564_CS6/P13_ACT1564)
+df <- df %>% mutate(Etudiants=P13_ETUD1564/P13_ACT1564)
+df <- df %>% mutate(Retraites=P13_RETR1564/P13_ACT1564) 
+
+return(df)
+}
+
+df.emploi.COM<-add_employment_stats(df.emploi.COM)
+df.all<-merge(df.all,df.emploi.COM,by.x='INSEE_COM',by.y='CODGEO',suffixes=c('','_COM'),all.x=TRUE)
+df.all %>% filter(grepl('ROSTR',NOM_COM))
+df.all %>% filter(INSEE_COM=='01001')
+```
+### Fill missing job data with ARR values :
+
+```{r}
+## compute mean ratio job per ARR :
+
+```
+
+```{r}
+
 df_misc.param<-read.csv('data/DOI/MDB-INSEE-V2.csv',stringsAsFactors = F)
 df_revenus<-read.csv('data/DOI/revenus_median.csv')
 
@@ -60,83 +92,11 @@ df_revenus_pauvrete_ARR<-read.csv('data/DOI/filo-revenu-pauvrete-menage-2013_ARR
 candidats<-c("ARTHAUD","ASSELINEAU","CHEMINADE","DUPONT.AIGNAN","FILLON","HAMON","LASSALLE","LE.PEN","MACRON","MÉLENCHON","POUTOU")
 ```
 
-
-
-### Remove comma on df_emploi
-
-```{r}
-df_emploi.dec.2016.age[,7:9]<-lapply(df_emploi.dec.2016.age[,7:9],function(x){as.numeric(gsub(",", "", x))})
-df_emploi.dec.2016.sex[,7:9]<-lapply(df_emploi.dec.2016.sex[,7:9],function(x){as.numeric(gsub(",", "", x))})
-
-```
-### Combine communes with regions names:
-```{r}
-
-df_zones_communes<-merge(df_zones_communes,df_regions,by.x="REG",by.y="REGION",suffixes = c('','_region'))
-
-df_zones_communes %>% filter(CODGEO==32009)
-```
-
-
-### Combine zone geo with votes :
-
-```{r}
-df.all<-merge(df_zones_communes, df_votes.2017,by.x = c('DEP','COM'),by.y = c('Code.du.département','Code.de.la.commune'),all.x = TRUE)
-
-df.all %>% filter(CODGEO=="22007")
-
-
-```
-### Combine votes with population structure :
-```{r}
-df.all<- merge(df.all, df_population.2011,by='CODGEO',all.x=T)
-df.all %>% filter(CODGEO=="01001")
-```
-
-```{r}
-df.all<-merge(df.all,df_emploi.dec.2016.sex,by.x='CODGEO',by.y ='Code.Insee.de.la.commune')
-```
-
-### Add unemployment rate
-```{r}
-
-df.all<-merge(df.all,df_emploi.dec.2016.age,by.x='CODGEO',by.y ='Code.Insee.de.la.commune')
-df.all<-merge(df.all,df_misc.param,by='CODGEO')
-df.all<-merge(df.all,df_revenus %>% select(-LIBGEO),by='CODGEO',all.x=TRUE)
-
-df.all<-merge(df.all,df_revenus_pauvrete,by='CODGEO')
-
-
-```
-
 ```{r}
 df.all<-merge(df.all,df_revenus_pauvrete_ARR,by.x='ARR',by.y='CODGEO',suffixes = c('','_ARR'))
 df.all<-merge(df.all,df_revenus_ARR,by.x='ARR',by.y='CODGEO',by='CODGEO',suffixes = c('','_ARR'))
 
 df.all %>% filter(CODGEO=="32009")%>% select(Q213,Q213_ARR, MED13,MED13_ARR, Q3_Q1,Q3_Q1_ARR)
-```
-
-### Fill the missing Income values using the district media :
-
-```{r}
-df.all <- df.all %>%   mutate(MED13= if_else(is.na(MED13),MED13_ARR,MED13))
-df.all <- df.all %>%   mutate(Q213= if_else(is.na(Q213),Q213_ARR,Q213))
-df.all <- df.all %>%   mutate(Q3_Q1= if_else(is.na(Q3_Q1),Q3_Q1_ARR,Q3_Q1))
-df.all %>% filter(CODGEO=='22007') %>% select(Q213,MED13,Q3_Q1,MED13_ARR)
-```
-
-```{r}
-# per sex
-POP_Active_Male_cols<-grep('C11_H15P_C',colnames(df.all),value = T)
-df.all$POP_Active_Male<- df.all %>% select(one_of(POP_Active_Male_cols)) %>% rowSums(.)
-df.all<-df.all%>% mutate(POP_Active_Male_NoJob=Hommes/POP_Active_Male)
-
-POP_Active_Female_cols<-grep('C11_F15P_C',colnames(df.all),value = T)
-df.all$POP_Active_Female<- df.all %>% select(one_of(POP_Active_Female_cols)) %>% rowSums(.)
-df.all<-df.all%>% mutate(POP_Active_Female_NoJob=Femmes/POP_Active_Female)
-
-df.all<- df.all %>% mutate(POP_Active_Agricole= C11_POP15P_CS1/(POP_Active_Female+POP_Active_Male))
-df.all<-df.all %>% mutate(POP_Active_Agricole_log= log(POP_Active_Agricole+1))
 ```
 
 Focus on one city :
