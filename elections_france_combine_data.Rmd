@@ -13,11 +13,37 @@ library(ggcorrplot)
 
 
 ```{r}
-df_zones_communes<- read.csv('data/DOI/code_geo_communes.csv',sep=';',stringsAsFactors = 1)
-df_regions<-read.table('data/DOI/reg2016.txt',  sep="\t",quote = "\n",header = T)
-df_regions<-df_regions %>% select(REGION,NCC)
+df_communes<- read.csv('data/DOI/OGR_Communes.csv',colClasses=c(INSEE_COM='character',CODE_COM='character',CODE_DEPT='character',CODE_ARR='character')) %>% select(CODE_COM,INSEE_COM,NOM_COM,CODE_ARR,CODE_DEPT,NOM_DEPT,CODE_REG,NOM_REG)
+
+df_communes<-df_communes %>%  mutate(CODE_COM=str_pad(CODE_COM, 3, pad = "0"))
+df_communes<-df_communes %>%  mutate(CODE_ARR=str_pad(CODE_ARR, 3, pad = "0"))
+df_communes<-df_communes %>%  unite(GEOCODE_ARR,CODE_DEPT,CODE_ARR,sep = '')
+
+
+str(df_communes)
+
+```
+### Combine with votes :
+
+```{r}
 df_votes.2017<-read.csv('data/DOI/pres_1erTour_2017_commune_candidat.csv',stringsAsFactors = F)
-df_population.2011<-read.csv('data/DOI/base-cc-evol-struct-pop-2011.csv',stringsAsFactors = F)
+df_votes.2017<-df_votes.2017 %>%  mutate(CODE_COM=str_pad(Code.de.la.commune, 3, pad = "0"))
+df_votes.2017<-df_votes.2017 %>%  mutate(CODE_DEPT=str_pad(Code.du.département, 2, pad = "0"))
+df_votes.2017<-df_votes.2017 %>%  unite(GEOCODE_COM,CODE_DEPT,CODE_COM,sep = '')
+df_votes.2017<- df_votes.2017 %>% select(-Code.de.la.commune,-Libellé.de.la.commune,-Code.du.département,-Libellé.du.département)
+
+df.all<-merge(df_communes,df_votes.2017,by.x='INSEE_COM',by.y='GEOCODE_COM',all.x=TRUE)
+str(df.all)
+df.all %>% filter(INSEE_COM=='32009')
+```
+
+```{r}
+
+
+df_votes.2017<-read.csv('data/DOI/pres_1erTour_2017_commune_candidat.csv',stringsAsFactors = F)
+df_votes.2017$Code.du.département<- as.character(df_votes.2017$Code.du.département)
+
+df_population.2011<-read.csv('data/DOI/base-cc-evol-struct-pop-2011.csv',stringsAsFactors = F, colClasses=c(CODGEO='character'))
 df_emploi.dec.2016.sex<-read.csv('data/DOI/communes_internet_decembre_2016_gorf18oa_per_sex.csv',stringsAsFactors = F)
 df_emploi.dec.2016.age<-read.csv('data/DOI/communes_internet_decembre_2016_gorf18oa_per_age.csv',stringsAsFactors = F)
 df_misc.param<-read.csv('data/DOI/MDB-INSEE-V2.csv',stringsAsFactors = F)
@@ -32,14 +58,9 @@ df_revenus_pauvrete_ARR<-read.csv('data/DOI/filo-revenu-pauvrete-menage-2013_ARR
 
 
 candidats<-c("ARTHAUD","ASSELINEAU","CHEMINADE","DUPONT.AIGNAN","FILLON","HAMON","LASSALLE","LE.PEN","MACRON","MÉLENCHON","POUTOU")
-
 ```
 
-check missing CODEGEO 22007
 
-```{r}
-df_votes.2017 %>% filter(Code.du.département==22 & Code.de.la.commune==7)
-```
 
 ### Remove comma on df_emploi
 
@@ -50,27 +71,26 @@ df_emploi.dec.2016.sex[,7:9]<-lapply(df_emploi.dec.2016.sex[,7:9],function(x){as
 ```
 ### Combine communes with regions names:
 ```{r}
-df_zones_communes$dept<-str_sub(df_zones_communes$CODGEO,1,end=2) %>% as.numeric()
-df_zones_communes$communes<-str_sub(df_zones_communes$CODGEO,3)%>% as.numeric()
-df_zones_communes<-merge(df_zones_communes,df_regions,by.x="REG",by.y="REGION")
 
-head(df_zones_communes)
+df_zones_communes<-merge(df_zones_communes,df_regions,by.x="REG",by.y="REGION",suffixes = c('','_region'))
+
+df_zones_communes %>% filter(CODGEO==32009)
 ```
 
 
 ### Combine zone geo with votes :
 
 ```{r}
-df_votes.2017<-merge(df_zones_communes, df_votes.2017,by.x = c('dept','communes'),by.y = c('Code.du.département','Code.de.la.commune'),all.x = TRUE)
-df_votes.2017$CODGEO<-as.character(df_votes.2017$CODGEO)
-df_votes.2017 %>% filter(CODGEO=="03310")
+df.all<-merge(df_zones_communes, df_votes.2017,by.x = c('DEP','COM'),by.y = c('Code.du.département','Code.de.la.commune'),all.x = TRUE)
+
+df.all %>% filter(CODGEO=="22007")
 
 
 ```
 ### Combine votes with population structure :
 ```{r}
-df.all<- merge(df_votes.2017, df_population.2011,by='CODGEO',all.x=T)
-df.all %>% filter(CODGEO=="03310")
+df.all<- merge(df.all, df_population.2011,by='CODGEO',all.x=T)
+df.all %>% filter(CODGEO=="01001")
 ```
 
 ```{r}
@@ -86,6 +106,10 @@ df.all<-merge(df.all,df_revenus %>% select(-LIBGEO),by='CODGEO',all.x=TRUE)
 
 df.all<-merge(df.all,df_revenus_pauvrete,by='CODGEO')
 
+
+```
+
+```{r}
 df.all<-merge(df.all,df_revenus_pauvrete_ARR,by.x='ARR',by.y='CODGEO',suffixes = c('','_ARR'))
 df.all<-merge(df.all,df_revenus_ARR,by.x='ARR',by.y='CODGEO',by='CODGEO',suffixes = c('','_ARR'))
 
@@ -98,7 +122,7 @@ df.all %>% filter(CODGEO=="32009")%>% select(Q213,Q213_ARR, MED13,MED13_ARR, Q3_
 df.all <- df.all %>%   mutate(MED13= if_else(is.na(MED13),MED13_ARR,MED13))
 df.all <- df.all %>%   mutate(Q213= if_else(is.na(Q213),Q213_ARR,Q213))
 df.all <- df.all %>%   mutate(Q3_Q1= if_else(is.na(Q3_Q1),Q3_Q1_ARR,Q3_Q1))
-df.all %>% filter(CODGEO=='32009') %>% select(Q213,MED13,Q3_Q1,MED13_ARR)
+df.all %>% filter(CODGEO=='22007') %>% select(Q213,MED13,Q3_Q1,MED13_ARR)
 ```
 
 ```{r}
