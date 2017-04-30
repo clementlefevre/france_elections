@@ -13,8 +13,8 @@ library(ggcorrplot)
 
 
 ```{r}
-df_communes<- read.csv('data/DOI/OGR_Communes.csv',colClasses=c(INSEE_COM='character',CODE_COM='character',CODE_DEPT='character',CODE_ARR='character')) %>% select(CODE_COM,INSEE_COM,NOM_COM,CODE_ARR,CODE_DEPT,NOM_DEPT,CODE_REG,NOM_REG)
-
+df_communes<- read.csv('data/DOI/OGR_Communes.csv',colClasses=c(INSEE_COM='character',CODE_COM='character',CODE_DEPT='character',CODE_ARR='character')) %>% select(CODE_COM,INSEE_COM,NOM_COM,CODE_ARR,CODE_DEPT,NOM_DEPT,CODE_REG,NOM_REG,POPULATION)
+df_communes<-df_communes %>%  unite(CODGEO_ARR_NO,CODE_DEPT,CODE_ARR,sep='',remove=FALSE)
 df_communes<-df_communes %>%  mutate(CODE_COM=str_pad(CODE_COM, 3, pad = "0"))
 df_communes<-df_communes %>%  mutate(CODE_ARR=str_pad(CODE_ARR, 3, pad = "0"))
 df_communes<-df_communes %>%  unite(CODGEO_ARR,CODE_DEPT,CODE_ARR,sep = '')
@@ -26,6 +26,8 @@ str(df_communes)
 ### Combine with votes :
 
 ```{r}
+candidats<-c("ARTHAUD","ASSELINEAU","CHEMINADE","DUPONT.AIGNAN","FILLON","HAMON","LASSALLE","LE.PEN","MACRON","MÉLENCHON","POUTOU")
+
 df_votes.2017<-read.csv('data/DOI/pres_1erTour_2017_commune_candidat.csv',stringsAsFactors = F)
 df_votes.2017<-df_votes.2017 %>%  mutate(CODE_COM=str_pad(Code.de.la.commune, 3, pad = "0"))
 df_votes.2017<-df_votes.2017 %>%  mutate(CODE_DEPT=str_pad(Code.du.département, 2, pad = "0"))
@@ -61,47 +63,113 @@ df <- df %>% mutate(Job_OUVRIER=C13_ACT1564_CS6/P13_ACT1564)
 df <- df %>% mutate(Etudiants=P13_ETUD1564/P13_ACT1564)
 df <- df %>% mutate(Retraites=P13_RETR1564/P13_ACT1564) 
 
+df<-df %>% select(-matches('P13|C13'))
+
+
 return(df)
 }
 
 df.emploi.COM<-add_employment_stats(df.emploi.COM)
 df.all<-merge(df.all,df.emploi.COM,by.x='INSEE_COM',by.y='CODGEO',suffixes=c('','_COM'),all.x=TRUE)
+
+
+# compute value per ARR
+#df.all <- df.all %>% group_by(CODGEO_ARR) %>% mutate_at(vars(matches('Job')),funs(total=sum(.,na.rm=TRUE)))
+
 df.all %>% filter(grepl('ROSTR',NOM_COM))
-df.all %>% filter(INSEE_COM=='01001')
+df.all %>% filter(grepl('SAINT-NICOLAS-DU-PELEM',NOM_COM)) %>% gather()
+
+
 ```
-### Fill missing job data with ARR values :
+
+# Add Incomes indicators
+## per town
 
 ```{r}
-## compute mean ratio job per ARR :
+df.income.COM<-read.csv('data/DOI/FILO_DEC_COM.csv') %>% select(CODGEO,Q213,Q3_Q1,RD,GI13)
+
+
+str(df.income.COM)
+df.all<-merge(df.all,df.income.COM,by,by.x='INSEE_COM',by.y='CODGEO',all.x=TRUE)
+
+
+sum(is.na(df.all$Q213))
+dim(df.all)
+
+
 
 ```
 
+## per County and replace missing town incomes by county incomes.
+```{r}
+df.income.ARR<-read.csv('data/DOI/FILO_DEC_ARR.csv') %>% select(CODGEO,Q213,Q3_Q1,RD,GI13)
+
+df.all<- merge(df.all,df.income.ARR,by.x="CODGEO_ARR_NO",by.y='CODGEO',all.x=TRUE,suffixes=c('','_ARR'))
+
+sum(is.na(df.all$Q213_ARR))
+sum(is.na(df.all$Q213))
+df.all<-df.all %>% mutate(Q213=ifelse(is.na(Q213),Q213_ARR,Q213))
+sum(is.na(df.all$Q213))
+```
+
+# Add foreigners
+
+```{r}
+
+# add ratio of foreigners
+df.foreigners<-read.csv('data/DOI/BTX_TD_NAT1_2013.csv')
+colnames(df.foreigners)
+df.foreigners%>%  select(contains('INATC'))
+df.foreigners <- df.foreigners %>% mutate(total_pop= df.foreigners %>%rowwise() %>% select(contains('INATC')) %>% rowSums())
+df.foreigners <- df.foreigners %>% mutate(total_foreigners= df.foreigners %>%rowwise() %>% select(contains('INATC2')) %>% rowSums())
+df.foreigners <- df.foreigners %>% mutate(ratio_foreigners= total_foreigners/total_pop)
+df.foreigners %>% filter(CODGEO=='01001') %>% gather()
+df.foreigners <- df.foreigners %>% select(CODGEO,ratio_foreigners)
+
+df.all<-merge(df.all,df.foreigners,by.x='INSEE_COM',by.y='CODGEO')
+
+df.all %>% filter(grepl('PARIS',NOM_COM)) %>% select(ratio_foreigners)
+
+```
+
+## Add migrations
+
+```{r}
+
+df.immigrants<-read.csv('data/DOI/BTX_TD_IMG1A_2013.csv')
+colnames(df.foreigners)
+df.immigrants%>%  select(contains('INATC'))
+df.immigrants <- df.immigrants %>% mutate(total_pop= df.immigrants %>%rowwise() %>% select(contains('IMMI')) %>% rowSums())
+df.immigrants <- df.immigrants %>% mutate(total_immigrants= df.immigrants %>%rowwise() %>% select(contains('IMMI1')) %>% rowSums())
+df.immigrants <- df.immigrants %>% mutate(ratio_immigrants= total_immigrants/total_pop)
+df.immigrants %>% filter(CODGEO=='01001') %>% gather()
+df.immigrants <- df.immigrants %>% select(CODGEO,ratio_immigrants)
+
+df.all<-merge(df.all,df.immigrants,by.x='INSEE_COM',by.y='CODGEO')
+
+df.all %>% filter(grepl('VENDOME',NOM_COM)) %>% select(contains('ratio'))
+
+```
+
+# Add miscellaneous features (such as number of Shop, Camping, Hotels)
 ```{r}
 
 df_misc.param<-read.csv('data/DOI/MDB-INSEE-V2.csv',stringsAsFactors = F)
-df_revenus<-read.csv('data/DOI/revenus_median.csv')
-
-# to fill missing Median Income Q213 and Income IQR Q3_Q1 using the Arrondissement value.
-df_revenus_ARR<-read.csv('data/DOI/FILO_DEC_ARR.csv')  %>% select(CODGEO,Q213,Q3_Q1)
-df_revenus_pauvrete<-read.csv('data/DOI/filo-revenu-pauvrete-menage-2013.csv') %>% select(CODGEO,MED13)
-
-# to fill missing Median Income MED13 using the Arrondissement value.
-df_revenus_pauvrete_ARR<-read.csv('data/DOI/filo-revenu-pauvrete-menage-2013_ARR.csv') %>% select(CODGEO,MED13)
+df.all<-merge(df.all,df_misc.param,by.x='INSEE_COM',by.y='CODGEO',all.x=TRUE)
 
 
-candidats<-c("ARTHAUD","ASSELINEAU","CHEMINADE","DUPONT.AIGNAN","FILLON","HAMON","LASSALLE","LE.PEN","MACRON","MÉLENCHON","POUTOU")
 ```
 
 ```{r}
 df.all<-merge(df.all,df_revenus_pauvrete_ARR,by.x='ARR',by.y='CODGEO',suffixes = c('','_ARR'))
 df.all<-merge(df.all,df_revenus_ARR,by.x='ARR',by.y='CODGEO',by='CODGEO',suffixes = c('','_ARR'))
 
-df.all %>% filter(CODGEO=="32009")%>% select(Q213,Q213_ARR, MED13,MED13_ARR, Q3_Q1,Q3_Q1_ARR)
+df.all %>% filter(INSEE_COM=="32009")%>% select(Q213,Q213_ARR, Q3_Q1,Q3_Q1_ARR)
 ```
 
 Focus on one city :
 ```{r}
-df.all %>% filter(CODGEO==22056) %>% gather()
+df.all %>% filter(INSEE_COM==22007) %>% gather()
 ```
 
 
