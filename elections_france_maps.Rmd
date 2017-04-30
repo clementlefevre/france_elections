@@ -20,6 +20,8 @@ library("maptools")
 ```{r}
 # Emplacement de l'archive décompressée, à remplacer par le votre
 pathToShp <- "data/GEOFLA/1_DONNEES_LIVRAISON_2016-06-00236/GEOFLA_2-2_SHP_LAMB93_FR-ED161/COMMUNE/"
+
+pathToShp_dept <- "data/GEOFLA_DEPT/1_DONNEES_LIVRAISON_2016-06-00235/GEOFLA_2-2_SHP_LAMB93_FR-ED161/DEPARTEMENT"
 # Description des données via orgInfo
 # Attention à ne pas mettre l'extension à la fin du nom
 ogrInfo(dsn = pathToShp,layer="COMMUNE")
@@ -78,20 +80,32 @@ legend("bottomleft", legend = legende_LePen, fill = palette, cex=0.6, title = "V
 ```
 
   
+```{r}
+# Lecture des départements
+departements <- readOGR(dsn=pathToShp_dept,  layer="DEPARTEMENT")
+
+# Lecture des limites départementales pour sélectionner les frontières
+frontieres <- readOGR(dsn=pathToShp_dept,  layer="LIMITE_DEPARTEMENT")
+frontieres <- frontieres[frontieres$NATURE %in% c('Fronti\xe8re internationale','Limite c\xf4ti\xe8re'),]
+```
 
 ```{r}
 
 col <- findColours(classIntervals(
             comm2$Q213, 4, style="quantile"),
-            smoothColors("blue",98,"red"))
+            smoothColors("white",3,"#0C3269"))
 
 leg <- findColours(classIntervals(
             round(comm2$Q213,0), 4, style="quantile"),
-            smoothColors("blue",2,"red"),
+            smoothColors("white",3,"#0C3269"),
             under="moins de", over="plus de", between="–",
             cutlabels=FALSE)
 
-plot(comm2,   col=col, border=col, lwd=.1)
+plot(frontieres,  col="red")
+plot(frontieres,  col="#D8D6D4", lwd=6, add=TRUE)
+plot(departements,col="#FFFFFF", border="#CCCCCC",lwd=.7, add=TRUE)
+plot(frontieres,  col="#666666", lwd=1, add=TRUE)
+#plot(comm2,   col=col, border=col, lwd=.1)
 
 legend("bottomleft",fill=attr(leg, "palette"),
     legend=gsub("\\.", ",", names(attr(leg,"table"))),
