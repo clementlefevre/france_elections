@@ -8,6 +8,7 @@ library("sp")
 library("rgdal")
 library(dplyr)
 library(tidyr)
+library(gridExtra)
 
 library("RColorBrewer")
 library("classInt")
@@ -89,27 +90,42 @@ frontieres <- readOGR(dsn=pathToShp_dept,  layer="LIMITE_DEPARTEMENT")
 frontieres <- frontieres[frontieres$NATURE %in% c('Fronti\xe8re internationale','Limite c\xf4ti\xe8re'),]
 ```
 
+
+
 ```{r}
 
-col <- findColours(classIntervals(
-            comm2$Q213, 4, style="quantile"),
+
+
+plot_map<- function(comm,feature){
+  
+  col <- findColours(classIntervals(
+            comm@data[,feature]*100, 4, style="quantile"),
             smoothColors("white",3,"#0C3269"))
 
 leg <- findColours(classIntervals(
-            round(comm2$Q213,0), 4, style="quantile"),
+            round(comm@data[,feature]*100,0), 4, style="quantile"),
             smoothColors("white",3,"#0C3269"),
             under="moins de", over="plus de", between="–",
             cutlabels=FALSE)
 
-plot(frontieres,  col="red")
-plot(frontieres,  col="#D8D6D4", lwd=6, add=TRUE)
-plot(departements,col="#FFFFFF", border="#CCCCCC",lwd=.7, add=TRUE)
-plot(frontieres,  col="#666666", lwd=1, add=TRUE)
-#plot(comm2,   col=col, border=col, lwd=.1)
+
+plot(comm,   col=col, border=col, lwd=.1)
+plot(departements[departements@data$CODE_REG==53,], border="#8b8378",lwd=.7,add=TRUE)
 
 legend("bottomleft",fill=attr(leg, "palette"),
     legend=gsub("\\.", ",", names(attr(leg,"table"))),
-    title = "Revenu médian par UC :")
+    title = paste(feature,":"))
+  
+}
+
+
+
+myplots <- lapply(c('NoJob_all','Job_OUVRIER','Q213','MACRON','FILLON'), plot_map, comm = comm2)
+n <- length(myplots)
+nCol <- floor(sqrt(n))
+do.call("grid.arrange", c(myplots, ncol=nCol))
+
+
 
 ```
 
