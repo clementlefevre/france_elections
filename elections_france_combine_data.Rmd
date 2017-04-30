@@ -150,6 +150,40 @@ df.all<-merge(df.all,df.immigrants,by.x='INSEE_COM',by.y='CODGEO')
 df.all %>% filter(grepl('VENDOME',NOM_COM)) %>% select(contains('ratio'))
 
 ```
+## Add immigrants job ratio
+
+```{r}
+df.immigrants_job<-read.csv('data/DOI/BTX_TD_IMG3A_2013.csv')
+
+
+df.immigrants_job <- df.immigrants_job %>% mutate(total_AGRO= df.immigrants_job %>%rowwise() %>% select(contains('CS1_81')) %>% rowSums())
+df.immigrants_job <- df.immigrants_job %>% mutate(total_ARTISANS= df.immigrants_job %>%rowwise() %>% select(contains('CS1_82')) %>% rowSums())
+df.immigrants_job <- df.immigrants_job %>% mutate(total_CADRE= df.immigrants_job %>%rowwise() %>% select(contains('CS1_83')) %>% rowSums())
+df.immigrants_job <- df.immigrants_job %>% mutate(total_INTER= df.immigrants_job %>%rowwise() %>% select(contains('CS1_84')) %>% rowSums())
+df.immigrants_job <- df.immigrants_job %>% mutate(total_EMPLOYE= df.immigrants_job %>%rowwise() %>% select(contains('CS1_85')) %>% rowSums())
+
+df.immigrants_job <- df.immigrants_job %>% mutate(total_OUVRIER= df.immigrants_job %>%rowwise() %>% select(contains('CS1_86')) %>% rowSums())
+
+df.immigrants_job <- df.immigrants_job %>% mutate(total_RETRAITE= df.immigrants_job %>%rowwise() %>% select(contains('CS1_87')) %>% rowSums())
+
+
+df.immigrants_job <- df.immigrants_job %>% mutate(ratio_immigrants_AGRO= (CS1_81_IMMI1_SEXE1+CS1_81_IMMI1_SEXE2)/total_AGRO)
+df.immigrants_job <- df.immigrants_job %>% mutate(ratio_immigrants_ARTISANS= (CS1_82_IMMI1_SEXE1+CS1_82_IMMI1_SEXE2)/total_ARTISANS)
+df.immigrants_job <- df.immigrants_job %>% mutate(ratio_immigrants_CADRE= (CS1_83_IMMI1_SEXE1+CS1_83_IMMI1_SEXE2)/total_CADRE)
+df.immigrants_job <- df.immigrants_job %>% mutate(ratio_immigrants_INTER= (CS1_84_IMMI1_SEXE1+CS1_84_IMMI1_SEXE2)/total_INTER)
+df.immigrants_job <- df.immigrants_job %>% mutate(ratio_immigrants_EMPLOYE= (CS1_85_IMMI1_SEXE1+CS1_85_IMMI1_SEXE2)/total_EMPLOYE)
+df.immigrants_job <- df.immigrants_job %>% mutate(ratio_immigrants_OUVRIER= (CS1_86_IMMI1_SEXE1+CS1_86_IMMI1_SEXE2)/total_OUVRIER)
+df.immigrants_job <- df.immigrants_job %>% mutate(ratio_immigrants_RETRAITE= (CS1_87_IMMI1_SEXE1+CS1_87_IMMI1_SEXE2)/total_RETRAITE)
+
+                                                    
+
+df.immigrants_job <- df.immigrants_job %>% select(CODGEO,contains('ratio'))
+
+df.all<-merge(df.all,df.immigrants_job,by.x='INSEE_COM',by.y='CODGEO')
+
+df.all %>% filter(grepl('VILLEBAROU',NOM_COM)) %>% select(contains('ratio'))
+
+```
 
 # Add miscellaneous features (such as number of Shop, Camping, Hotels)
 ```{r}
@@ -157,15 +191,9 @@ df.all %>% filter(grepl('VENDOME',NOM_COM)) %>% select(contains('ratio'))
 df_misc.param<-read.csv('data/DOI/MDB-INSEE-V2.csv',stringsAsFactors = F)
 df.all<-merge(df.all,df_misc.param,by.x='INSEE_COM',by.y='CODGEO',all.x=TRUE)
 
-
 ```
 
-```{r}
-df.all<-merge(df.all,df_revenus_pauvrete_ARR,by.x='ARR',by.y='CODGEO',suffixes = c('','_ARR'))
-df.all<-merge(df.all,df_revenus_ARR,by.x='ARR',by.y='CODGEO',by='CODGEO',suffixes = c('','_ARR'))
 
-df.all %>% filter(INSEE_COM=="32009")%>% select(Q213,Q213_ARR, Q3_Q1,Q3_Q1_ARR)
-```
 
 Focus on one city :
 ```{r}
@@ -175,7 +203,7 @@ df.all %>% filter(INSEE_COM==22007) %>% gather()
 
 ```{r}
 
-corr <- round(cor(df.all %>% select(one_of(c(candidats,"Taux.étudiants","POP_Active_Male_NoJob","POP_Active_Female_NoJob")))%>% na.omit()),1)
+corr <- round(cor(df.all %>% select(one_of(c(candidats)),matches('NoJob|Q213'))%>% na.omit()),1)
 
 # Plot
 ggcorrplot(corr, hc.order = TRUE, 
@@ -188,35 +216,27 @@ ggcorrplot(corr, hc.order = TRUE,
            ggtheme=theme_bw)
 ```
 
-```{r}
-ggplot(df.all,aes(x=Score.PIB)) + geom_histogram(bins = 100)
-ggplot(df.all,aes(x=P11_POP,y=P11_POP,na.rm=T)) + geom_boxplot()
-df.all[which.min(df.all$P11_POP),]
-summary(df.all$P11_POP)
 
-```
 
 ### Clean features and save
 ```{r}
-# Remove demographic classes data
-df.all.clean<-df.all %>% select(-contains('C11')) %>% select(-contains('P11'))
 
-# add Ratio
+# add logarithmic Ratio for Misc Features
 
-Nb.Columns<- grep('Nb.',colnames(df.all.clean),value = T)
+Nb.Columns<- grep('Nb.',colnames(df.all),value = T)
 Ratio.Nb <- gsub("Nb.", "Ratio.", Nb.Columns)
 
-df.all.clean<-df.all.clean %>% mutate_each(funs(ratio=log(./Population+1)),contains('Nb.'))
+df.all<-df.all %>% mutate_each(funs(ratio=log(./Population+1)),contains('Nb.'))
 
-write.csv(df.all.clean,'data/DOI/elections_2017_First_round.csv')
+write.csv(df.all,'data/DOI/elections_2017_First_round.csv')
 
 ```
 
 ```{r}
-bretagne<-df.all.clean %>% filter(REG==24) %>% filter(!is.na(Q3_Q1))
-bretagne$extremes<-bretagne$LE.PEN+bretagne$MÉLENCHON
+bretagne<-df.all %>% filter(REG==53) #%>% filter(!is.na(Q3_Q1))
+str(bretagne)
 dim(bretagne)
-model1<-lm(LE.PEN~. ,data=bretagne %>%select(matches('LE.PEN|NoJob|Q213|Q3_Q1|GI13|RD|Score.PIB|_ratio|Population')))
+model1<-lm(LE.PEN~. ,data=bretagne )
 summary(model1)
 ```
 
