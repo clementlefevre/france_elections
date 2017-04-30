@@ -228,8 +228,21 @@ Ratio.Nb <- gsub("Nb.", "Ratio.", Nb.Columns)
 
 df.all<-df.all %>% mutate_each(funs(ratio=log(./Population+1)),contains('Nb.'))
 
-write.csv(df.all,'data/DOI/elections_2017_First_round.csv')
+```
 
+## Add best candidate per town:
+```{r}
+
+
+df.all2<-df.all %>% select(one_of(candidats)) %>% mutate(best_candidate= names(.)[max.col(.)]) 
+table(df.all2$best_candidate)
+df.all$best_candidate <- df.all2$best_candidate
+  
+```
+
+## Save final dataframe
+```{r}
+write.csv(df.all,'data/DOI/elections_2017_First_round.csv')
 ```
 
 ```{r}

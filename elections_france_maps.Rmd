@@ -73,6 +73,8 @@ legende_LePen <- as.character(levels(cut(comm2@data$LE.PEN, breaks = classSuffra
 
 
 ```{r}
+
+
 plot(comm2, col = comm2@data$suffrage_cat, border='black',lwd=0.001)
 
 legend("bottomleft", legend = legende_LePen, fill = palette, cex=0.6, title = "Vote Le Pen 2017")
@@ -125,6 +127,20 @@ n <- length(myplots)
 nCol <- floor(sqrt(n))
 do.call("grid.arrange", c(myplots, ncol=nCol))
 
+
+
+```
+
+```{r}
+#add color for each candidate :
+df<-data.frame()
+candidate_colors <- with(df, data.frame(best_candidate = levels(comm2@data$best_candidate), color = palette <- brewer.pal(n = 9, name = "Set1")))
+
+
+candidates_palette<-comm2@data %>% select(best_candidate) %>% left_join(.,candidate_colors,by='best_candidate') 
+candidates_palette$color<-as.character(candidates_palette$color)
+
+plot(comm2,col = candidates_palette$color)
 
 
 ```
