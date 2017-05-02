@@ -19,7 +19,6 @@ df_communes<-df_communes %>%  mutate(CODE_COM=str_pad(CODE_COM, 3, pad = "0"))
 df_communes<-df_communes %>%  mutate(CODE_ARR=str_pad(CODE_ARR, 3, pad = "0"))
 df_communes<-df_communes %>%  unite(CODGEO_ARR,CODE_DEPT,CODE_ARR,sep = '')
 
-
 str(df_communes)
 
 ```
@@ -38,6 +37,14 @@ df.all<-merge(df_communes,df_votes.2017,by.x='INSEE_COM',by.y='GEOCODE_COM',all.
 str(df.all)
 df.all %>% filter(INSEE_COM=='32009')
 ```
+### Fill empty votes for MARSEILLE,LYON and PARIS :
+
+```{r}
+df.missing_votes<- df.all %>% filter(is.na(LE.PEN) & grepl('^13|^75|^69',CODGEO_ARR))
+write.csv(df.missing_votes,'missing_votes')
+```
+
+
 
 ### Combine with Population and add Unemployment rate
 
@@ -50,18 +57,18 @@ add_employment_stats <- function(df){
  df<- df %>% select(CODGEO,P13_ACT1564,P13_ACT1524,P13_ACT2554,P13_ACT5564,P13_CHOM1564
 ,P13_HCHOM1564,P13_HCHOM1524,P13_HCHOM2554,P13_HCHOM5564,P13_FCHOM1564,P13_FCHOM1524,P13_FCHOM2554,P13_FCHOM5564,C13_ACT1564_CS1,C13_ACT1564_CS2,C13_ACT1564_CS3,C13_ACT1564_CS4,C13_ACT1564_CS5,C13_ACT1564_CS6,P13_ETUD1564,P13_RETR1564)
 
-df <- df %>% mutate(NoJob_all=P13_CHOM1564/P13_ACT1564)
-df <- df %>%mutate(NoJob_1524=(P13_HCHOM1524+P13_FCHOM1524)/P13_ACT1524)
-df <- df %>%mutate(NoJob_2554=(P13_HCHOM2554+P13_FCHOM2554)/P13_ACT2554)
-df <- df %>%mutate(NoJob_5564=(P13_HCHOM5564+P13_FCHOM5564)/P13_ACT5564)
-df <- df %>% mutate(Job_AGRO=C13_ACT1564_CS1/P13_ACT1564)
-df <- df %>% mutate(Job_ARTISAN=C13_ACT1564_CS2/P13_ACT1564)
-df <- df %>% mutate(Job_CADRE=C13_ACT1564_CS3/P13_ACT1564)
-df <- df %>% mutate(Job_INTERMED=C13_ACT1564_CS4/P13_ACT1564)
-df <- df %>% mutate(Job_EMPLOYE=C13_ACT1564_CS5/P13_ACT1564)
-df <- df %>% mutate(Job_OUVRIER=C13_ACT1564_CS6/P13_ACT1564)
-df <- df %>% mutate(Etudiants=P13_ETUD1564/P13_ACT1564)
-df <- df %>% mutate(Retraites=P13_RETR1564/P13_ACT1564) 
+df <- df %>% mutate(NoJob_all_ratio=P13_CHOM1564/P13_ACT1564)
+df <- df %>%mutate(NoJob_1524_ratio=(P13_HCHOM1524+P13_FCHOM1524)/P13_ACT1524)
+df <- df %>%mutate(NoJob_2554_ratio=(P13_HCHOM2554+P13_FCHOM2554)/P13_ACT2554)
+df <- df %>%mutate(NoJob_5564_ratio=(P13_HCHOM5564+P13_FCHOM5564)/P13_ACT5564)
+df <- df %>% mutate(Job_AGRO_ratio=C13_ACT1564_CS1/P13_ACT1564)
+df <- df %>% mutate(Job_ARTISAN_ratio=C13_ACT1564_CS2/P13_ACT1564)
+df <- df %>% mutate(Job_CADRE_ratio=C13_ACT1564_CS3/P13_ACT1564)
+df <- df %>% mutate(Job_INTERMED_ratio=C13_ACT1564_CS4/P13_ACT1564)
+df <- df %>% mutate(Job_EMPLOYE_ratio=C13_ACT1564_CS5/P13_ACT1564)
+df <- df %>% mutate(Job_OUVRIER_ratio=C13_ACT1564_CS6/P13_ACT1564)
+df <- df %>% mutate(Etudiants_ratio=P13_ETUD1564/P13_ACT1564)
+df <- df %>% mutate(Retraites_ratio=P13_RETR1564/P13_ACT1564) 
 
 df<-df %>% select(-matches('P13|C13'))
 
@@ -109,6 +116,7 @@ df.all<- merge(df.all,df.income.ARR,by.x="CODGEO_ARR_NO",by.y='CODGEO',all.x=TRU
 sum(is.na(df.all$Q213_ARR))
 sum(is.na(df.all$Q213))
 df.all<-df.all %>% mutate(Q213=ifelse(is.na(Q213),Q213_ARR,Q213))
+df.all<-df.all %>% mutate(Q3_Q1=ifelse(is.na(Q3_Q1),Q3_Q1_ARR,Q3_Q1))
 sum(is.na(df.all$Q213))
 ```
 
@@ -199,66 +207,40 @@ Focus on one city :
 ```{r}
 df.all %>% filter(INSEE_COM==22007) %>% gather()
 ```
-
-
+### Convert Indicators based on absolute values ('Nb.') into logarithmic ratio :
 ```{r}
-
-corr <- round(cor(df.all %>% select(one_of(c(candidats)),matches('NoJob|Q213'))%>% na.omit()),1)
-
-# Plot
-ggcorrplot(corr, hc.order = TRUE, 
-           type = "lower", 
-           lab = FALSE, 
-           lab_size = 3, 
-           method="square", 
-           colors = c("cyan4", "white", "red3"), 
-           title="Correlogram of Selected Features", 
-           ggtheme=theme_bw)
-```
-
-
-
-### Clean features and save
-```{r}
-
-# add logarithmic Ratio for Misc Features
-
-Nb.Columns<- grep('Nb.',colnames(df.all),value = T)
-Ratio.Nb <- gsub("Nb.", "Ratio.", Nb.Columns)
-
 df.all<-df.all %>% mutate_each(funs(ratio=log(./Population+1)),contains('Nb.'))
-
 ```
 
 ## Add best candidate per town:
 ```{r}
-
-
 df.all2<-df.all %>% select(one_of(candidats)) %>% mutate(best_candidate= names(.)[max.col(.)]) 
 table(df.all2$best_candidate)
 df.all$best_candidate <- df.all2$best_candidate
   
 ```
 
+## Replace N/A on ratio with Zeros :
+```{r}
+ratio_features<- grep('ratio',colnames(df.all),value = TRUE)
+all_misc_moyennes<- df.all %>% filter
+df.all <- df.all %>% mutate_at(ratio_features,funs(ifelse(is.na(.),0,.)))
+
+```
+
+
+## Replace NA on 'moyenne' with moyenn of ARR :
+```{r}
+moyenne_features<- grep('Moyenne',colnames(df.all),value = TRUE)
+moyenne_features
+df.all %>% filter(is.na(Dep.Moyenne.Salaires.Horaires))
+moyenne_features
+df.all2 <- df.all %>% group_by(CODGEO_ARR) %>% mutate_at(moyenne_features,funs(.=max(.,na.rm=TRUE)))
+
+
+```
+
 ## Save final dataframe
 ```{r}
 write.csv(df.all,'data/DOI/elections_2017_First_round.csv')
 ```
-
-```{r}
-bretagne<-df.all %>% filter(REG==53) #%>% filter(!is.na(Q3_Q1))
-str(bretagne)
-dim(bretagne)
-model1<-lm(LE.PEN~. ,data=bretagne )
-summary(model1)
-```
-
-```{r}
-ggplot(df.all.clean  %>% filter(REG %in% c(32,53,93,44)) %>% filter(Population>10),aes(x=Q3_Q1,y=LE.PEN,col=NCC))+geom_jitter(alpha=.5) #+geom_smooth(method = 'lm')
-ggplot(df.all.clean  %>% filter(REG %in% c(93)) ,aes(x=(Q213),y=(LE.PEN),col=NCC))+geom_jitter(alpha=.3) #+geom_smooth(method = 'lm')
-```
-
-```{r}
-ggplot(df.all.clean %>% filter(Q213<30000) %>% filter(REG==53),aes(x=Q213,y=Q3_Q1,col=LE.PEN))+ geom_jitter(alpha=1)+scale_color_gradientn(colours = rainbow(5))
-```
-

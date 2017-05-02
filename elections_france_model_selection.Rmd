@@ -1,0 +1,41 @@
+---
+title: "Elections France 2017 Models analysis"
+output:  github_document
+---
+
+```{r}
+library(dplyr)
+library(tidyr)
+library(stringr)
+```
+
+### Load file
+```{r}
+df<- read.csv('data/DOI/elections_2017_First_round.csv')
+
+```
+```{r}
+candidats<-c("ARTHAUD","ASSELINEAU","CHEMINADE","DUPONT.AIGNAN","FILLON","HAMON","LASSALLE","LE.PEN","MACRON","MÉLENCHON","POUTOU")
+job_indicators<- grep('Job|ratio',colnames(df),value = TRUE)
+fiscal<-c('Etudiants','Retraites','Q213','Q3_Q1','Population')
+
+all_features<-c(candidats,job_indicators,fiscal)
+df %>% filter(is.na(LE.PEN))
+#colnames(df)
+```
+
+
+
+```{r}
+
+df_numeric<- df %>% select(one_of(all_features)) #%>% mutate_if(is.factor, funs(as.numeric(levels(.))[.])) 
+df_numeric %>% summarise_each(funs(sum(is.na(.)))) %>% gather() %>% arrange(desc(value))
+
+
+```
+
+```{r}
+cor.matrix<-cor(df_numeric %>% filter(!is.na(LE.PEN)) ) 
+View(as.data.frame(cor.matrix) %>% select(LE.PEN))
+```
+

@@ -6,14 +6,12 @@ output:  github_document
 library(dplyr)
 library(tidyr)
 library(stringr)
+library(ggplot2)
 ```
 
 
 ```{r}
-df_chomage<-read.csv('data/unemployment.csv',stringsAsFactors = F)
-df_zones_communes<- read.csv('data/DOI/code_geo_communes.csv',sep=';',stringsAsFactors = 1)
 df_votes.2017<-read.csv('data/DOI/Pres_Tour1_2017.csv',stringsAsFactors = F,sep=';')
-
 ```
 
 Clean the mess with the votes results (the score are ranked per columns !!!)
@@ -37,7 +35,7 @@ gather_name_scores<- data.frame(select(gather_scores, Score), select(gather_name
 
 df_votes.2017<-gather_name_scores
 
-ggplot(df_votes.2017,aes(x=Nom,y=Score, col=Nom))+ geom_boxplot()
+#ggplot(df_votes.2017,aes(x=Nom,y=Score, col=Nom))+ geom_boxplot()
 
 ```
 ```{r}
@@ -46,7 +44,7 @@ df_votes.2017 %>% filter(Code.du.département==73  &  grepl("Peis",Libellé.de.l
 
 top LE PEN :
 ```{r}
-df_votes.2017 %>% filter(Nom=='LE PEN' & Score>70)  %>% arrange(desc(Votants))
+df_votes.2017 %>% filter(Nom=='LE PEN' & Code.du.département==75)  %>% arrange(desc(Votants))
 ```
 
 Spread candidate names :
