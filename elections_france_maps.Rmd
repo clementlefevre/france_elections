@@ -30,11 +30,9 @@ ogrInfo(dsn = pathToShp,layer="COMMUNE")
 
 ```{r}
 # Import via la fonction readOGR de rgdal
-# Pour info, d'autres outils existent (ex : fonction readShapeSpatial() du package maptools)
 comm <- readOGR(dsn = pathToShp, layer="COMMUNE", stringsAsFactors=FALSE)
-df.elections_2017<-read.csv('data/DOI/elections_2017_First_round.csv',colClasses=c(CODGEO='character'))
-df.elections_2017 %>% filter(grepl('03310',INSEE_COM))
-#df.elections_2017$CODGEO<-as.character(df.elections_2017$CODGEO)
+df.elections_2017<-read.csv('data/DOI/elections_2017_First_round.csv')
+ggplot(df.elections_2017,aes(x=EVOLUTION_FDG))+ geom_histogram()
 ```
 
 
@@ -42,7 +40,6 @@ df.elections_2017 %>% filter(grepl('03310',INSEE_COM))
 dim(comm@data)
 comm2<-comm
 comm2@data <- left_join(comm2@data, df.elections_2017, by="INSEE_COM")
-str(comm2@data)
 ```
 
 ```{r}
@@ -73,7 +70,7 @@ legende_LePen <- as.character(levels(cut(comm2@data$LE.PEN, breaks = classSuffra
 
 
 ```{r}
-
+palettes<-c('#ecad31')
 
 plot(comm2, col = comm2@data$suffrage_cat, border='black',lwd=0.001)
 
@@ -101,11 +98,11 @@ frontieres <- frontieres[frontieres$NATURE %in% c('Fronti\xe8re internationale',
 plot_map<- function(comm,feature){
   
   col <- findColours(classIntervals(
-            comm@data[,feature]*100, 4, style="quantile"),
+            comm@data[,feature], 4, style="quantile"),
             smoothColors("white",3,"#0C3269"))
 
 leg <- findColours(classIntervals(
-            round(comm@data[,feature]*100,0), 4, style="quantile"),
+            comm@data[,feature], 4, style="quantile"),
             smoothColors("white",3,"#0C3269"),
             under="moins de", over="plus de", between="–",
             cutlabels=FALSE)
@@ -122,7 +119,7 @@ legend("bottomleft",fill=attr(leg, "palette"),
 
 
 
-myplots <- lapply(c('NoJob_all','Job_OUVRIER','Q213','MACRON','FILLON'), plot_map, comm = comm2)
+myplots <- lapply(c('NoJob_all_ratio','Job_OUVRIER_ratio','Q213','MACRON','FILLON','EVOLUTION_FN'), plot_map, comm = comm2)
 n <- length(myplots)
 nCol <- floor(sqrt(n))
 do.call("grid.arrange", c(myplots, ncol=nCol))
@@ -134,13 +131,18 @@ do.call("grid.arrange", c(myplots, ncol=nCol))
 ```{r}
 #add color for each candidate :
 df<-data.frame()
-candidate_colors <- with(df, data.frame(best_candidate = levels(comm2@data$best_candidate), color = palette <- brewer.pal(n = 9, name = "Set1")))
+candidate_colors <-  data.frame(best_candidate = levels(comm2@data$best_candidate),color='grey')
+candidate_colors<- candidate_colors %>% mutate(color=ifelse(best_candidate=='MACRON','#ecad31',color))
+candidate_colors<- candidate_colors %>% mutate(color=ifelse(best_candidate=='LE.PEN','#767374',color))
+candidate_colors<- candidate_colors %>% mutate(color=ifelse(best_candidate=='FILLON','#1d88be',color))
+candidate_colors<- candidate_colors %>% mutate(color=ifelse(best_candidate=='MÉLENCHON','#ec6a56',color))
+candidate_colors<- candidate_colors %>% mutate(color=ifelse(best_candidate=='HAMON','#e97ba9',color))
 
 
 candidates_palette<-comm2@data %>% select(best_candidate) %>% left_join(.,candidate_colors,by='best_candidate') 
 candidates_palette$color<-as.character(candidates_palette$color)
 
-plot(comm2,col = candidates_palette$color)
+plot(comm2,col = candidates_palette$color,  lwd=.1)
 
 
 ```

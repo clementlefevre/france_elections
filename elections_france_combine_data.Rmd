@@ -22,7 +22,25 @@ df_communes<-df_communes %>%  unite(CODGEO_ARR,CODE_DEPT,CODE_ARR,sep = '')
 str(df_communes)
 
 ```
-### Combine with votes :
+### Combine with 2012 First round votes  for LEPEN(FN) HOLLANDE(PS) SARKOZY(LR):
+```{r}
+df.votes.2012<-read.csv('data/DOI/presidentielle_2012_T1_communes.csv')
+df.votes.2012<-df.votes.2012 %>%  mutate(CodeInsee=str_pad(CodeInsee, 5, pad = "0"))
+df.votes.2012$CodeInsee<-as.character(df.votes.2012$CodeInsee)
+df.votes.2012 <- df.votes.2012 %>% mutate(LE.PEN_2012=LePen/Exprimés)
+df.votes.2012 <- df.votes.2012 %>% mutate(HOLLANDE_2012=Hollande/Exprimés)
+df.votes.2012 <- df.votes.2012 %>% mutate(SARKOZY_2012=Sarkozy/Exprimés)
+df.votes.2012 <- df.votes.2012 %>% mutate(MELENCHON_2012=Mélenchon/Exprimés)
+
+df.votes.2012 <- df.votes.2012 %>% select(CodeInsee,LE.PEN_2012,HOLLANDE_2012,SARKOZY_2012,MELENCHON_2012)
+
+df.all<-left_join(df_communes,df.votes.2012,by=c('INSEE_COM'='CodeInsee'))
+str(df.all)
+```
+
+
+
+### Combine with 2017 First round votes :
 
 ```{r}
 candidats<-c("ARTHAUD","ASSELINEAU","CHEMINADE","DUPONT.AIGNAN","FILLON","HAMON","LASSALLE","LE.PEN","MACRON","MÉLENCHON","POUTOU")
@@ -32,18 +50,19 @@ df_votes.2017<-df_votes.2017 %>%  mutate(CODE_COM=str_pad(Code.de.la.commune, 3,
 df_votes.2017<-df_votes.2017 %>%  mutate(CODE_DEPT=str_pad(Code.du.département, 2, pad = "0"))
 df_votes.2017<-df_votes.2017 %>%  unite(GEOCODE_COM,CODE_DEPT,CODE_COM,sep = '')
 df_votes.2017<- df_votes.2017 %>% select(-Code.de.la.commune,-Libellé.de.la.commune,-Code.du.département,-Libellé.du.département)
-
-df.all<-merge(df_communes,df_votes.2017,by.x='INSEE_COM',by.y='GEOCODE_COM',all.x=TRUE)
+df_votes.2017 <- df_votes.2017 %>% mutate_at(candidats,funs(./100))
+df.all<-merge(df.all,df_votes.2017,by.x='INSEE_COM',by.y='GEOCODE_COM',all.x=TRUE)
 str(df.all)
 df.all %>% filter(INSEE_COM=='32009')
 ```
-### Fill empty votes for MARSEILLE,LYON and PARIS :
+### Compute vote evolution for the four main parties :
 
 ```{r}
-df.missing_votes<- df.all %>% filter(is.na(LE.PEN) & grepl('^13|^75|^69',CODGEO_ARR))
-write.csv(df.missing_votes,'missing_votes')
+df.all<-df.all %>% mutate(EVOLUTION_FN=LE.PEN-LE.PEN_2012)
+df.all<-df.all %>% mutate(EVOLUTION_PS=HAMON-HOLLANDE_2012)
+df.all<-df.all %>% mutate(EVOLUTION_LR=FILLON-SARKOZY_2012)
+df.all<-df.all %>% mutate(EVOLUTION_FDG=MÉLENCHON-MELENCHON_2012)
 ```
-
 
 
 ### Combine with Population and add Unemployment rate
@@ -94,17 +113,10 @@ df.all %>% filter(grepl('SAINT-NICOLAS-DU-PELEM',NOM_COM)) %>% gather()
 
 ```{r}
 df.income.COM<-read.csv('data/DOI/FILO_DEC_COM.csv') %>% select(CODGEO,Q213,Q3_Q1,RD,GI13)
-
-
 str(df.income.COM)
 df.all<-merge(df.all,df.income.COM,by,by.x='INSEE_COM',by.y='CODGEO',all.x=TRUE)
-
-
 sum(is.na(df.all$Q213))
 dim(df.all)
-
-
-
 ```
 
 ## per County and replace missing town incomes by county incomes.
@@ -113,8 +125,6 @@ df.income.ARR<-read.csv('data/DOI/FILO_DEC_ARR.csv') %>% select(CODGEO,Q213,Q3_Q
 
 df.all<- merge(df.all,df.income.ARR,by.x="CODGEO_ARR_NO",by.y='CODGEO',all.x=TRUE,suffixes=c('','_ARR'))
 
-
-sum(is.na(df.all$Q213))
 df.all <- df.all %>% mutate(Q213.Data.Available= ifelse(is.na(Q213),FALSE,TRUE))
 df.all <- df.all %>% mutate(Q3_Q1.Data.Available= ifelse(is.na(Q3_Q1),FALSE,TRUE))
 
@@ -232,18 +242,9 @@ df.all <- df.all %>% mutate_at(ratio_features,funs(ifelse(is.na(.),0,.)))
 ```
 
 
-## Replace NA on 'moyenne' with moyenn of ARR :
-```{r}
-moyenne_features<- grep('Moyenne',colnames(df.all),value = TRUE)
-moyenne_features
-df.all %>% filter(is.na(Dep.Moyenne.Salaires.Horaires))
-moyenne_features
-df.all2 <- df.all %>% group_by(CODGEO_ARR) %>% mutate_at(moyenne_features,funs(.=max(.,na.rm=TRUE)))
-
-
-```
 
 ## Save final dataframe
 ```{r}
+df.all[is.na(df.all$HOLLANDE_2012),]
 write.csv(df.all,'data/DOI/elections_2017_First_round.csv')
 ```
