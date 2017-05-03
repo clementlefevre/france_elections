@@ -113,8 +113,11 @@ df.income.ARR<-read.csv('data/DOI/FILO_DEC_ARR.csv') %>% select(CODGEO,Q213,Q3_Q
 
 df.all<- merge(df.all,df.income.ARR,by.x="CODGEO_ARR_NO",by.y='CODGEO',all.x=TRUE,suffixes=c('','_ARR'))
 
-sum(is.na(df.all$Q213_ARR))
+
 sum(is.na(df.all$Q213))
+df.all <- df.all %>% mutate(Q213.Data.Available= ifelse(is.na(Q213),FALSE,TRUE))
+df.all <- df.all %>% mutate(Q3_Q1.Data.Available= ifelse(is.na(Q3_Q1),FALSE,TRUE))
+
 df.all<-df.all %>% mutate(Q213=ifelse(is.na(Q213),Q213_ARR,Q213))
 df.all<-df.all %>% mutate(Q3_Q1=ifelse(is.na(Q3_Q1),Q3_Q1_ARR,Q3_Q1))
 sum(is.na(df.all$Q213))
