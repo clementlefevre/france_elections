@@ -91,37 +91,36 @@ frontieres <- frontieres[frontieres$NATURE %in% c('Fronti\xe8re internationale',
 
 
 
-```{r}
+```{r fig.width=14, fig.height=12}
 
 
 
-plot_map<- function(comm,feature){
+plot_map<- function(comm,feature,color_hex,title,ratio){
   
   col <- findColours(classIntervals(
-            comm@data[,feature], 4, style="quantile"),
-            smoothColors("white",3,"#0C3269"))
+            comm@data[,feature], 100, style="quantile"),
+            smoothColors("white",98,color_hex))
 
 leg <- findColours(classIntervals(
-            comm@data[,feature], 4, style="quantile"),
-            smoothColors("white",3,"#0C3269"),
-            under="moins de", over="plus de", between="–",
+            round(comm@data[,feature]*ratio,0), 5, style="quantile"),
+            smoothColors("white",3,color_hex),
+            under="<", over=">", between="–",
             cutlabels=FALSE)
 
-plot(comm,   col=col, border=col, lwd=.1)
-plot(departements[departements@data$CODE_REG==53,], border="#8b8378",lwd=.7,add=TRUE)
+plot(comm,   col=col, border=col, lwd=.1,main=title)
+plot(departements, border="#8b8378",lwd=.7,add=TRUE)
 
 legend("bottomleft",fill=attr(leg, "palette"),
     legend=gsub("\\.", ",", names(attr(leg,"table"))),
-    title = paste(feature,":"))
+    title = paste(title," :"),bty = "n",cex=1)
   
 }
+plot_map(comm = comm2,feature = 'LE.PEN',"#660066",'Le Pen Votes 2017 (%)',ratio=100)
+plot_map(comm = comm2,feature = 'EVOLUTION_FN',"#0C3269",'Evolution of FN Votes 2012-2017 (%)',ratio=100)
+plot_map(comm = comm2,feature = 'Job_OUVRIER_ratio',"#a54a4a",'% of Worker amongst working population',ratio=100)
+plot_map(comm = comm2,feature = 'Q213',"#317873",'Income IQR (Euros)',ratio=1)
 
-
-
-myplots <- lapply(c('NoJob_all_ratio','Job_OUVRIER_ratio','Q213','MACRON','FILLON','EVOLUTION_FN'), plot_map, comm = comm2)
-n <- length(myplots)
-nCol <- floor(sqrt(n))
-do.call("grid.arrange", c(myplots, ncol=nCol))
+#myplots <- lapply(c('NoJob_all_ratio','Job_OUVRIER_ratio','Q213','MACRON','FILLON','EVOLUTION_FN'), plot_map, comm = comm2)
 
 
 
@@ -146,7 +145,7 @@ candidates_palette$color<-as.character(candidates_palette$color)
 
 plot(comm2,col = candidates_palette$color,  lwd=.1)
 par(xpd=TRUE)
-legend("bottomleft", inset=c(-0.000,0),legend = unique(legend_colors$best_candidate), fill=unique(legend_colors$color),bty = "n",cex=0.7)
+legend("bottomleft", inset=c(-0.000,0),legend = unique(legend_colors$best_candidate), fill=unique(legend_colors$color),bty = "n",cex=1)
 
 
 ```
