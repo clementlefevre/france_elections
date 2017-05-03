@@ -1,4 +1,4 @@
-Document Center
+Elections France 2017 Models analysis
 ================
 
 ``` r
@@ -20,6 +20,7 @@ library(dplyr)
 library(tidyr)
 library(stringr)
 library(ggplot2)
+library(ggcorrplot)
 ```
 
 ### Load file
@@ -35,32 +36,180 @@ candidats<-c("ARTHAUD","ASSELINEAU","CHEMINADE","DUPONT.AIGNAN","FILLON","HAMON"
 job_indicators<- grep('Job|ratio',colnames(df),value = TRUE)
 fiscal<-c('Q213','Q3_Q1','Population')
 
-all_features<-c(candidats,job_indicators,fiscal)
+all_features<-c(job_indicators,fiscal)
 ```
 
 ### Filter on numerical values
 
 ``` r
-df_numeric<- df %>% select(one_of(all_features)) #%>% mutate_if(is.factor, funs(as.numeric(levels(.))[.])) 
+# %>% mutate_if(is.factor, funs(as.numeric(levels(.))[.])) 
 ```
 
 ### Correlations
 
 ``` r
-cor.matrix<-cor(df_numeric %>% filter(!is.na(LE.PEN)))
-View(as.data.frame(cor.matrix) %>% select(LE.PEN) %>% top_n(10))
+df_numeric<- df %>% select(one_of(c(all_features,'LE.PEN')))
+cor.matrix<-cor(df_numeric %>% filter(!is.na(LE.PEN))%>% filter(!is.na(Q3_Q1)))
+df_corr<- as.data.frame(cor.matrix) %>% select(LE.PEN) 
+df_corr$feature<-rownames(df_corr)
+
+df_corr<-df_corr %>% mutate(corr_abs=abs(LE.PEN)) %>% top_n(10,corr_abs) %>% arrange(desc(corr_abs))
+
+highest.corr.features<- as.vector(df_corr$feature)
+
+corr <- round(cor(df_numeric %>% select(one_of(highest.corr.features)) %>% na.omit()),2)
+
+# Plot
+ggcorrplot(corr, hc.order = TRUE, 
+           type = "lower", 
+           lab = TRUE, 
+           lab_size = 6, 
+           method="square", 
+           colors = c("cyan4", "white", "red3"), 
+           title="Correlogram for LE PEN",
+           show.legend=FALSE,
+           show.diag = FALSE,
+           ggtheme=theme_bw)
 ```
 
-    ## Selecting by LE.PEN
+![](elections_france_model_selection_files/figure-markdown_github/unnamed-chunk-5-1.png)
 
 ``` r
-ggplot(df%>% filter(!is.na(LE.PEN))%>% filter(Q3_Q1.Data.Available) %>% filter(REG %in% c(53,93,22,31)) ,aes(Q3_Q1,LE.PEN, col=as.factor(NOM_REG)))+ geom_jitter(alpha=.6)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - LE PEN (%)')+ xlab('Yearly Income - Inter Quartile Range')
+df_numeric<- df %>% select(one_of(c(all_features,'MACRON')))
+cor.matrix<-cor(df_numeric %>% filter(!is.na(MACRON))%>% filter(!is.na(Q3_Q1)))
+df_corr<- as.data.frame(cor.matrix) %>% select(MACRON) 
+df_corr$feature<-rownames(df_corr)
+
+df_corr<-df_corr %>% mutate(corr_abs=abs(MACRON)) %>% top_n(10,corr_abs) %>% arrange(desc(corr_abs))
+
+highest.corr.features<- as.vector(df_corr$feature)
+
+corr <- round(cor(df_numeric %>% select(one_of(highest.corr.features)) %>% na.omit()),2)
+
+# Plot
+ggcorrplot(corr, hc.order = TRUE, 
+           type = "lower", 
+           lab = TRUE, 
+           lab_size = 6, 
+           method="square", 
+           colors = c("cyan4", "white", "red3"), 
+           title="Correlogram for MACRON",
+           show.legend=FALSE,
+           show.diag = FALSE,
+           ggtheme=theme_bw)
 ```
 
-![](elections_france_model_selection_files/figure-markdown_github/unnamed-chunk-6-1.png)
+![](elections_france_model_selection_files/figure-markdown_github/unnamed-chunk-6-1.png) \#\#\# Multiplot function
 
 ``` r
-ggplot(df%>% filter(!is.na(LE.PEN))%>% filter(Q3_Q1.Data.Available) %>% filter(REG %in% c(53,93,22,31)) ,aes(Q3_Q1,MACRON, col=as.factor(NOM_REG)))+ geom_jitter(alpha=.6)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - MACRON (%)')+ xlab('Yearly Income - Inter Quartile Range')
+library(gridExtra)
 ```
 
-![](elections_france_model_selection_files/figure-markdown_github/unnamed-chunk-6-2.png)
+    ## 
+    ## Attaching package: 'gridExtra'
+
+    ## The following object is masked from 'package:dplyr':
+    ## 
+    ##     combine
+
+``` r
+library(grid)
+
+
+grid_arrange_shared_legend <- function(..., nrow = 1, ncol = length(list(...)), position = c("bottom", "right")) {
+
+  plots <- list(...)
+  position <- match.arg(position)
+  g <- ggplotGrob(plots[[1]] + theme(legend.position = position))$grobs
+  legend <- g[[which(sapply(g, function(x) x$name) == "guide-box")]]
+  lheight <- sum(legend$height)
+  lwidth <- sum(legend$width)
+  gl <- lapply(plots, function(x) x + theme(legend.position = "none"))
+  gl <- c(gl, nrow = nrow, ncol = ncol)
+
+  combined <- switch(position,
+                     "bottom" = arrangeGrob(do.call(arrangeGrob, gl),
+                                            legend,
+                                            ncol = 1,
+                                            heights = unit.c(unit(1, "npc") - lheight, lheight)),
+                     "right" = arrangeGrob(do.call(arrangeGrob, gl),
+                                           legend,
+                                           ncol = 2,
+                                           widths = unit.c(unit(1, "npc") - lwidth, lwidth)))
+  grid.newpage()
+  grid.draw(combined)
+
+}
+```
+
+### Some correlation plot :
+
+``` r
+p0<-ggplot(df %>% filter(Job_OUVRIER_ratio>0 & Job_OUVRIER_ratio<1) %>% filter(Population>1000) %>% filter(REG %in% c(53,93,22,31)),aes(x=Job_OUVRIER_ratio*100,y=LE.PEN,col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - LE PEN (%)')+ xlab('Worker rate in active population (%)')+theme(aspect.ratio=1/2)
+
+
+p1<-ggplot(df %>% filter(Job_OUVRIER_ratio>0 & Job_OUVRIER_ratio<1) %>% filter(Population>1000) %>% filter(REG %in% c(53,93,22,31)),aes(x=Job_OUVRIER_ratio*100,y=MACRON,col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - MACRON (%)')+ xlab('Worker rate in active population (%)')+theme(aspect.ratio=1/2)
+
+
+p2<-ggplot(df %>% filter(ratio_immigrants>0 ) %>% filter(Population>1000) %>% filter(REG %in% c(53,93,22,31)),aes(x=log(ratio_immigrants+1),y=LE.PEN,col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - LE PEN (%)')+ xlab('Immigrant rate log()')+theme(aspect.ratio=1/2)
+
+
+p3<-ggplot(df %>% filter(ratio_immigrants>0 ) %>% filter(Population>1000) %>% filter(REG %in% c(53,93,22,31)),aes(x=log(ratio_immigrants+1),y=MACRON,col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - MACRON (%)')+ xlab('Immigrant rate log()')+theme(aspect.ratio=1/2)
+
+
+p4<-ggplot(df %>% filter(ratio_immigrants>0 ) %>% filter(Population>1000) %>% filter(REG %in% c(22,31)),aes(x=log(ratio_immigrants+1),y=MÉLENCHON,col=as.factor(NOM_REG)))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - MÉLENCHON (%)')+ xlab('Immigrant rate log()')+theme(aspect.ratio=1/2)
+
+p5<-ggplot(df %>% filter(Job_OUVRIER_ratio>0 & Job_OUVRIER_ratio<1) %>% filter(Population>1000) %>% filter(REG %in% c(53,93,22,31)),aes(x=NoJob_1524_ratio*100,y=LE.PEN,col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - LE PEN (%)')+ xlab('NoJob_1524_ratio (%)')+theme(aspect.ratio=1/2)
+
+
+p6<-ggplot(df %>% filter(Job_OUVRIER_ratio>0 & Job_OUVRIER_ratio<1) %>% filter(Population>1000) %>% filter(REG %in% c(53,93,22,31)),aes(x=NoJob_1524_ratio*100,y=MACRON,col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - MACRON (%)')+ xlab('NoJob_1524_ratio (%)')+theme(aspect.ratio=1/2)
+
+p7<-ggplot(df %>% filter(Job_OUVRIER_ratio>0 & Job_OUVRIER_ratio<1) %>% filter(Population>1000) %>% filter(REG %in% c(53,93,22,31)),aes(x=NoJob_1524_ratio*100,y=MÉLENCHON,col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - MÉLENCHON (%)')+ xlab('NoJob_1524_ratio (%)')+theme(aspect.ratio=1/2)
+
+
+grid_arrange_shared_legend(p0,p1,nrow =2 , ncol = 1)
+```
+
+    ## Warning: Removed 4 rows containing missing values (geom_point).
+
+    ## Warning: Removed 4 rows containing missing values (geom_point).
+
+    ## Warning: Removed 4 rows containing missing values (geom_point).
+
+![](elections_france_model_selection_files/figure-markdown_github/unnamed-chunk-8-1.png)
+
+``` r
+grid_arrange_shared_legend(p2,p3,nrow =2 , ncol = 1)
+```
+
+    ## Warning: Removed 4 rows containing missing values (geom_point).
+
+    ## Warning: Removed 4 rows containing missing values (geom_point).
+
+    ## Warning: Removed 4 rows containing missing values (geom_point).
+
+![](elections_france_model_selection_files/figure-markdown_github/unnamed-chunk-8-2.png)
+
+``` r
+grid_arrange_shared_legend(p5,p6,p7,nrow =3 , ncol = 1)
+```
+
+    ## Warning: Removed 4 rows containing missing values (geom_point).
+
+    ## Warning: Removed 4 rows containing missing values (geom_point).
+
+    ## Warning: Removed 4 rows containing missing values (geom_point).
+
+    ## Warning: Removed 4 rows containing missing values (geom_point).
+
+![](elections_france_model_selection_files/figure-markdown_github/unnamed-chunk-8-3.png)
+
+``` r
+p1<-ggplot(df%>% filter(!is.na(LE.PEN))%>% filter(Q3_Q1.Data.Available) %>% filter(REG %in% c(53,93,22,31)) ,aes(Q3_Q1,LE.PEN, col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.6)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - LE PEN (%)')+ xlab('Yearly Income - Inter Quartile Range')+theme(aspect.ratio=1/2)
+
+p2<-ggplot(df%>% filter(!is.na(LE.PEN))%>% filter(Q3_Q1.Data.Available) %>% filter(REG %in% c(53,93,22,31)) ,aes(Q3_Q1,MACRON, col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.6)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - MACRON (%)')+ xlab('Yearly Income - Inter Quartile Range')+theme(aspect.ratio=1/2)
+
+grid_arrange_shared_legend(p1, p2,nrow = 2, ncol = 1)
+```
+
+![](elections_france_model_selection_files/figure-markdown_github/unnamed-chunk-9-1.png)
