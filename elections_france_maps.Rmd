@@ -45,7 +45,7 @@ comm2@data <- left_join(comm2@data, df.elections_2017, by="INSEE_COM")
 ```{r}
 # Filtrage des données pour ne garder que la région Bretagne
 
-comm2 <- comm2[comm2@data$CODE_REG.x=="53",]
+#comm2 <- comm2[comm2@data$CODE_REG.x=="53",]
 dim(comm2)
 summarise_each(comm2@data, funs(sum(is.na(.)/n()))) %>% gather() %>% arrange(desc(value))
 ```
@@ -70,7 +70,7 @@ legende_LePen <- as.character(levels(cut(comm2@data$LE.PEN, breaks = classSuffra
 
 
 ```{r}
-palettes<-c('#ecad31')
+
 
 plot(comm2, col = comm2@data$suffrage_cat, border='black',lwd=0.001)
 
@@ -107,7 +107,6 @@ leg <- findColours(classIntervals(
             under="moins de", over="plus de", between="–",
             cutlabels=FALSE)
 
-
 plot(comm,   col=col, border=col, lwd=.1)
 plot(departements[departements@data$CODE_REG==53,], border="#8b8378",lwd=.7,add=TRUE)
 
@@ -128,7 +127,7 @@ do.call("grid.arrange", c(myplots, ncol=nCol))
 
 ```
 
-```{r}
+```{r fig.width=14, fig.height=12}
 #add color for each candidate :
 df<-data.frame()
 candidate_colors <-  data.frame(best_candidate = levels(comm2@data$best_candidate),color='grey')
@@ -137,12 +136,17 @@ candidate_colors<- candidate_colors %>% mutate(color=ifelse(best_candidate=='LE.
 candidate_colors<- candidate_colors %>% mutate(color=ifelse(best_candidate=='FILLON','#1d88be',color))
 candidate_colors<- candidate_colors %>% mutate(color=ifelse(best_candidate=='MÉLENCHON','#ec6a56',color))
 candidate_colors<- candidate_colors %>% mutate(color=ifelse(best_candidate=='HAMON','#e97ba9',color))
+candidate_colors<- candidate_colors %>% mutate(color=ifelse(best_candidate=='LASSALLE','#a9cfe2',color))
+
+legend_colors<-candidate_colors %>% filter(color!=1)
 
 
 candidates_palette<-comm2@data %>% select(best_candidate) %>% left_join(.,candidate_colors,by='best_candidate') 
 candidates_palette$color<-as.character(candidates_palette$color)
 
 plot(comm2,col = candidates_palette$color,  lwd=.1)
+par(xpd=TRUE)
+legend("bottomleft", inset=c(-0.000,0),legend = unique(legend_colors$best_candidate), fill=unique(legend_colors$color),bty = "n",cex=0.7)
 
 
 ```
