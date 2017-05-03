@@ -47,39 +47,8 @@ comm2@data <- left_join(comm2@data, df.elections_2017, by="INSEE_COM")
 
 #comm2 <- comm2[comm2@data$CODE_REG.x=="53",]
 dim(comm2)
-summarise_each(comm2@data, funs(sum(is.na(.)/n()))) %>% gather() %>% arrange(desc(value))
+#summarise_each(comm2@data, funs(sum(is.na(.)/n()))) %>% gather() %>% arrange(desc(value))
 ```
-
-
-```{r}
-# Découpage du taux de vote   en 5 classes via la méthodes des quantiles : idenfication des bornes (breaks, ou brks)
-classSuffrages <- classIntervals(comm2@data$LE.PEN, 5, style = "quantile")
-# Choix d'une palette de couleur pour les 5 catégories
-palette <- brewer.pal(n = 5, name = "YlOrRd")
-
-
-# Application de ce découpage à la variable suffrages, sauvegarde dans suffrage_cat
-# On stocke, pour chaque observation, la valeur de la couleur correspondante
-comm2@data$suffrage_cat <- as.character(cut(comm2@data$LE.PEN, breaks = classSuffrages$brks, labels = palette, include.lowest = TRUE))
-
-# On stocke l'information des classes pour créer une légende 
-legende_LePen <- as.character(levels(cut(comm2@data$LE.PEN, breaks = classSuffrages$brks, include.lowest = TRUE, right = FALSE)))
-
-```
-
-
-
-```{r}
-
-
-plot(comm2, col = comm2@data$suffrage_cat, border='black',lwd=0.001)
-
-legend("bottomleft", legend = legende_LePen, fill = palette, cex=0.6, title = "Vote Le Pen 2017")
-
-
-```
-
-  
 ```{r}
 # Lecture des départements
 departements <- readOGR(dsn=pathToShp_dept,  layer="DEPARTEMENT")
@@ -121,9 +90,6 @@ plot_map(comm = comm2,feature = 'Job_OUVRIER_ratio',"#a54a4a",'% of Worker among
 plot_map(comm = comm2,feature = 'Q213',"#317873",'Income IQR (Euros)',ratio=1)
 
 #myplots <- lapply(c('NoJob_all_ratio','Job_OUVRIER_ratio','Q213','MACRON','FILLON','EVOLUTION_FN'), plot_map, comm = comm2)
-
-
-
 ```
 
 ```{r fig.width=14, fig.height=12}
@@ -143,7 +109,7 @@ legend_colors<-candidate_colors %>% filter(color!=1)
 candidates_palette<-comm2@data %>% select(best_candidate) %>% left_join(.,candidate_colors,by='best_candidate') 
 candidates_palette$color<-as.character(candidates_palette$color)
 
-plot(comm2,col = candidates_palette$color,  lwd=.1)
+plot(comm2,col = candidates_palette$color,  lwd=.1,main='Presidential election 2017 - First Round')
 par(xpd=TRUE)
 legend("bottomleft", inset=c(-0.000,0),legend = unique(legend_colors$best_candidate), fill=unique(legend_colors$color),bty = "n",cex=1)
 

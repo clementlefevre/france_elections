@@ -52,7 +52,7 @@ df_votes.2017<-df_votes.2017 %>%  unite(GEOCODE_COM,CODE_DEPT,CODE_COM,sep = '')
 df_votes.2017<- df_votes.2017 %>% select(-Code.de.la.commune,-Libellé.de.la.commune,-Code.du.département,-Libellé.du.département)
 df_votes.2017 <- df_votes.2017 %>% mutate_at(candidats,funs(./100))
 df.all<-merge(df.all,df_votes.2017,by.x='INSEE_COM',by.y='GEOCODE_COM',all.x=TRUE)
-str(df.all)
+
 df.all %>% filter(INSEE_COM=='32009')
 ```
 ### Compute vote evolution for the four main parties :
@@ -233,12 +233,12 @@ df.all$best_candidate <- df.all2$best_candidate
   
 ```
 
-## Replace N/A on ratio with Zeros :
+## Replace N/A on ratio with Zeros and infinite with 1:
 ```{r}
 ratio_features<- grep('ratio',colnames(df.all),value = TRUE)
-all_misc_moyennes<- df.all %>% filter
-df.all <- df.all %>% mutate_at(ratio_features,funs(ifelse(is.na(.),0,.)))
 
+df.all <- df.all %>% mutate_at(ratio_features,funs(ifelse(is.na(.),0,.)))
+df.all <- df.all %>% mutate_at(ratio_features,funs(ifelse(is.infinite(.),1,.)))
 ```
 
 
