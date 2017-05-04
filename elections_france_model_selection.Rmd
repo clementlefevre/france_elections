@@ -9,6 +9,7 @@ library(tidyr)
 library(stringr)
 library(ggplot2)
 library(ggcorrplot)
+library(ggthemes)
 ```
 
 ### Load file
@@ -33,7 +34,7 @@ all_features<-c(job_indicators,fiscal)
 ```
 
 ### Correlations
-```{r fig.width=14, fig.height=12}
+```{r fig.width=10, fig.height=10}
 
 df_numeric<- df %>% select(one_of(c(all_features,'LE.PEN')))
 cor.matrix<-cor(df_numeric %>% filter(!is.na(LE.PEN))%>% filter(!is.na(Q3_Q1)))
@@ -60,7 +61,7 @@ ggcorrplot(corr, hc.order = TRUE,
 
 
 ```
-```{r fig.width=14, fig.height=12}
+```{r fig.width=10, fig.height=10}
 
 df_numeric<- df %>% select(one_of(c(all_features,'MACRON')))
 cor.matrix<-cor(df_numeric %>% filter(!is.na(MACRON))%>% filter(!is.na(Q3_Q1)))
@@ -118,29 +119,48 @@ grid_arrange_shared_legend <- function(..., nrow = 1, ncol = length(list(...)), 
 
 ```
 
+### Generic function to plot
+```{r fig.width=8, fig.height=8}
+plot_corr<-function(df,feature,ratio,pop_threshold,candidate,title){
+  df<-  df[df[,feature]>0,] 
+ df<-  df[df[,feature]<1,]  %>%filter(Population>pop_threshold) %>% filter(REG %in% c(53,93,22,31))
+  
+  x_data<-df[,feature] * ratio
+  
+  
+  ggplot(df,aes_string(x=x_data,y=candidate,col="NOM_REG",size="Population"))+ geom_jitter(alpha=.9)  +theme_economist(stata=TRUE) + scale_colour_economist()+theme(legend.title=element_blank())+ylab(paste0('1st Round - ',candidate,' (%)'))+ xlab('Worker rate in active population (%)')+theme(aspect.ratio=1/2,legend.direction='vertical',legend.position='bottom',legend.box='horizontal')+ggtitle(paste0('For cities with Population>',pop_threshold))+labs(caption = "©Clément Lefèvre 2017 (Sources : Ministère de l'Intérieur, INSEE)")+scale_colour_manual(values = c("#f04723", "#f48d04", "#00a1ce"))
+}
+
+plot_corr(df,"Job_OUVRIER_ratio",100,1000,'LE.PEN','LE PEN TITLE')
+
+
+
+```
+
 
 ### Some correlation plot :
 ```{r fig.width=14, fig.height=12}
-p0<-ggplot(df %>% filter(Job_OUVRIER_ratio>0 & Job_OUVRIER_ratio<1) %>% filter(Population>1000) %>% filter(REG %in% c(53,93,22,31)),aes(x=Job_OUVRIER_ratio*100,y=LE.PEN,col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - LE PEN (%)')+ xlab('Worker rate in active population (%)')+theme(aspect.ratio=1/2)
+p0<-ggplot(df %>% filter(Job_OUVRIER_ratio>0 & Job_OUVRIER_ratio<1) %>% filter(Population>1000) %>% filter(REG %in% c(53,93,22,31)),aes(x=Job_OUVRIER_ratio*100,y=LE.PEN,col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.5)+
+  theme_economist(stata=TRUE) + scale_colour_economist()+theme(legend.title=element_blank())+ylab('1st Round - LE PEN (%)')+ xlab('Worker rate in active population (%)')+theme(aspect.ratio=1/2)+ggtitle('For cities with Population>1000')+labs( caption = "©Clement LEFEVRE 2017 -Sources : Ministere de l'interieur, INSEE.")
 
 
-p1<-ggplot(df %>% filter(Job_OUVRIER_ratio>0 & Job_OUVRIER_ratio<1) %>% filter(Population>1000) %>% filter(REG %in% c(53,93,22,31)),aes(x=Job_OUVRIER_ratio*100,y=MACRON,col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - MACRON (%)')+ xlab('Worker rate in active population (%)')+theme(aspect.ratio=1/2)
+p1<-ggplot(df %>% filter(Job_OUVRIER_ratio>0 & Job_OUVRIER_ratio<1) %>% filter(Population>1000) %>% filter(REG %in% c(53,93,22,31)),aes(x=Job_OUVRIER_ratio*100,y=MACRON,col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - MACRON (%)')+ xlab('Worker rate in active population (%)')+theme(aspect.ratio=1/2)+ggtitle('For cities with Population>1000')
 
 
-p2<-ggplot(df %>% filter(ratio_immigrants>0 ) %>% filter(Population>1000) %>% filter(REG %in% c(53,93,22,31)),aes(x=log(ratio_immigrants+1),y=LE.PEN,col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - LE PEN (%)')+ xlab('Immigrant rate log()')+theme(aspect.ratio=1/2)
+p2<-ggplot(df %>% filter(ratio_immigrants>0 ) %>% filter(Population>1000) %>% filter(REG %in% c(53,93,22,31)),aes(x=log(ratio_immigrants+1),y=LE.PEN,col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - LE PEN (%)')+ xlab('Immigrant rate log()')+theme(aspect.ratio=1/2)+ggtitle('For cities with Population>1000')
 
 
-p3<-ggplot(df %>% filter(ratio_immigrants>0 ) %>% filter(Population>1000) %>% filter(REG %in% c(53,93,22,31)),aes(x=log(ratio_immigrants+1),y=MACRON,col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - MACRON (%)')+ xlab('Immigrant rate log()')+theme(aspect.ratio=1/2)
+p3<-ggplot(df %>% filter(ratio_immigrants>0 ) %>% filter(Population>1000) %>% filter(REG %in% c(53,93,22,31)),aes(x=log(ratio_immigrants+1),y=MACRON,col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - MACRON (%)')+ xlab('Immigrant rate log()')+theme(aspect.ratio=1/2)+ggtitle('For cities with Population>1000')
 
 
-p4<-ggplot(df %>% filter(ratio_immigrants>0 ) %>% filter(Population>1000) %>% filter(REG %in% c(22,31)),aes(x=log(ratio_immigrants+1),y=MÉLENCHON,col=as.factor(NOM_REG)))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - MÉLENCHON (%)')+ xlab('Immigrant rate log()')+theme(aspect.ratio=1/2)
+p4<-ggplot(df %>% filter(ratio_immigrants>0 ) %>% filter(Population>1000) %>% filter(REG %in% c(22,31)),aes(x=log(ratio_immigrants+1),y=MÉLENCHON,col=as.factor(NOM_REG)))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - MÉLENCHON (%)')+ xlab('Immigrant rate log()')+theme(aspect.ratio=1/2)+ggtitle('For cities with Population>1000')
 
-p5<-ggplot(df %>% filter(Job_OUVRIER_ratio>0 & Job_OUVRIER_ratio<1) %>% filter(Population>1000) %>% filter(REG %in% c(53,93,22,31)),aes(x=NoJob_1524_ratio*100,y=LE.PEN,col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - LE PEN (%)')+ xlab('NoJob_1524_ratio (%)')+theme(aspect.ratio=1/2)
+p5<-ggplot(df %>% filter(Job_OUVRIER_ratio>0 & Job_OUVRIER_ratio<1) %>% filter(Population>1000) %>% filter(REG %in% c(53,93,22,31)),aes(x=NoJob_1524_ratio*100,y=LE.PEN,col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - LE PEN (%)')+ xlab('NoJob_1524_ratio (%)')+theme(aspect.ratio=1/2)+ggtitle('For cities with Population>1000')
 
 
-p6<-ggplot(df %>% filter(Job_OUVRIER_ratio>0 & Job_OUVRIER_ratio<1) %>% filter(Population>1000) %>% filter(REG %in% c(53,93,22,31)),aes(x=NoJob_1524_ratio*100,y=MACRON,col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - MACRON (%)')+ xlab('NoJob_1524_ratio (%)')+theme(aspect.ratio=1/2)
+p6<-ggplot(df %>% filter(Job_OUVRIER_ratio>0 & Job_OUVRIER_ratio<1) %>% filter(Population>1000) %>% filter(REG %in% c(53,93,22,31)),aes(x=NoJob_1524_ratio*100,y=MACRON,col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - MACRON (%)')+ xlab('NoJob_1524_ratio (%)')+theme(aspect.ratio=1/2)+ggtitle('For cities with Population>1000')
 
-p7<-ggplot(df %>% filter(Job_OUVRIER_ratio>0 & Job_OUVRIER_ratio<1) %>% filter(Population>1000) %>% filter(REG %in% c(53,93,22,31)),aes(x=NoJob_1524_ratio*100,y=MÉLENCHON,col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - MÉLENCHON (%)')+ xlab('NoJob_1524_ratio (%)')+theme(aspect.ratio=1/2)
+p7<-ggplot(df %>% filter(Job_OUVRIER_ratio>0 & Job_OUVRIER_ratio<1) %>% filter(Population>1000) %>% filter(REG %in% c(53,93,22,31)),aes(x=NoJob_1524_ratio*100,y=MÉLENCHON,col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - MÉLENCHON (%)')+ xlab('NoJob_1524_ratio (%)')+theme(aspect.ratio=1/2)+ggtitle('For cities with Population>1000')
 
 
 grid_arrange_shared_legend(p0,p1,nrow =2 , ncol = 1)
@@ -153,9 +173,9 @@ grid_arrange_shared_legend(p5,p6,p7,nrow =3 , ncol = 1)
 
 ```{r fig.width=14, fig.height=12}
 
-p1<-ggplot(df%>% filter(!is.na(LE.PEN))%>% filter(Q3_Q1.Data.Available) %>% filter(REG %in% c(53,93,22,31)) ,aes(Q3_Q1,LE.PEN, col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.6)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - LE PEN (%)')+ xlab('Yearly Income - Inter Quartile Range')+theme(aspect.ratio=1/2)
+p1<-ggplot(df%>% filter(!is.na(LE.PEN))%>% filter(Q3_Q1.Data.Available) %>% filter(REG %in% c(53,93,22,31)) ,aes(Q3_Q1,LE.PEN, col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.6)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - LE PEN (%)')+ xlab('Yearly Income per household - Inter Quartile Range')+theme(aspect.ratio=1/2)+ggtitle('For cities with Household>50 or Population>100')
 
-p2<-ggplot(df%>% filter(!is.na(LE.PEN))%>% filter(Q3_Q1.Data.Available) %>% filter(REG %in% c(53,93,22,31)) ,aes(Q3_Q1,MACRON, col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.6)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - MACRON (%)')+ xlab('Yearly Income - Inter Quartile Range')+theme(aspect.ratio=1/2)
+p2<-ggplot(df%>% filter(!is.na(LE.PEN))%>% filter(Q3_Q1.Data.Available) %>% filter(REG %in% c(53,93,22,31)) ,aes(Q3_Q1,MACRON, col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.6)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - MACRON (%)')+ xlab('Yearly Income per household - Inter Quartile Range')+theme(aspect.ratio=1/2)
 
 grid_arrange_shared_legend(p1, p2,nrow = 2, ncol = 1)
 ```
