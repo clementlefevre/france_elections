@@ -16,6 +16,11 @@ library(ggthemes)
 ```{r}
 df<- read.csv('data/DOI/elections_2017_First_round.csv')
 ```
+### Add new features :
+
+```{r}
+df<-df %>% mutate(Combined_ratio=log(NoJob_1524_ratio+1)*log(education_no_diplom_ratio+1)*log(family_monoparental_ratio+1))
+```
 
 ### Set features
 ```{r}
@@ -121,62 +126,55 @@ grid_arrange_shared_legend <- function(..., nrow = 1, ncol = length(list(...)), 
 
 ### Generic function to plot
 ```{r fig.width=8, fig.height=6}
-plot_corr<-function(df,feature,ratio,pop_threshold,candidate,title){
+plot_corr<-function(df,feature,ratio,max,pop_threshold,candidate,xlab){
   df<-  df[df[,feature]>0,] 
- df<-  df[df[,feature]<1,]  %>%filter(Population>pop_threshold) %>% filter(REG %in% c(53,93,22,31))
+ df<-  df[df[,feature]<max,]  %>%filter(Population>pop_threshold) %>% filter(REG %in% c(53,93,22,31))
   
   x_data<-df[,feature] * ratio
   
   
   p<-ggplot(df,aes_string(x=x_data,y=candidate,col="NOM_REG",size="Population"))+ geom_jitter(alpha=.7)  +theme_fivethirtyeight() +
-    theme(axis.title = element_text()) + scale_colour_economist()+ylab(paste0('1st Round - ',candidate,' (%)'))+ xlab('Worker rate in active population (%)')+theme(legend.direction='vertical',legend.position='top',legend.box='horizontal')+ggtitle(paste0('Cities with population>',pop_threshold))+labs(caption = "©Clément Lefèvre 2017 (Sources : Ministère de l'Intérieur, INSEE)")+scale_colour_manual(values = c("#f04723", "#f48d04", "#00a1ce"))+labs(size = "Population",color=' ')+ theme(legend.title=element_text(size=8))
+    theme(axis.title = element_text())+ylab(paste0('1st Round - ',candidate,' (%)'))+ xlab(xlab)+theme(legend.direction='vertical',legend.position='top',legend.box='horizontal')+ggtitle(paste0('Cities with population>',pop_threshold))+labs(caption = "©Clément Lefèvre 2017 (Sources : Ministère de l'Intérieur, INSEE)")+scale_colour_manual(values = c("#f04723", "#f48d04", "#00a1ce"))+labs(size = "Population",color=' ')+ theme(legend.title=element_text(size=8))+ylim(0,0.5)
   return(p)
 }
 
-p0<-plot_corr(df,"Job_OUVRIER_ratio",100,1000,'LE.PEN',"")
-p1<-plot_corr(df,"Job_OUVRIER_ratio",100,1000,'MACRON','')
-p0
-p1
-#grid_arrange_shared_legend(p0,p1,nrow =2 , ncol = 1)
+p0<-plot_corr(df,"Job_OUVRIER_ratio",100,100,1000,'LE.PEN',"Workers in active population(%)")
+p1<-plot_corr(df,"Job_OUVRIER_ratio",100,100,1000,'MACRON',"Workers in active population(%)")
+
+p2<-plot_corr(df,"education_no_diplom_ratio",100,100,1000,'LE.PEN',"% of adult without degree")
+p3<-plot_corr(df,"education_no_diplom_ratio",100,100,1000,'MACRON',"% of adult without degree")
+
+p4<-plot_corr(df,"family_monoparental_ratio",100,100,1000,'LE.PEN',"% monoparental families")
+p5<-plot_corr(df,"family_monoparental_ratio",100,100,1000,'MACRON',"% monoparental families")
+
+p6<-plot_corr(df,"NoJob_1524_ratio",100,100,1000,'LE.PEN',"% Unemployment <24 years old")
+p7<-plot_corr(df,"NoJob_1524_ratio",100,100,1000,'MACRON',"% Unemployment <24 years old")
+
+p8<-plot_corr(df %>% filter(Q213>0),"Q213",100,max(df$Q213),1000,'LE.PEN',"Median yearly Income per household (Euros)")
+p9<-plot_corr(df,"Q213",100,max(df$Q213),1000,'MACRON',"Median yearly Income per household (Euros)")
 
 
-
-
-```
-
-
-### Some correlation plot :
-```{r fig.width=14, fig.height=12}
-p0<-ggplot(df %>% filter(Job_OUVRIER_ratio>0 & Job_OUVRIER_ratio<1) %>% filter(Population>1000) %>% filter(REG %in% c(53,93,22,31)),aes(x=Job_OUVRIER_ratio*100,y=LE.PEN,col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.5)+
-  theme_economist(stata=TRUE) + scale_colour_economist()+theme(legend.title=element_blank())+ylab('1st Round - LE PEN (%)')+ xlab('Worker rate in active population (%)')+theme(aspect.ratio=1/2)+ggtitle('For cities with Population>1000')+labs( caption = "©Clement LEFEVRE 2017 -Sources : Ministere de l'interieur, INSEE.")
-
-
-p1<-ggplot(df %>% filter(Job_OUVRIER_ratio>0 & Job_OUVRIER_ratio<1) %>% filter(Population>1000) %>% filter(REG %in% c(53,93,22,31)),aes(x=Job_OUVRIER_ratio*100,y=MACRON,col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - MACRON (%)')+ xlab('Worker rate in active population (%)')+theme(aspect.ratio=1/2)+ggtitle('For cities with Population>1000')
-
-
-p2<-ggplot(df %>% filter(ratio_immigrants>0 ) %>% filter(Population>1000) %>% filter(REG %in% c(53,93,22,31)),aes(x=log(ratio_immigrants+1),y=LE.PEN,col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - LE PEN (%)')+ xlab('Immigrant rate log()')+theme(aspect.ratio=1/2)+ggtitle('For cities with Population>1000')
-
-
-p3<-ggplot(df %>% filter(ratio_immigrants>0 ) %>% filter(Population>1000) %>% filter(REG %in% c(53,93,22,31)),aes(x=log(ratio_immigrants+1),y=MACRON,col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - MACRON (%)')+ xlab('Immigrant rate log()')+theme(aspect.ratio=1/2)+ggtitle('For cities with Population>1000')
-
-
-p4<-ggplot(df %>% filter(ratio_immigrants>0 ) %>% filter(Population>1000) %>% filter(REG %in% c(22,31)),aes(x=log(ratio_immigrants+1),y=MÉLENCHON,col=as.factor(NOM_REG)))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - MÉLENCHON (%)')+ xlab('Immigrant rate log()')+theme(aspect.ratio=1/2)+ggtitle('For cities with Population>1000')
-
-p5<-ggplot(df %>% filter(Job_OUVRIER_ratio>0 & Job_OUVRIER_ratio<1) %>% filter(Population>1000) %>% filter(REG %in% c(53,93,22,31)),aes(x=NoJob_1524_ratio*100,y=LE.PEN,col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - LE PEN (%)')+ xlab('NoJob_1524_ratio (%)')+theme(aspect.ratio=1/2)+ggtitle('For cities with Population>1000')
-
-
-p6<-ggplot(df %>% filter(Job_OUVRIER_ratio>0 & Job_OUVRIER_ratio<1) %>% filter(Population>1000) %>% filter(REG %in% c(53,93,22,31)),aes(x=NoJob_1524_ratio*100,y=MACRON,col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - MACRON (%)')+ xlab('NoJob_1524_ratio (%)')+theme(aspect.ratio=1/2)+ggtitle('For cities with Population>1000')
-
-p7<-ggplot(df %>% filter(Job_OUVRIER_ratio>0 & Job_OUVRIER_ratio<1) %>% filter(Population>1000) %>% filter(REG %in% c(53,93,22,31)),aes(x=NoJob_1524_ratio*100,y=MÉLENCHON,col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.5)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - MÉLENCHON (%)')+ xlab('NoJob_1524_ratio (%)')+theme(aspect.ratio=1/2)+ggtitle('For cities with Population>1000')
-
-
-grid_arrange_shared_legend(p0,p1,nrow =2 , ncol = 1)
-grid_arrange_shared_legend(p2,p3,nrow =2 , ncol = 1)
-grid_arrange_shared_legend(p5,p6,p7,nrow =3 , ncol = 1)
-
+p9
+grid_arrange_shared_legend(p0,p1,nrow =1, ncol = 2)
+grid_arrange_shared_legend(p2,p3,nrow =1, ncol = 2)
+grid_arrange_shared_legend(p4,p5,nrow =1, ncol = 2)
+grid_arrange_shared_legend(p6,p7,nrow =1, ncol = 2)
+grid_arrange_shared_legend(p8,p9,nrow =1, ncol = 2)
 
 
 ```
+
+```{r}
+df$Population_cat <- factor(df$Population_cat, levels = c("<100","[100,300]","[300,500]","[500,1000]" ,"[1000,2000]","[2000,5000]",">10000" ))
+
+
+groupy_pop<- df %>% group_by(Population_cat) %>% summarise(LE.PEN=mean(LE.PEN*100,na.rm=TRUE),MACRON=mean(MACRON*100,na.rm=TRUE),FILLON=mean(FILLON*100,na.rm=TRUE),MELENCHON=mean(MÉLENCHON*100,na.rm=TRUE))
+groupy_pop<- groupy_pop %>% gather(candidate,score,-Population_cat)
+groupy_pop$candidate<-  factor(groupy_pop$candidate, levels = c("MACRON","LE.PEN","FILLON","MELENCHON"))
+
+ggplot(groupy_pop,aes(x=Population_cat,y=score,fill=candidate)) + geom_bar(stat='identity', position = "dodge")+ylab('1st round (%)')+scale_fill_manual(values = c("#ecad31", "#767374", "#1d88be",'#ec6a56'))+ggtitle('Per city population')+labs(caption = "©Clément Lefèvre 2017 (Sources : Ministère de l'Intérieur, INSEE)") + theme_fivethirtyeight()+theme(axis.title = element_text())+xlab("")+ theme(legend.title=element_blank())
+```
+
 
 ```{r fig.width=14, fig.height=12}
 

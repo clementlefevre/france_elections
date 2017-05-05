@@ -3,11 +3,14 @@ title: "Elections France 2017 Data Merge"
 output:  github_document
 ---
 ```{r}
+library(plyr)
 library(dplyr)
+
 library(tidyr)
 library(stringr)
 library(GGally)
 library(ggcorrplot)
+library(lsr)
 ```
 
 
@@ -205,6 +208,29 @@ df.all<-merge(df.all,df.immigrants_job,by.x='INSEE_COM',by.y='CODGEO')
 df.all %>% filter(grepl('VILLEBAROU',NOM_COM)) %>% select(contains('ratio'))
 
 ```
+## Add education level
+
+```{r}
+df.education<-read.csv('data/DOI/base-cc-diplomes-formation-2013_v2.csv')
+df.education$CODGEO<-as.character(df.education$CODGEO)
+df.education<-df.education %>% mutate(education_no_diplom_ratio=P13_NSCOL15P_DIPLMIN/P13_NSCOL15P)
+df.education<-df.education %>% mutate(education_CAPBEP_ratio=P13_NSCOL15P_CAPBEP/P13_NSCOL15P)
+df.education<-df.education %>% mutate(education_BAC_ratio=P13_NSCOL15P_BAC/P13_NSCOL15P)
+df.education<-df.education %>% mutate(education_SUP_ratio=P13_NSCOL15P_SUP/P13_NSCOL15P)
+df.education %>% filter(CODGEO=="01001") %>% gather()
+df.all<- left_join(df.all,df.education %>% select(CODGEO,education_no_diplom_ratio,education_CAPBEP_ratio,education_BAC_ratio,education_SUP_ratio),by=c('INSEE_COM'='CODGEO'))
+```
+## Add family status
+
+```{r}
+df.family<-read.csv('data/DOI/BTX_TD_FAM1_2013.csv')
+df.family$CODGEO<-as.character(df.family$CODGEO)
+df.family$family_monoparental<-df.family %>% select(matches('TF1211|TF1212|TF1221|TF1222')) %>% rowSums(.)
+df.family$total= df.family %>% select(contains('NBENF')) %>% rowSums(.)
+df.family$family_monoparental_ratio<- df.family$family_monoparental/df.family$total
+df.all<- left_join(df.all,df.family %>% select(CODGEO,family_monoparental_ratio),by=c('INSEE_COM'='CODGEO'))
+
+```
 
 # Add miscellaneous features (such as number of Shop, Camping, Hotels)
 ```{r}
@@ -241,6 +267,14 @@ df.all <- df.all %>% mutate_at(ratio_features,funs(ifelse(is.na(.),0,.)))
 df.all <- df.all %>% mutate_at(ratio_features,funs(ifelse(is.infinite(.),1,.)))
 ```
 
+## Add Population category
+
+```{r}
+
+df.all$Population_cat<- cut(df.all$POPULATION, breaks=c(0, 100, 300,500,1000,2000,5000,1000000),include.lowest = TRUE )
+df.all$Population_cat<-revalue(df.all$Population_cat, c("[0,100]"="<100","(100,300]"="[100,300]","(300,500]"="[300,500]", "(500,1e+03]"="[500,1000]","(1e+03,2e+03]"="[1000,2000]", "(2e+03,5e+03]"="[2000,5000]","(5e+03,1e+06]"=">10000"))
+
+```
 
 
 ## Save final dataframe

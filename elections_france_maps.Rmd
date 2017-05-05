@@ -32,7 +32,6 @@ ogrInfo(dsn = pathToShp,layer="COMMUNE")
 # Import via la fonction readOGR de rgdal
 comm <- readOGR(dsn = pathToShp, layer="COMMUNE", stringsAsFactors=FALSE)
 df.elections_2017<-read.csv('data/DOI/elections_2017_First_round.csv')
-ggplot(df.elections_2017,aes(x=EVOLUTION_FDG))+ geom_histogram()
 ```
 
 
@@ -91,6 +90,9 @@ plot_map(comm = comm2,feature = 'Q213',"#317873",'Income IQR (Euros)',ratio=1)
 
 #myplots <- lapply(c('NoJob_all_ratio','Job_OUVRIER_ratio','Q213','MACRON','FILLON','EVOLUTION_FN'), plot_map, comm = comm2)
 ```
+```{r}
+plot(comm2,col = comm2@data$REG,  lwd=.1,main='Presidential election 2017 - First Round')
+```
 
 ```{r fig.width=14, fig.height=12}
 #add color for each candidate :
@@ -102,6 +104,9 @@ candidate_colors<- candidate_colors %>% mutate(color=ifelse(best_candidate=='FIL
 candidate_colors<- candidate_colors %>% mutate(color=ifelse(best_candidate=='MÉLENCHON','#ec6a56',color))
 candidate_colors<- candidate_colors %>% mutate(color=ifelse(best_candidate=='HAMON','#e97ba9',color))
 candidate_colors<- candidate_colors %>% mutate(color=ifelse(best_candidate=='LASSALLE','#a9cfe2',color))
+
+## add color for each region :
+region_colors<- candidate_colors %>% mutate(color=ifelse(best_candidate=='LASSALLE','#a9cfe2',color))
 
 legend_colors<-candidate_colors %>% filter(color!=1)
 
