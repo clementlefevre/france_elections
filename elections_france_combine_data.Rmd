@@ -40,7 +40,21 @@ df.votes.2012 <- df.votes.2012 %>% select(CodeInsee,LE.PEN_2012,HOLLANDE_2012,SA
 df.all<-left_join(df_communes,df.votes.2012,by=c('INSEE_COM'='CodeInsee'))
 str(df.all)
 ```
+### Combine with 2017 second round :
 
+```{r}
+df_votes.2017_2ndRound<-read.csv('data/DOI/Presidentielle_2017_Resultats_Communes_Tour_2.csv',stringsAsFactors = F)
+
+
+df_votes.2017_2ndRound<-df_votes.2017_2ndRound %>%  mutate(CODE_COM=str_pad(Code.de.la.commune, 3, pad = "0"))
+df_votes.2017_2ndRound<-df_votes.2017_2ndRound %>%  mutate(CODE_DEPT=str_pad(Code.du.département, 2, pad = "0"))
+df_votes.2017_2ndRound<-df_votes.2017_2ndRound %>%  unite(GEOCODE_COM,CODE_DEPT,CODE_COM,sep = '')
+df_votes.2017_2ndRound<- df_votes.2017_2ndRound %>% select(-Code.de.la.commune,-Libellé.de.la.commune,-Code.du.département,-Libellé.du.département)
+
+df.all_2<-merge(df.all,df_votes.2017_2ndRound,by.x='INSEE_COM',by.y='GEOCODE_COM',all.x=TRUE)
+
+View(df.all_2 %>% filter(CODE_REG=='53' | CODE_COM==41269) %>% arrange(desc(X..Voix.Exp.1)) %>% select(NOM_COM,NOM_DEPT,X..Voix.Exp, X..Voix.Exp.1))
+```
 
 
 ### Combine with 2017 First round votes :
@@ -58,6 +72,14 @@ df.all<-merge(df.all,df_votes.2017,by.x='INSEE_COM',by.y='GEOCODE_COM',all.x=TRU
 
 df.all %>% filter(INSEE_COM=='32009')
 ```
+
+
+
+
+```{r}
+str(df_votes.2017_2ndRound)
+```
+
 ### Compute vote evolution for the four main parties :
 
 ```{r}

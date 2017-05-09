@@ -33,6 +33,14 @@ ogrInfo(dsn = pathToShp,layer="COMMUNE")
 comm <- readOGR(dsn = pathToShp, layer="COMMUNE", stringsAsFactors=FALSE)
 df.elections_2017<-read.csv('data/DOI/elections_2017_First_round.csv')
 ```
+# Lecture des pays et sélection de l'Europe
+```{r}
+europe <- readOGR(dsn="data/countries/", layer="ne_10m_admin_0_countries")
+europe<- europe[europe$REGION_UN=="Europe",]
+# Projection en Lambert 93
+europe <- spTransform(europe, CRS("+init=epsg:2154"))
+```
+
 
 
 ```{r}
@@ -41,13 +49,7 @@ comm2<-comm
 comm2@data <- left_join(comm2@data, df.elections_2017, by="INSEE_COM")
 ```
 
-```{r}
-# Filtrage des données pour ne garder que la région Bretagne
 
-#comm2 <- comm2[comm2@data$CODE_REG.x=="53",]
-dim(comm2)
-#summarise_each(comm2@data, funs(sum(is.na(.)/n()))) %>% gather() %>% arrange(desc(value))
-```
 ```{r}
 # Lecture des départements
 departements <- readOGR(dsn=pathToShp_dept,  layer="DEPARTEMENT")
@@ -61,38 +63,58 @@ frontieres <- frontieres[frontieres$NATURE %in% c('Fronti\xe8re internationale',
 
 ```{r fig.width=14, fig.height=12}
 
+comm2@data<- comm2@data %>% mutate(LE.PEN = ifelse(is.na(LE.PEN),mean(LE.PEN,na.rm=TRUE),LE.PEN))
+comm2@data<- comm2@data %>% mutate(MACRON = ifelse(is.na(MACRON),mean(MACRON,na.rm=TRUE),MACRON))
+comm2@data<- comm2@data %>% mutate(education_SUP_ratio = ifelse(is.na(education_SUP_ratio),mean(education_SUP_ratio,na.rm=TRUE),education_SUP_ratio))
 
 
 plot_map<- function(comm,feature,color_hex,title,ratio){
+  color_hex_min='#404040'
+  color_hex_max='#ca0020'
   
+  data.comm<- comm@data %>% mutate(feature = ifelse(is.na(feature),mean(feature),feature))
+  data <- data.comm[,feature]
   col <- findColours(classIntervals(
-            comm@data[,feature], 100, style="quantile"),
-            smoothColors("white",98,color_hex))
+            data, 10, style="quantile"),
+            smoothColors(color_hex_min,3,'white',2,color_hex_max))
 
 leg <- findColours(classIntervals(
-            round(comm@data[,feature]*ratio,0), 5, style="quantile"),
-            smoothColors("white",3,color_hex),
+            round(data*ratio,0), 5, style="quantile"),
+            smoothColors(color_hex_min,3,'white',2,color_hex_max),
             under="<", over=">", between="–",
             cutlabels=FALSE)
 
-plot(comm,   col=col, border=col, lwd=.1,main=title)
-plot(departements, border="#8b8378",lwd=.7,add=TRUE)
 
-legend("bottomleft",fill=attr(leg, "palette"),
+plot(frontieres, col="#FFFFFF")
+
+plot(europe,      col="#E6E6E6", border="#AAAAAA",lwd=1, add=TRUE)
+plot(frontieres,  col="#D8D6D4", lwd=6, add=TRUE)
+
+plot(frontieres,  col="#666666", lwd=1, add=TRUE)
+plot(comm,   col=col, border=col, lwd=.1,main=title,add=TRUE)
+plot(frontieres, col="#666666", lwd=1, add=TRUE)
+plot(frontieres,  col="#D8D6D4", lwd=6, add=TRUE)
+legend(-10000,6537500,fill=attr(leg, "palette"),
     legend=gsub("\\.", ",", names(attr(leg,"table"))),
     title = paste(title," :"),bty = "n",cex=1)
   
 }
-plot_map(comm = comm2,feature = 'LE.PEN',"#660066",'Le Pen Votes 2017 (%)',ratio=100)
-plot_map(comm = comm2,feature = 'EVOLUTION_FN',"#0C3269",'Evolution of FN Votes 2012-2017 (%)',ratio=100)
-plot_map(comm = comm2,feature = 'Job_OUVRIER_ratio',"#a54a4a",'% of Worker amongst working population',ratio=100)
-plot_map(comm = comm2,feature = 'Q213',"#317873",'Income IQR (Euros)',ratio=1)
 
-#myplots <- lapply(c('NoJob_all_ratio','Job_OUVRIER_ratio','Q213','MACRON','FILLON','EVOLUTION_FN'), plot_map, comm = comm2)
+
 ```
-```{r}
-plot(comm2,col = comm2@data$REG,  lwd=.1,main='Presidential election 2017 - First Round')
+
+
+```{r fig.width=14, fig.height=12}
+plot_map(comm = comm2,feature = 'LE.PEN',"#ca0020",'Le Pen Votes 2017 (%)',ratio=100)
+plot_map(comm = comm2,feature = 'MACRON',"#ea4335",'Macron Votes 2017 (%)',ratio=100)
+plot_map(comm = comm2,feature = 'education_SUP_ratio',"#0C3269",'% of university degree in active population (2013)',ratio=100)
+plot_map(comm = comm2,feature = 'education_CAPBEP_ratio',"#0C3269",'% of vocational degree in active population (2013)',ratio=100)
+plot_map(comm = comm2,feature = 'Job_OUVRIER_ratio',"#a54a4a",'% of Worker amongst working population',ratio=100)
+plot_map(comm = comm2,feature = 'Q3_Q1_ARR',"#317873",'Income IQR (Euros)',ratio=1)
+
 ```
+
+
 
 ```{r fig.width=14, fig.height=12}
 #add color for each candidate :
@@ -114,9 +136,18 @@ legend_colors<-candidate_colors %>% filter(color!=1)
 candidates_palette<-comm2@data %>% select(best_candidate) %>% left_join(.,candidate_colors,by='best_candidate') 
 candidates_palette$color<-as.character(candidates_palette$color)
 
-plot(comm2,col = candidates_palette$color,  lwd=.1,main='Presidential election 2017 - First Round')
-par(xpd=TRUE)
-legend("bottomleft", inset=c(-0.000,0),legend = unique(legend_colors$best_candidate), fill=unique(legend_colors$color),bty = "n",cex=1)
+plot(frontieres, col="#FFFFFF")
+
+plot(europe,      col="#E6E6E6", border="#AAAAAA",lwd=1, add=TRUE)
+plot(frontieres,  col="#D8D6D4", lwd=6, add=TRUE)
+
+plot(frontieres,  col="#666666", lwd=1, add=TRUE)
+
+plot(comm2,col = candidates_palette$color,  lwd=.1,main='Presidential election 2017 - First Round',add=TRUE)
+plot(frontieres, col="#666666", lwd=1, add=TRUE)
+
+
+legend(-10000,6537500, inset=c(-0.000,0),legend = unique(legend_colors$best_candidate), fill=unique(legend_colors$color),bty = "n",cex=1)
 
 
 ```

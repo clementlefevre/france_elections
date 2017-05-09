@@ -56,8 +56,8 @@ corr <- round(cor(df_numeric %>% select(one_of(highest.corr.features)) %>% na.om
 ggcorrplot(corr, hc.order = TRUE, 
            type = "lower", 
            lab = TRUE, 
-           lab_size = 6, 
-           method="square", 
+           lab_size = 2, 
+           method="circle", 
            colors = c("cyan4", "white", "red3"), 
            title="Correlogram for LE PEN",
            show.legend=FALSE,
@@ -83,8 +83,8 @@ corr <- round(cor(df_numeric %>% select(one_of(highest.corr.features)) %>% na.om
 ggcorrplot(corr, hc.order = TRUE, 
            type = "lower", 
            lab = TRUE, 
-           lab_size = 6, 
-           method="square", 
+           lab_size = 2, 
+           method="circle", 
            colors = c("cyan4", "white", "red3"), 
            title="Correlogram for MACRON",
            show.legend=FALSE,
@@ -134,7 +134,7 @@ plot_corr<-function(df,feature,ratio,max,pop_threshold,candidate,xlab){
   
   
   p<-ggplot(df,aes_string(x=x_data,y=candidate,col="NOM_REG",size="Population"))+ geom_jitter(alpha=.7)  +theme_fivethirtyeight() +
-    theme(axis.title = element_text())+ylab(paste0('1st Round - ',candidate,' (%)'))+ xlab(xlab)+theme(legend.direction='vertical',legend.position='top',legend.box='horizontal')+ggtitle(paste0('Cities with population>',pop_threshold))+labs(caption = "©Clément Lefèvre 2017 (Sources : Ministère de l'Intérieur, INSEE)")+scale_colour_manual(values = c("#f04723", "#f48d04", "#00a1ce"))+labs(size = "Population",color=' ')+ theme(legend.title=element_text(size=8))+ylim(0,0.5)
+    theme(axis.title = element_text())+ylab(paste0('1st Round - ',candidate,' (%)'))+ xlab(xlab)+theme(legend.direction='vertical',legend.position='top',legend.box='horizontal')+ggtitle(paste0('Cities with population>',pop_threshold))+labs(caption = "©Clément Lefèvre 2017 (Sources : Ministère de l'Intérieur, INSEE)")+scale_colour_manual(values = c("#e41a1c", "#377eb8", "#4daf4a"))+labs(size = "Population",color=' ')+ theme(legend.title=element_text(size=8))+ylim(0,0.5)
   return(p)
 }
 
@@ -153,13 +153,25 @@ p7<-plot_corr(df,"NoJob_1524_ratio",100,100,1000,'MACRON',"% Unemployment <24 ye
 p8<-plot_corr(df %>% filter(Q213>0),"Q213",100,max(df$Q213),1000,'LE.PEN',"Median yearly Income per household (Euros)")
 p9<-plot_corr(df,"Q213",100,max(df$Q213),1000,'MACRON',"Median yearly Income per household (Euros)")
 
-
+p10<-plot_corr(df %>% filter(Q3_Q1>0),"Q3_Q1",100,max(df$Q3_Q1),1000,'LE.PEN',"Yearly household incomes IQR (Euros)")
+p11<-plot_corr(df %>% filter(Q3_Q1>0),"Q3_Q1",100,max(df$Q3_Q1),1000,'MACRON',"Yearly household incomes IQR (Euros)")
+p0
+p1
+p2
+p3
+p4
+p5
+p6
+p7
+p8
 p9
-grid_arrange_shared_legend(p0,p1,nrow =1, ncol = 2)
-grid_arrange_shared_legend(p2,p3,nrow =1, ncol = 2)
-grid_arrange_shared_legend(p4,p5,nrow =1, ncol = 2)
-grid_arrange_shared_legend(p6,p7,nrow =1, ncol = 2)
-grid_arrange_shared_legend(p8,p9,nrow =1, ncol = 2)
+p10
+p11
+# grid_arrange_shared_legend(p2,p3,nrow =1, ncol = 2)
+# grid_arrange_shared_legend(p4,p5,nrow =1, ncol = 2)
+# grid_arrange_shared_legend(p6,p7,nrow =1, ncol = 2)
+# grid_arrange_shared_legend(p8,p9,nrow =1, ncol = 2)
+# grid_arrange_shared_legend(p10,p11,nrow =1, ncol = 2)
 
 
 ```
