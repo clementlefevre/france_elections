@@ -46,6 +46,7 @@ comm@data <- left_join(comm@data, df.elections_2017, by="INSEE_COM")
 ```
 
 
+
 ```{r}
 # Lecture des départements
 departements <- readOGR(dsn=pathToShp_dept,  layer="DEPARTEMENT")
@@ -62,6 +63,8 @@ frontieres <- frontieres[frontieres$NATURE %in% c('Fronti\xe8re internationale',
 comm@data<- comm@data %>% mutate(LE.PEN = ifelse(is.na(LE.PEN),mean(LE.PEN,na.rm=TRUE),LE.PEN))
 comm@data<- comm@data %>% mutate(MACRON = ifelse(is.na(MACRON),mean(MACRON,na.rm=TRUE),MACRON))
 comm@data<- comm@data %>% mutate(education_SUP_ratio = ifelse(is.na(education_SUP_ratio),mean(education_SUP_ratio,na.rm=TRUE),education_SUP_ratio))
+comm@data<- comm@data %>% mutate(NoJob_all_ratio = ifelse(is.na(NoJob_all_ratio),mean(NoJob_all_ratio,na.rm=TRUE),NoJob_all_ratio))
+
 
 ```
 
@@ -126,7 +129,7 @@ AUVERGNE_RHONE<-c("84")
 ```{r}
 plot_map_region<- function(comm,feature,color_hex,title,ratio){
   color_hex_min='#404040'
-  color_hex_max='#ca0020'
+  color_hex_max=color_hex
   
   data.comm<- comm@data %>% mutate(feature = ifelse(is.na(feature),mean(feature),feature))
   data <- data.comm[,feature]
@@ -165,15 +168,10 @@ plot_reg<- function(region_code,comm){
  
   comm<- subset(comm, CODE_REG.x %in% region_code)
   plot_map_region(comm = comm ,feature = 'LE.PEN',"#ca0020",'Le Pen Votes 2017 (%)',ratio=100)
-  
-  plot_map_region(comm = comm ,feature = 'Z_MOYEN',"#ca0020",'Elevation (meters)',ratio=.1)
+  plot_map_region(comm = comm ,feature = 'Z_MOYEN.x',"#0C3269",'Elevation (meters)',ratio=.1)
   plot_map_region(comm = comm ,feature = 'X..Abs.Ins',"#ca0020",'Abstention (%)',ratio=1)
-  # plot_map(comm = comm[comm$CODE_REG.x=='53',] ,feature = 'education_CAPBEP_ratio',"#ca0020",'Le Pen Votes 2017 (%)',ratio=100)
-
+  plot_map_region(comm = comm,feature = 'NoJob_all_ratio',"#0C3269",'Unemployment (%)',ratio=100)
 }
-
-
-
 ```
 
 ```{r}
@@ -222,25 +220,5 @@ legend(-10000,6537500, inset=c(-0.000,0),legend = unique(legend_colors$best_cand
 
 
 
-```{r}
-library(cartogram)
-library(tmap)
 
-# construct cartogram
-communes_fr <- cartogram(departements, "pop", itermax=5)
-
-tm_shape(communes_fr) + tm_fill("pop", style="jenks") +tm_borders() + tm_layout(frame=F)
-
-data(wrld_simpl)
-
-afr <- wrld_simpl[wrld_simpl$REGION==2,]
-afr <- spTransform(afr, CRS("+init=epsg:3395"))
-
-# construct cartogram
-afrc <- cartogram(afr, "POP2005", itermax=5)
-
-# plot it
-tm_shape(afrc) + tm_fill("POP2005", style="jenks") + 
-  tm_borders() + tm_layout(frame=F)
-```
 

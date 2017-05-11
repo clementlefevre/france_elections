@@ -5,7 +5,6 @@ output:  github_document
 ```{r}
 library(plyr)
 library(dplyr)
-
 library(tidyr)
 library(stringr)
 library(GGally)
@@ -16,7 +15,8 @@ library(lsr)
 
 
 ```{r}
-df_communes<- read.csv('data/DOI/OGR_Communes.csv',colClasses=c(INSEE_COM='character',CODE_COM='character',CODE_DEPT='character',CODE_ARR='character')) %>% select(CODE_COM,INSEE_COM,NOM_COM,CODE_ARR,CODE_DEPT,NOM_DEPT,CODE_REG,NOM_REG,POPULATION)
+df_communes<- read.csv('data/DOI/OGR_Communes.csv',colClasses=c(INSEE_COM='character',CODE_COM='character',CODE_DEPT='character',CODE_ARR='character')) %>% select(CODE_COM,INSEE_COM,NOM_COM,CODE_ARR,CODE_DEPT,NOM_DEPT,CODE_REG,NOM_REG,POPULATION,SUPERFICIE,Z_MOYEN)
+df_communes$DENSITY<-df_communes$POPULATION/df_communes$SUPERFICIE
 df_communes<-df_communes %>%  unite(CODGEO_ARR_NO,CODE_DEPT,CODE_ARR,sep='',remove=FALSE)
 df_communes<-df_communes %>%  mutate(CODE_COM=str_pad(CODE_COM, 3, pad = "0"))
 df_communes<-df_communes %>%  mutate(CODE_ARR=str_pad(CODE_ARR, 3, pad = "0"))
@@ -53,7 +53,6 @@ df_votes.2017_2ndRound<- df_votes.2017_2ndRound %>% select(-Code.de.la.commune,-
 
 df.all_2<-merge(df.all,df_votes.2017_2ndRound,by.x='INSEE_COM',by.y='GEOCODE_COM',all.x=TRUE)
 
-View(df.all_2 %>% filter(CODE_REG=='53' | CODE_COM==41269) %>% arrange(desc(X..Voix.Exp.1)) %>% select(NOM_COM,NOM_DEPT,X..Voix.Exp, X..Voix.Exp.1))
 ```
 
 

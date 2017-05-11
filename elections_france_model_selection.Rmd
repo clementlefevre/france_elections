@@ -15,6 +15,7 @@ library(ggthemes)
 ### Load file
 ```{r}
 df<- read.csv('data/DOI/elections_2017_First_round.csv')
+df<-df %>% filter(CODE_REG==93)
 ```
 ### Add new features :
 
@@ -26,7 +27,7 @@ df<-df %>% mutate(Combined_ratio=log(NoJob_1524_ratio+1)*log(education_no_diplom
 ```{r}
 candidats<-c("ARTHAUD","ASSELINEAU","CHEMINADE","DUPONT.AIGNAN","FILLON","HAMON","LASSALLE","LE.PEN","MACRON","MÉLENCHON","POUTOU")
 job_indicators<- grep('Job|ratio',colnames(df),value = TRUE)
-fiscal<-c('Q213','Q3_Q1','Population')
+fiscal<-c('Q213','Q3_Q1','Population','DENSITY','Z_MOYEN')
 
 all_features<-c(job_indicators,fiscal)
 
@@ -42,7 +43,7 @@ all_features<-c(job_indicators,fiscal)
 ```{r fig.width=10, fig.height=10}
 
 df_numeric<- df %>% select(one_of(c(all_features,'LE.PEN')))
-cor.matrix<-cor(df_numeric %>% filter(!is.na(LE.PEN))%>% filter(!is.na(Q3_Q1)))
+cor.matrix<-cor(df_numeric %>% filter(!is.na(LE.PEN))%>% filter(!is.na(Q3_Q1))) 
 df_corr<- as.data.frame(cor.matrix) %>% select(LE.PEN) 
 df_corr$feature<-rownames(df_corr)
 
@@ -58,11 +59,11 @@ ggcorrplot(corr, hc.order = TRUE,
            lab = TRUE, 
            lab_size = 2, 
            method="circle", 
-           colors = c("cyan4", "white", "red3"), 
+           colors = c("#0C3269", "white", "#ca0020"), 
            title="Correlogram for LE PEN",
            show.legend=FALSE,
            show.diag = FALSE,
-           ggtheme=theme_bw)
+            ggtheme = ggplot2::theme_gray)
 
 
 ```
@@ -85,11 +86,11 @@ ggcorrplot(corr, hc.order = TRUE,
            lab = TRUE, 
            lab_size = 2, 
            method="circle", 
-           colors = c("cyan4", "white", "red3"), 
+           colors = c("#0C3269", "white", "#ca0020"), 
            title="Correlogram for MACRON",
            show.legend=FALSE,
            show.diag = FALSE,
-           ggtheme=theme_bw)
+           ggtheme = ggplot2::theme_gray)
 ```
 ### Multiplot function
 ```{r}

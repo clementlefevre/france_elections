@@ -21,16 +21,18 @@ Read data
 df<- read.csv('data/DOI/elections_2017_First_round.csv')
 candidats<-c("ARTHAUD","ASSELINEAU","CHEMINADE","DUPONT.AIGNAN","FILLON","HAMON","LASSALLE","LE.PEN","MACRON","MÉLENCHON","POUTOU")
 
+best_candidates<-c("FILLON","LE.PEN","MACRON","MÉLENCHON")
+
 
 ```
 
 # convert target to factor to activate classification in caret train method :
 ```{r}
-df <- df %>% filter(!is.na(best_candidate))
+df <- df %>% filter(!is.na(best_candidate) & best_candidate %in% best_candidates)
 
-df<- df %>% select(-one_of(candidats)) %>% select(-matches('EVOLUTION|2012'))
+df<- df %>% select(-one_of(candidats)) %>% select(-matches('EVOLUTION|2012|^X'))
 
-
+df$best_candidate<-as.character(df$best_candidate)
 target<-as.factor(df$best_candidate)
 df<- df %>% select_if(is.numeric) %>% select(-RD,-GI13)
 df$best_candidate<-target
@@ -39,6 +41,11 @@ dim(df)
 df<-df %>% na.omit()
 dim(df)
 
+```
+# Filter on BRETAGNE
+
+```{r}
+df<- df %>% filter(CODE_REG==93)
 ```
 
 #### Resplit the train :
@@ -58,8 +65,8 @@ Hyperparameters :
 xgb_grid_1 = expand.grid(nrounds=20, max_depth=2, eta=0.1, gamma=1, colsample_bytree=0.4, min_child_weight=1, subsample = 1)
 xgb_grid_1 = expand.grid(
   nrounds = 1000,
-  eta = c(0.01, 0.001, 0.0001),
-  max_depth = c(2, 4, 6, 8, 10),
+  eta = c(0.01),
+  max_depth = c(12),
   gamma = 1,
   colsample_bytree=0.4,
   min_child_weight=1,
