@@ -4,28 +4,24 @@ output:  github_document
 ---
 
 ```{r}
-library("sp")
-library("rgdal")
+library(sp)
+library(rgdal)
 library(dplyr)
 library(tidyr)
 library(gridExtra)
 
-library("RColorBrewer")
-library("classInt")
-library('plotrix')    # Créer des échelles de couleurs
+library(RColorBrewer)
+library(classInt)
+library(plotrix)    # Créer des échelles de couleurs
 
-library("ggmap")
-library("maptools")
+library(ggmap)
+library(maptools)
 ```
 
 ```{r}
 # Emplacement de l'archive décompressée, à remplacer par le votre
 pathToShp <- "data/GEOFLA/1_DONNEES_LIVRAISON_2016-06-00236/GEOFLA_2-2_SHP_LAMB93_FR-ED161/COMMUNE/"
-
 pathToShp_dept <- "data/GEOFLA_DEPT/1_DONNEES_LIVRAISON_2016-06-00235/GEOFLA_2-2_SHP_LAMB93_FR-ED161/DEPARTEMENT"
-# Description des données via orgInfo
-# Attention à ne pas mettre l'extension à la fin du nom
-ogrInfo(dsn = pathToShp,layer="COMMUNE")
 ```
 
 ```{r}
@@ -45,8 +41,8 @@ europe <- spTransform(europe, CRS("+init=epsg:2154"))
 
 ```{r}
 dim(comm@data)
-comm2<-comm
-comm2@data <- left_join(comm2@data, df.elections_2017, by="INSEE_COM")
+comm<-comm
+comm@data <- left_join(comm@data, df.elections_2017, by="INSEE_COM")
 ```
 
 
@@ -60,13 +56,16 @@ frontieres <- frontieres[frontieres$NATURE %in% c('Fronti\xe8re internationale',
 ```
 
 
-
+# Fill empty zones with means :
 ```{r fig.width=14, fig.height=12}
 
-comm2@data<- comm2@data %>% mutate(LE.PEN = ifelse(is.na(LE.PEN),mean(LE.PEN,na.rm=TRUE),LE.PEN))
-comm2@data<- comm2@data %>% mutate(MACRON = ifelse(is.na(MACRON),mean(MACRON,na.rm=TRUE),MACRON))
-comm2@data<- comm2@data %>% mutate(education_SUP_ratio = ifelse(is.na(education_SUP_ratio),mean(education_SUP_ratio,na.rm=TRUE),education_SUP_ratio))
+comm@data<- comm@data %>% mutate(LE.PEN = ifelse(is.na(LE.PEN),mean(LE.PEN,na.rm=TRUE),LE.PEN))
+comm@data<- comm@data %>% mutate(MACRON = ifelse(is.na(MACRON),mean(MACRON,na.rm=TRUE),MACRON))
+comm@data<- comm@data %>% mutate(education_SUP_ratio = ifelse(is.na(education_SUP_ratio),mean(education_SUP_ratio,na.rm=TRUE),education_SUP_ratio))
 
+```
+
+```{r}
 
 plot_map<- function(comm,feature,color_hex,title,ratio){
   color_hex_min='#404040'
@@ -74,6 +73,7 @@ plot_map<- function(comm,feature,color_hex,title,ratio){
   
   data.comm<- comm@data %>% mutate(feature = ifelse(is.na(feature),mean(feature),feature))
   data <- data.comm[,feature]
+
   col <- findColours(classIntervals(
             data, 10, style="quantile"),
             smoothColors(color_hex_min,3,'white',2,color_hex_max))
@@ -99,27 +99,95 @@ legend(-10000,6537500,fill=attr(leg, "palette"),
     title = paste(title," :"),bty = "n",cex=1)
   
 }
-
-
 ```
+
 
 
 ```{r fig.width=14, fig.height=12}
-plot_map(comm = comm2,feature = 'LE.PEN',"#ca0020",'Le Pen Votes 2017 (%)',ratio=100)
-plot_map(comm = comm2,feature = 'MACRON',"#ea4335",'Macron Votes 2017 (%)',ratio=100)
-plot_map(comm = comm2,feature = 'education_SUP_ratio',"#0C3269",'% of university degree in active population (2013)',ratio=100)
-plot_map(comm = comm2,feature = 'education_CAPBEP_ratio',"#0C3269",'% of vocational degree in active population (2013)',ratio=100)
-plot_map(comm = comm2,feature = 'Job_OUVRIER_ratio',"#a54a4a",'% of Worker amongst working population',ratio=100)
-plot_map(comm = comm2,feature = 'Q3_Q1_ARR',"#317873",'Income IQR (Euros)',ratio=1)
+
+plot_map(comm = comm,feature = 'LE.PEN',"#ca0020",'Le Pen Votes 2017 (%)',ratio=100)
+plot_map(comm = comm,feature = 'MACRON',"#ea4335",'Macron Votes 2017 (%)',ratio=100)
+plot_map(comm = comm,feature = 'education_SUP_ratio',"#0C3269",'% of university degree in active population (2013)',ratio=100)
+plot_map(comm = comm,feature = 'education_CAPBEP_ratio',"#0C3269",'% of vocational degree in active population (2013)',ratio=100)
+plot_map(comm = comm,feature = 'Job_OUVRIER_ratio',"#a54a4a",'% of Worker amongst working population',ratio=100)
+plot_map(comm = comm,feature = 'Q3_Q1_ARR',"#317873",'Income IQR (Euros)',ratio=1)
 
 ```
 
+# Filter on Regions :
+
+```{r}
+BRETAGNE <-c("53")
+HAUTS_DE_FRANCE<- c("32")
+PACA<-c("93")
+AUVERGNE_RHONE<-c("84")
+```
+
+```{r}
+plot_map_region<- function(comm,feature,color_hex,title,ratio){
+  color_hex_min='#404040'
+  color_hex_max='#ca0020'
+  
+  data.comm<- comm@data %>% mutate(feature = ifelse(is.na(feature),mean(feature),feature))
+  data <- data.comm[,feature]
+
+  col <- findColours(classIntervals(
+            data, 10, style="quantile"),
+            smoothColors(color_hex_min,3,'white',2,color_hex_max))
+
+leg <- findColours(classIntervals(
+            round(data*ratio,0), 5, style="quantile"),
+            smoothColors(color_hex_min,3,'white',2,color_hex_max),
+            under="<", over=">", between="–",
+            cutlabels=FALSE)
+
+plot(comm,   col=col, border='green', lwd=.1,main=title)
+plot(frontieres, col="#FFFFFF",,add=TRUE)
+
+plot(europe,      col="#E6E6E6", border="#AAAAAA",lwd=1, add=TRUE)
+plot(frontieres,  col="#D8D6D4", lwd=6, add=TRUE)
+
+plot(frontieres,  col="#666666", lwd=1, add=TRUE)
+
+plot(frontieres, col="#666666", lwd=1, add=TRUE)
+plot(frontieres,  col="#D8D6D4", lwd=6, add=TRUE)
+plot(comm,   col=col, border=col, lwd=.1,main=title,add=TRUE)
+legend("bottomleft",fill=attr(leg, "palette"),
+    legend=gsub("\\.", ",", names(attr(leg,"table"))),
+    title = paste(title," :"),bty = "n",cex=.5)
+  
+}
+```
+
+```{r}
+
+plot_reg<- function(region_code,comm){
+ 
+  comm<- subset(comm, CODE_REG.x %in% region_code)
+  plot_map_region(comm = comm ,feature = 'LE.PEN',"#ca0020",'Le Pen Votes 2017 (%)',ratio=100)
+  
+  plot_map_region(comm = comm ,feature = 'Z_MOYEN',"#ca0020",'Elevation (meters)',ratio=.1)
+  plot_map_region(comm = comm ,feature = 'X..Abs.Ins',"#ca0020",'Abstention (%)',ratio=1)
+  # plot_map(comm = comm[comm$CODE_REG.x=='53',] ,feature = 'education_CAPBEP_ratio',"#ca0020",'Le Pen Votes 2017 (%)',ratio=100)
+
+}
+
+
+
+```
+
+```{r}
+plot_reg(HAUTS_DE_FRANCE,comm)
+plot_reg(BRETAGNE,comm)
+plot_reg(PACA,comm)
+plot_reg(AUVERGNE_RHONE,comm)
+```
 
 
 ```{r fig.width=14, fig.height=12}
 #add color for each candidate :
 df<-data.frame()
-candidate_colors <-  data.frame(best_candidate = levels(comm2@data$best_candidate),color='grey')
+candidate_colors <-  data.frame(best_candidate = levels(comm@data$best_candidate),color='grey')
 candidate_colors<- candidate_colors %>% mutate(color=ifelse(best_candidate=='MACRON','#ecad31',color))
 candidate_colors<- candidate_colors %>% mutate(color=ifelse(best_candidate=='LE.PEN','#767374',color))
 candidate_colors<- candidate_colors %>% mutate(color=ifelse(best_candidate=='FILLON','#1d88be',color))
@@ -133,7 +201,7 @@ region_colors<- candidate_colors %>% mutate(color=ifelse(best_candidate=='LASSAL
 legend_colors<-candidate_colors %>% filter(color!=1)
 
 
-candidates_palette<-comm2@data %>% select(best_candidate) %>% left_join(.,candidate_colors,by='best_candidate') 
+candidates_palette<-comm@data %>% select(best_candidate) %>% left_join(.,candidate_colors,by='best_candidate') 
 candidates_palette$color<-as.character(candidates_palette$color)
 
 plot(frontieres, col="#FFFFFF")
@@ -143,7 +211,7 @@ plot(frontieres,  col="#D8D6D4", lwd=6, add=TRUE)
 
 plot(frontieres,  col="#666666", lwd=1, add=TRUE)
 
-plot(comm2,col = candidates_palette$color,  lwd=.1,main='Presidential election 2017 - First Round',add=TRUE)
+plot(comm,col = candidates_palette$color,  lwd=.1,main='Presidential election 2017 - First Round',add=TRUE)
 plot(frontieres, col="#666666", lwd=1, add=TRUE)
 
 
@@ -153,4 +221,26 @@ legend(-10000,6537500, inset=c(-0.000,0),legend = unique(legend_colors$best_cand
 ```
 
 
+
+```{r}
+library(cartogram)
+library(tmap)
+
+# construct cartogram
+communes_fr <- cartogram(departements, "pop", itermax=5)
+
+tm_shape(communes_fr) + tm_fill("pop", style="jenks") +tm_borders() + tm_layout(frame=F)
+
+data(wrld_simpl)
+
+afr <- wrld_simpl[wrld_simpl$REGION==2,]
+afr <- spTransform(afr, CRS("+init=epsg:3395"))
+
+# construct cartogram
+afrc <- cartogram(afr, "POP2005", itermax=5)
+
+# plot it
+tm_shape(afrc) + tm_fill("POP2005", style="jenks") + 
+  tm_borders() + tm_layout(frame=F)
+```
 
