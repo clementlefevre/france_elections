@@ -11,3 +11,4 @@ For modeling and prediction, see `XGB_elections.Rmd`
 ![alt text](https://cloud.githubusercontent.com/assets/6842576/26036148/d9d45dfe-38d8-11e7-9ec4-fa15b3853704.png "Elevation")
 
 
+For a summary see [here](http://localhost:4000/articles/french-elections)
