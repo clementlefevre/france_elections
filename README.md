@@ -8,6 +8,6 @@ The resulting dataset is `elections_2017_First_round.csv.tar.gz`
 For modeling and prediction, see `XGB_elections.Rmd`
 
 
-![alt text](https://github.com/clementlefevre/french_elections/elevation_LePen.png "Elevation")
+![alt text](https://github.com/clementlefevre/france_elections/elevation_LePen.png "Elevation")
 
 
