@@ -4,24 +4,21 @@ output:  github_document
 ---
 
 ```{r}
-library(dplyr)
+
 library(tidyr)
 library(stringr)
 library(ggplot2)
 library(ggcorrplot)
 library(ggthemes)
+library(dplyr)
 ```
 
 ### Load file
 ```{r}
 df<- read.csv('data/DOI/elections_2017_First_round.csv')
-df<-df %>% filter(CODE_REG==93)
-```
-### Add new features :
 
-```{r}
-df<-df %>% mutate(Combined_ratio=log(NoJob_1524_ratio+1)*log(education_no_diplom_ratio+1)*log(family_monoparental_ratio+1))
 ```
+
 
 ### Set features
 ```{r}
@@ -30,7 +27,8 @@ job_indicators<- grep('Job|ratio',colnames(df),value = TRUE)
 fiscal<-c('Q213','Q3_Q1','Population','DENSITY','Z_MOYEN')
 
 all_features<-c(job_indicators,fiscal)
-
+df<-df %>% mutate_at(candidats,funs(.*100))
+df<-df %>% mutate_at(c('DENSITY','ratio_immigrants'),funs(log=log(1+.)))
 ```
 
 
@@ -42,56 +40,46 @@ all_features<-c(job_indicators,fiscal)
 ### Correlations
 ```{r fig.width=10, fig.height=10}
 
-df_numeric<- df %>% select(one_of(c(all_features,'LE.PEN')))
-cor.matrix<-cor(df_numeric %>% filter(!is.na(LE.PEN))%>% filter(!is.na(Q3_Q1))) 
-df_corr<- as.data.frame(cor.matrix) %>% select(LE.PEN) 
-df_corr$feature<-rownames(df_corr)
-
-df_corr<-df_corr %>% mutate(corr_abs=abs(LE.PEN)) %>% top_n(10,corr_abs) %>% arrange(desc(corr_abs))
-
-highest.corr.features<- as.vector(df_corr$feature)
-
-corr <- round(cor(df_numeric %>% select(one_of(highest.corr.features)) %>% na.omit()),2)
-
-# Plot
-ggcorrplot(corr, hc.order = TRUE, 
+plot_corr_matrix_LE.PEN <- function(df,region, region_name){
+  df<-df %>% filter(CODE_REG==region)
+  df_numeric<- df %>% select(one_of(c(all_features,'LE.PEN')))
+  cor.matrix<-cor(df_numeric %>% filter(!is.na(LE.PEN))%>% filter(!is.na(Q3_Q1))) 
+  df_corr<- as.data.frame(cor.matrix) %>% select(LE.PEN) 
+  df_corr$feature<-rownames(df_corr)
+  
+  df_corr<-df_corr %>% mutate(corr_abs=abs(LE.PEN)) %>% top_n(10,corr_abs) %>% arrange(desc(corr_abs))
+  
+  highest.corr.features<- as.vector(df_corr$feature)
+  
+  corr <- round(cor(df_numeric %>% select(one_of(highest.corr.features)) %>% na.omit()),2)
+  
+  # Plot
+  ggcorrplot(corr, hc.order = TRUE, 
            type = "lower", 
            lab = TRUE, 
-           lab_size = 2, 
+           lab_size = 3, 
            method="circle", 
            colors = c("#0C3269", "white", "#ca0020"), 
-           title="Correlogram for LE PEN",
+           title=paste0("Correlogram for LE PEN : ",region_name),
            show.legend=FALSE,
            show.diag = FALSE,
-            ggtheme = ggplot2::theme_gray)
+            ggtheme = ggplot2::theme_gray) 
+}
+
 
 
 ```
-```{r fig.width=10, fig.height=10}
 
-df_numeric<- df %>% select(one_of(c(all_features,'MACRON')))
-cor.matrix<-cor(df_numeric %>% filter(!is.na(MACRON))%>% filter(!is.na(Q3_Q1)))
-df_corr<- as.data.frame(cor.matrix) %>% select(MACRON) 
-df_corr$feature<-rownames(df_corr)
+# Plot corr matrix for each region of interest:
+```{r fig.width=8, fig.height=8}
+plot_corr_matrix_LE.PEN(df,93, "Provence Alpes Cote d'Azur")
+plot_corr_matrix_LE.PEN(df,32, "Hauts de France")
+plot_corr_matrix_LE.PEN(df,53, "Bretagne")
 
-df_corr<-df_corr %>% mutate(corr_abs=abs(MACRON)) %>% top_n(10,corr_abs) %>% arrange(desc(corr_abs))
-
-highest.corr.features<- as.vector(df_corr$feature)
-
-corr <- round(cor(df_numeric %>% select(one_of(highest.corr.features)) %>% na.omit()),2)
-
-# Plot
-ggcorrplot(corr, hc.order = TRUE, 
-           type = "lower", 
-           lab = TRUE, 
-           lab_size = 2, 
-           method="circle", 
-           colors = c("#0C3269", "white", "#ca0020"), 
-           title="Correlogram for MACRON",
-           show.legend=FALSE,
-           show.diag = FALSE,
-           ggtheme = ggplot2::theme_gray)
 ```
+
+
+
 ### Multiplot function
 ```{r}
 library(gridExtra)
@@ -127,17 +115,21 @@ grid_arrange_shared_legend <- function(..., nrow = 1, ncol = length(list(...)), 
 
 ### Generic function to plot
 ```{r fig.width=8, fig.height=6}
+
+
 plot_corr<-function(df,feature,ratio,max,pop_threshold,candidate,xlab){
+
   df<-  df[df[,feature]>0,] 
- df<-  df[df[,feature]<max,]  %>%filter(Population>pop_threshold) %>% filter(REG %in% c(53,93,22,31))
+  df<-  df[df[,feature]<max,]  %>%filter(Population>pop_threshold) %>% filter(REG %in% c(53,93,22,31))
   
+ 
   x_data<-df[,feature] * ratio
   
   
-  p<-ggplot(df,aes_string(x=x_data,y=candidate,col="NOM_REG",size="Population"))+ geom_jitter(alpha=.7)  +theme_fivethirtyeight() +
-    theme(axis.title = element_text())+ylab(paste0('1st Round - ',candidate,' (%)'))+ xlab(xlab)+theme(legend.direction='vertical',legend.position='top',legend.box='horizontal')+ggtitle(paste0('Cities with population>',pop_threshold))+labs(caption = "©Clément Lefèvre 2017 (Sources : Ministère de l'Intérieur, INSEE)")+scale_colour_manual(values = c("#e41a1c", "#377eb8", "#4daf4a"))+labs(size = "Population",color=' ')+ theme(legend.title=element_text(size=8))+ylim(0,0.5)
+  p<-ggplot(df,aes_string(x=x_data,y=candidate,col="NOM_REG",size=I("Population")))+ geom_jitter(alpha=.7)  +theme_fivethirtyeight() +
+    theme(axis.title = element_text())+ylab(paste0('1st Round - ',candidate,' (%)'))+ xlab(xlab)+theme(legend.direction='vertical',legend.position='top',legend.box='horizontal')+ggtitle(paste0('Cities with population>',pop_threshold))+labs(caption = "©Clément Lefèvre 2017 (Sources : Ministère de l'Intérieur, INSEE)")+scale_colour_manual(values = c("#e41a1c", "#377eb8", "#4daf4a"))+labs(size = "Population",color=' ')+ theme(legend.title=element_text(size=8))+ylim(0,50)+ scale_size(guide="none")+geom_smooth(method = 'lm',se=FALSE)
   return(p)
-}
+  }
 
 p0<-plot_corr(df,"Job_OUVRIER_ratio",100,100,1000,'LE.PEN',"Workers in active population(%)")
 p1<-plot_corr(df,"Job_OUVRIER_ratio",100,100,1000,'MACRON',"Workers in active population(%)")
@@ -151,11 +143,15 @@ p5<-plot_corr(df,"family_monoparental_ratio",100,100,1000,'MACRON',"% monoparent
 p6<-plot_corr(df,"NoJob_1524_ratio",100,100,1000,'LE.PEN',"% Unemployment <24 years old")
 p7<-plot_corr(df,"NoJob_1524_ratio",100,100,1000,'MACRON',"% Unemployment <24 years old")
 
-p8<-plot_corr(df %>% filter(Q213>0),"Q213",100,max(df$Q213),1000,'LE.PEN',"Median yearly Income per household (Euros)")
-p9<-plot_corr(df,"Q213",100,max(df$Q213),1000,'MACRON',"Median yearly Income per household (Euros)")
+p8<-plot_corr(df %>% filter(Q213>0),"Q213",1,max(df$Q213),1000,'LE.PEN',"Median yearly Income per household (Euros)")
+p9<-plot_corr(df,"Q213",1,max(df$Q213),1000,'MACRON',"Median yearly Income per household (Euros)")
 
-p10<-plot_corr(df %>% filter(Q3_Q1>0),"Q3_Q1",100,max(df$Q3_Q1),1000,'LE.PEN',"Yearly household incomes IQR (Euros)")
-p11<-plot_corr(df %>% filter(Q3_Q1>0),"Q3_Q1",100,max(df$Q3_Q1),1000,'MACRON',"Yearly household incomes IQR (Euros)")
+p10<-plot_corr(df %>% filter(Q3_Q1>0),"Q3_Q1",1,max(df$Q3_Q1),1000,'LE.PEN',"Yearly household incomes IQR (Euros)")
+p11<-plot_corr(df %>% filter(Q3_Q1>0),"Q3_Q1",1,max(df$Q3_Q1),1000,'MACRON',"Yearly household incomes IQR (Euros)")
+
+p12<-plot_corr(df %>% filter(ratio_immigrants>0 & LE.PEN<100),"ratio_immigrants_log",1,max(df$ratio_immigrants),1000,'LE.PEN',"% Immigrants - log scale")
+p13<-plot_corr(df %>% filter(DENSITY>0),"DENSITY_log",1,max(df$DENSITY),500,'LE.PEN',"Population density (inhabitant/km² - log scale)")
+p14<-plot_corr(df %>% filter(Z_MOYEN>200),"Z_MOYEN",1,max(df$Z_MOYEN),500,'LE.PEN',"Elevation (m)")
 p0
 p1
 p2
@@ -168,33 +164,18 @@ p8
 p9
 p10
 p11
-# grid_arrange_shared_legend(p2,p3,nrow =1, ncol = 2)
-# grid_arrange_shared_legend(p4,p5,nrow =1, ncol = 2)
-# grid_arrange_shared_legend(p6,p7,nrow =1, ncol = 2)
-# grid_arrange_shared_legend(p8,p9,nrow =1, ncol = 2)
-# grid_arrange_shared_legend(p10,p11,nrow =1, ncol = 2)
-
-
+p12
+p13
+p14
 ```
 
 ```{r}
 df$Population_cat <- factor(df$Population_cat, levels = c("<100","[100,300]","[300,500]","[500,1000]" ,"[1000,2000]","[2000,5000]",">10000" ))
 
 
-groupy_pop<- df %>% group_by(Population_cat) %>% summarise(LE.PEN=mean(LE.PEN*100,na.rm=TRUE),MACRON=mean(MACRON*100,na.rm=TRUE),FILLON=mean(FILLON*100,na.rm=TRUE),MELENCHON=mean(MÉLENCHON*100,na.rm=TRUE))
+groupy_pop<- df %>% group_by(Population_cat) %>% summarise(LE.PEN=mean(LE.PEN,na.rm=TRUE),MACRON=mean(MACRON,na.rm=TRUE),FILLON=mean(FILLON,na.rm=TRUE),MELENCHON=mean(MÉLENCHON,na.rm=TRUE))
 groupy_pop<- groupy_pop %>% gather(candidate,score,-Population_cat)
 groupy_pop$candidate<-  factor(groupy_pop$candidate, levels = c("MACRON","LE.PEN","FILLON","MELENCHON"))
 
 ggplot(groupy_pop,aes(x=Population_cat,y=score,fill=candidate)) + geom_bar(stat='identity', position = "dodge")+ylab('1st round (%)')+scale_fill_manual(values = c("#ecad31", "#767374", "#1d88be",'#ec6a56'))+ggtitle('Per city population')+labs(caption = "©Clément Lefèvre 2017 (Sources : Ministère de l'Intérieur, INSEE)") + theme_fivethirtyeight()+theme(axis.title = element_text())+xlab("")+ theme(legend.title=element_blank())
 ```
-
-
-```{r fig.width=14, fig.height=12}
-
-p1<-ggplot(df%>% filter(!is.na(LE.PEN))%>% filter(Q3_Q1.Data.Available) %>% filter(REG %in% c(53,93,22,31)) ,aes(Q3_Q1,LE.PEN, col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.6)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - LE PEN (%)')+ xlab('Yearly Income per household - Inter Quartile Range')+theme(aspect.ratio=1/2)+ggtitle('For cities with Household>50 or Population>100')
-
-p2<-ggplot(df%>% filter(!is.na(LE.PEN))%>% filter(Q3_Q1.Data.Available) %>% filter(REG %in% c(53,93,22,31)) ,aes(Q3_Q1,MACRON, col=as.factor(NOM_REG),size=Population))+ geom_jitter(alpha=.6)+ scale_colour_brewer(palette = "Set1")+theme(legend.title=element_blank())+ylab('1st Round - MACRON (%)')+ xlab('Yearly Income per household - Inter Quartile Range')+theme(aspect.ratio=1/2)
-
-grid_arrange_shared_legend(p1, p2,nrow = 2, ncol = 1)
-```
-

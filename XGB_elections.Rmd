@@ -12,7 +12,9 @@ library(dplyr)
 library(tidyr)
 library(xgboost)
 library(caret)
-library(mice)
+library(knitr)
+library(ggthemes)
+
 ```
 
 
@@ -30,7 +32,10 @@ best_candidates<-c("FILLON","LE.PEN","MACRON","MÉLENCHON")
 ```{r}
 df <- df %>% filter(!is.na(best_candidate) & best_candidate %in% best_candidates)
 
-df<- df %>% select(-one_of(candidats)) %>% select(-matches('EVOLUTION|2012|^X'))
+col_Nb<-grep("Nb",colnames(df),value = TRUE)
+col_Nb_NO_ratio<-grep("^(?!.*ratio).*Nb.*$", col_Nb,value = TRUE,perl = TRUE)
+
+df<- df %>% select(-one_of(candidats)) %>% select(-matches('EVOLUTION|^X|CODE_REG|CODE_COM|POPULATION|Votants|Exprim|Inscrits|SUPERFICIE'))%>% select(-one_of(col_Nb_NO_ratio))
 
 df$best_candidate<-as.character(df$best_candidate)
 target<-as.factor(df$best_candidate)
@@ -45,7 +50,7 @@ dim(df)
 # Filter on BRETAGNE
 
 ```{r}
-df<- df %>% filter(CODE_REG==93)
+#df<- df %>% filter(CODE_REG==53)
 ```
 
 #### Resplit the train :
@@ -53,6 +58,10 @@ df<- df %>% filter(CODE_REG==93)
 intrain<-createDataPartition(y=df$best_candidate,p=0.7,list=FALSE)
 df_train<-df[intrain,]
 df_test<-df[-intrain,]
+
+
+train<-df_train %>% select(-best_candidate)
+label_train<- as.numeric(df_train$best_candidate)
 ```
 
 
@@ -64,13 +73,13 @@ Hyperparameters :
 # set up the cross-validated hyper-parameter search
 
 xgb_grid_1 = expand.grid(
-  o
-  nrounds = 1000,
+  
+  nrounds = 2,
   eta = c(0.01),
   max_depth = c(12),
-  gamma = 1,
-  colsample_bytree=1,
-  min_child_weight=1,
+  gamma = c(1),
+  colsample_bytree=c(1),
+  min_child_weight=c(0.1),
   subsample = 1
 )
 ```
@@ -87,19 +96,31 @@ train_control <- trainControl(method="cv", number=2)
 model <- train(best_candidate~.,data=df_train,trControl=train_control, method="xgbTree",tuneGrid=xgb_grid_1)
 # summarize results
 print(model)
-dput(model$finalModel,'xgb_final_model')
+dput(model$finalModel,'xgb_final_model_multiclass')
 ```
 
 
 ```{r}
-prediction1<-predict(model,newdata = df_test)
+prediction<-predict(model,newdata = df_test)
 
-df_prediction<-as.data.frame(table(prediction1,df_test$best_candidate))
+df_prediction<-as.data.frame(table(prediction,df_test$best_candidate))
 
 df_prediction<-df_prediction %>% spread(Var2,Freq)
-View(df_prediction)
-varImp(model)
+
+variable_importance<-varImp(model)$importance
+variable_importance$feature<-rownames(variable_importance)
+
+variable_importance<-variable_importance %>% arrange(desc(Overall))
+ggplot(variable_importance %>% top_n(20,Overall),aes(x=reorder(feature,-Overall),y=Overall))+ geom_bar(stat="identity",fill="#0c3269", colour="#0c3269")+theme_fivethirtyeight()+theme(axis.text.x=element_text(angle=45, hjust=1)) +ggtitle("XGB Features importance")
 
 
+```
+
+# Ouput Confusion Matrix :
+```{r}
+kable(df_prediction, format = "markdown")
+```
+```{r}
+confusionMatrix(table(prediction,df_test$best_candidate))
 ```
 

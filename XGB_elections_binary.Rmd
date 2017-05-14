@@ -1,0 +1,103 @@
+---
+title: "Kaggle_Votes"
+
+output:
+  html_document:
+    keep_md: true
+---
+
+
+```{r}
+library(dplyr)
+library(tidyr)
+library(xgboost)
+library(caret)
+```
+
+
+Read data 
+```{r}
+df<- read.csv('data/DOI/elections_2017_First_round.csv')
+
+candidats<-c("ARTHAUD","ASSELINEAU","CHEMINADE","DUPONT.AIGNAN","FILLON","HAMON","LASSALLE","LE.PEN","MACRON","MÉLENCHON","POUTOU")
+
+
+```
+
+# convert target to factor to activate classification in caret train method :
+```{r}
+df <- df %>% filter(!is.na(best_candidate) )
+df<-df %>% mutate(FN = ifelse(best_candidate == "LE.PEN","LE.PEN","Others"))
+target<-df$FN
+df<- df %>% select(-one_of(candidats)) %>% select(-matches('EVOLUTION|^X'))
+
+
+df<- df %>% select_if(is.numeric) %>% select(-RD,-GI13)
+df$FN<-target
+(df %>% summarise_each(funs(sum(is.na(.)))) %>% gather())
+dim(df)
+df<-df %>% na.omit()
+dim(df)
+
+```
+# Filter on BRETAGNE
+
+```{r}
+#df<- df %>% filter(CODE_REG==32)
+```
+
+#### Resplit the train :
+```{r}
+intrain<-createDataPartition(y=df$FN,p=0.7,list=FALSE)
+df_train<-df[intrain,]
+df_test<-df[-intrain,]
+```
+
+
+
+
+Hyperparameters :
+
+```{r}
+# set up the cross-validated hyper-parameter search
+
+xgb_grid_1 = expand.grid(
+  
+  nrounds = 1000,
+  eta = c(0.01),
+  max_depth = c(12),
+  gamma = c(1),
+  colsample_bytree=c(1),
+  min_child_weight=c(0.1),
+  subsample = 1
+)
+```
+
+
+Train the 
+```{r}
+
+# define training control
+train_control <- trainControl(method="cv", number=2)
+#train_control <- trainControl(method="repeatedcv", number=10, repeats=3)
+
+# train the model
+model <- train(FN~.,data=df_train,trControl=train_control, method="xgbTree",tuneGrid=xgb_grid_1)
+# summarize results
+print(model)
+dput(model$finalModel,'xgb_final_model')
+```
+
+
+```{r}
+prediction1<-predict(model,newdata = df_test)
+
+df_prediction<-as.data.frame(table(prediction1,df_test$FN))
+
+df_prediction<-df_prediction %>% spread(Var2,Freq)
+View(df_prediction)
+varImp(model)
+
+
+```
+

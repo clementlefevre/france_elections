@@ -41,7 +41,7 @@ europe <- spTransform(europe, CRS("+init=epsg:2154"))
 
 ```{r}
 dim(comm@data)
-comm<-comm
+
 comm@data <- left_join(comm@data, df.elections_2017, by="INSEE_COM")
 ```
 
@@ -64,7 +64,6 @@ comm@data<- comm@data %>% mutate(LE.PEN = ifelse(is.na(LE.PEN),mean(LE.PEN,na.rm
 comm@data<- comm@data %>% mutate(MACRON = ifelse(is.na(MACRON),mean(MACRON,na.rm=TRUE),MACRON))
 comm@data<- comm@data %>% mutate(education_SUP_ratio = ifelse(is.na(education_SUP_ratio),mean(education_SUP_ratio,na.rm=TRUE),education_SUP_ratio))
 comm@data<- comm@data %>% mutate(NoJob_all_ratio = ifelse(is.na(NoJob_all_ratio),mean(NoJob_all_ratio,na.rm=TRUE),NoJob_all_ratio))
-
 
 ```
 
@@ -145,19 +144,16 @@ leg <- findColours(classIntervals(
             cutlabels=FALSE)
 
 plot(comm,   col=col, border='green', lwd=.1,main=title)
-plot(frontieres, col="#FFFFFF",,add=TRUE)
+
 
 plot(europe,      col="#E6E6E6", border="#AAAAAA",lwd=1, add=TRUE)
-plot(frontieres,  col="#D8D6D4", lwd=6, add=TRUE)
-
+plot(departements,col="#FFFFFF", border="#CCCCCC",lwd=.7, add=TRUE)
+plot(comm,   col=col, border=col, lwd=.1,main=title,add=TRUE)
 plot(frontieres,  col="#666666", lwd=1, add=TRUE)
 
-plot(frontieres, col="#666666", lwd=1, add=TRUE)
-plot(frontieres,  col="#D8D6D4", lwd=6, add=TRUE)
-plot(comm,   col=col, border=col, lwd=.1,main=title,add=TRUE)
 legend("bottomleft",fill=attr(leg, "palette"),
     legend=gsub("\\.", ",", names(attr(leg,"table"))),
-    title = paste(title," :"),bty = "n",cex=.5)
+    title = paste(title," :"),bty = "n",cex=1)
   
 }
 ```
@@ -172,13 +168,26 @@ plot_reg<- function(region_code,comm){
   plot_map_region(comm = comm ,feature = 'X..Abs.Ins',"#ca0020",'Abstention (%)',ratio=1)
   plot_map_region(comm = comm,feature = 'NoJob_all_ratio',"#0C3269",'Unemployment (%)',ratio=100)
 }
+
+plot_dept<- function(dept_code,comm){
+ 
+  comm<- subset(comm, CODE_DEPT %in% dept_code)
+  plot_map_region(comm = comm ,feature = 'LE.PEN',"#ca0020",'Le Pen Votes 2017 (%)',ratio=100)
+  plot_map_region(comm = comm ,feature = 'Z_MOYEN.x',"#0C3269",'Elevation (meters)',ratio=.1)
+  plot_map_region(comm = comm ,feature = 'DENSITY',"#0C3269",'Density (inhabitants/km²)',ratio=100)
+  plot_map_region(comm = comm ,feature = 'X..Abs.Ins',"#ca0020",'Abstention (%)',ratio=1)
+  plot_map_region(comm = comm,feature = 'NoJob_all_ratio',"#0C3269",'Unemployment (%)',ratio=100)
+}
+
 ```
 
-```{r}
+```{r fig.width=14, fig.height=12}
 plot_reg(HAUTS_DE_FRANCE,comm)
 plot_reg(BRETAGNE,comm)
 plot_reg(PACA,comm)
 plot_reg(AUVERGNE_RHONE,comm)
+plot_dept(c('38'), comm)
+plot_dept(c('07'), comm)
 ```
 
 
