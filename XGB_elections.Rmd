@@ -18,7 +18,7 @@ library(ggthemes)
 ```
 
 
-Read data 
+### Read data 
 ```{r}
 df<- read.csv('data/DOI/elections_2017_First_round.csv')
 candidats<-c("ARTHAUD","ASSELINEAU","CHEMINADE","DUPONT.AIGNAN","FILLON","HAMON","LASSALLE","LE.PEN","MACRON","MÉLENCHON","POUTOU")
@@ -28,7 +28,7 @@ best_candidates<-c("FILLON","LE.PEN","MACRON","MÉLENCHON")
 
 ```
 
-# convert target to factor to activate classification in caret train method :
+### convert target to factor to activate classification in caret train method :
 ```{r}
 df <- df %>% filter(!is.na(best_candidate) & best_candidate %in% best_candidates)
 
@@ -47,13 +47,8 @@ df<-df %>% na.omit()
 dim(df)
 
 ```
-# Filter on BRETAGNE
 
-```{r}
-#df<- df %>% filter(CODE_REG==53)
-```
-
-#### Resplit the train :
+### Train Test Split :
 ```{r}
 intrain<-createDataPartition(y=df$best_candidate,p=0.7,list=FALSE)
 df_train<-df[intrain,]
@@ -67,7 +62,7 @@ label_train<- as.numeric(df_train$best_candidate)
 
 
 
-Hyperparameters :
+### Final Hyperparameters :
 
 ```{r}
 # set up the cross-validated hyper-parameter search
@@ -85,7 +80,7 @@ xgb_grid_1 = expand.grid(
 ```
 
 
-Train the 
+### Fit the Train 
 ```{r}
 
 # define training control
@@ -99,7 +94,7 @@ print(model)
 dput(model$finalModel,'xgb_final_model_multiclass')
 ```
 
-
+### Predict
 ```{r}
 prediction<-predict(model,newdata = df_test)
 
@@ -116,7 +111,7 @@ ggplot(variable_importance %>% top_n(20,Overall),aes(x=reorder(feature,-Overall)
 
 ```
 
-# Ouput Confusion Matrix :
+### Ouput Confusion Matrix :
 ```{r}
 kable(df_prediction, format = "markdown")
 ```
